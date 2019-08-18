@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<pre>
+THE NULL POINTER
+================
+
+HTTP POST files here:
+    curl -F'file=@yourfile.png' {{d.url}}
+
+
+Maximum file size: {{d.maxsize}}
+
+</pre>
+{% endblock%}

@@ -1,13 +1,9 @@
-alembic
-numpy
 SQLAlchemy
-tqdm
-Flask_SQLAlchemy
 Flask
-humanize
-requests
+Flask_SQLAlchemy
 flask_migrate
 flask_script
-python_magic
+humanize
+requests
 short_url
-validators
+ipfshttpclient
