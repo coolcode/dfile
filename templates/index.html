@@ -10,18 +10,18 @@
     <title>dfile.app - Easy and fast file sharing from the command-line.</title>
     <meta name="description" content="Easy and fast file sharing from the command-line.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="/static/img/icon.png"/>
+    <link rel="icon" type="image/png" href="/static/img/favicon.ico"/>
     <link rel="stylesheet" href="/static/styles/main.css">
     <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:100,200,300' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
     <script src="/static/scripts/modernizr.js"></script>
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-4222668639239778",
-            enable_page_level_ads: true
-        });
-    </script>
+    <!--    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
+    <!--    <script>-->
+    <!--        (adsbygoogle = window.adsbygoogle || []).push({-->
+    <!--            google_ad_client: "ca-pub-4222668639239778",-->
+    <!--            enable_page_level_ads: true-->
+    <!--        });-->
+    <!--    </script>-->
 </head>
 
 
@@ -46,14 +46,14 @@
 <div id="navigation">
     <div class="wrapper">
         <a href="/">
-            <h1>{{d.url}}</h1>
+            <img src="/static/img/icon.svg" alt="LOGO" class="icon">&nbsp;<span class="h1">{{d.url}}</span>
         </a>
         <ul class="hidden-xs">
             <li><a href="/">Home</a>
             </li>
-            <li><a href="/#samples">sample use cases</a>
+            <li><a href="/#samples">Samples</a>
             </li>
-            <li><a href="/#contact">contact us</a>
+            <li><a href="/#contact">Contact</a>
             </li>
         </ul>
     </div>
@@ -79,12 +79,12 @@
                 <div id="terminal" class="terminal">
                     <code>
                         <span class="code-title"># Upload using cURL</span>
-                        <br>$ curl -F'file=@yourfile.png' {{d.url}}
-                        <br>
+                        <br>$ curl -F file=@yourfile.txt {{d.url}}
+                        <br>https://dfile.app/QmV...HZ
                         <br>
                         <span class="code-title"># Using the alias</span>
-                        <br>$ transfer hello.txt
-                        <br>##################################################### 100.0% https://dfile.app/eibhM/hello.txt
+                        <br>$ dfile hello.txt
+                        <br>##################################################### 100.0% https://dfile.app/QmV...HZ
                     </code>
                 </div>
                 <div id="web">
@@ -112,9 +112,10 @@
             </div>
 
             <div>
-                <a href="#features" class="btn-cta btn-home">learn more</i> </a>
+                <a href="#features" class="btn-cta btn-home">Learn more</i> </a>
             </div>
         </div>
+    </div>
 </section>
 
 
@@ -122,9 +123,23 @@
     <div class="wrapper container">
         <div class="row  animated fadeInDown ">
             <div class="col-md-3 col-xs-6">
+                <i class="icon-tag"></i>
+                <h3>For free</h3>
+            </div>
+            <div class="col-md-3 col-xs-6">
+                <i class="icon-upload-cloud"></i>
+                <h3>IPFS</h3>
+            </div>
+            <div class="col-md-3 col-xs-6">
                 <i class="icon-clock"></i>
                 <h3>Files stored forever</h3>
             </div>
+            <div class="col-md-3 col-xs-6">
+                <i class="icon-database"></i>
+                <h3>No limit</h3>
+            </div>
+        </div>
+        <div class="row  animated fadeInDown">
             <div class="col-md-3 col-xs-6">
                 <i class="icon-terminal"></i>
                 <h3>Made for use with shell</h3>
@@ -132,20 +147,6 @@
             <div class="col-md-3 col-xs-6">
                 <i class="icon-link"></i>
                 <h3>Share files with a URL</h3>
-            </div>
-            <div class="col-md-3 col-xs-6">
-                <i class="icon-database"></i>
-                <h3>Upload up to 10 GB</h3>
-            </div>
-        </div>
-        <div class="row  animated fadeInDown">
-            <div class="col-md-3 col-xs-6">
-                <i class="icon-tag"></i>
-                <h3>For free</h3>
-            </div>
-            <div class="col-md-3 col-xs-6">
-                <i class="icon-upload-cloud"></i>
-                <h3>IPFS</h3>
             </div>
             <div class="col-md-3 col-xs-6">
                 <i class="icon-lock"></i>
@@ -159,7 +160,7 @@
     </div>
 </section>
 
-<section id="share">
+<section class="share">
     <div class="wrapper">
         <h2 class="page-title">Preview your files in the browser!</h2>
     </div>
@@ -180,200 +181,43 @@
                 <div class="terminal">
                     <code>
                         <span class="code-title"># Uploading is easy using curl</span>
-                        <br>$ curl --upload-file ./hello.txt https://dfile.app/hello.txt
-                        <br>https://dfile.app/66nb8/hello.txt
+                        <br>$ curl -F'file=@yourfile.png' https://dfile.app
+                        <br>https://dfile.app/QmV...HZ
                         <br/>
-                        <br>$ curl -H "Max-Downloads: 1" -H "Max-Days: 5" --upload-file ./hello.txt https://dfile.app/hello.txt
-                        <br>https://dfile.app/66nb8/hello.txt
-                        <br>
                         <span class="code-title"># Download the file</span>
-                        <br>$ curl https://dfile.app/66nb8/hello.txt -o hello.txt
+                        <br>$ curl https://dfile.app/QmV...HZ -o yourfile.png
+                        <br>
+                        <br>
+                        <br>
                     </code>
                 </div>
             </div>
             <div class="col-md-6 ">
-                <h3>Add an alias to .bashrc or .zshrc <a href='https://gist.github.com/nl5887/a511f172d3fb3cd0e42d'>[gist]</a></h3>
+                <h3>Add an alias to .bashrc or .zshrc </h3>
                 <div class="terminal-top">
                 </div>
                 <div class="terminal">
                     <code>
                         <span class="code-title"># Add this to .bashrc or its equivalent</span>
-                        <br/>transfer() { if [ $# -eq 0 ]; then echo -e "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"; return 1; fi <br/>tmpfile=$(
-                        mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar --upload-file "$1" "https://dfile.app/$basefile" >>
-                        $tmpfile; else curl --progress-bar --upload-file "-" "https://dfile.app/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; }
+                        <br/>dfile() { if [ $# -eq 0 ]; then echo -e "No arguments specified. Usage:\necho dfile /tmp/test.md\ncat /tmp/test.md | dfile test.md"; return 1; fi <br/>tmpfile=$(
+                        mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar -F file=@"$1" "https://dfile.app" >>
+                        $tmpfile; else curl --progress-bar -F file=@"-" "https://dfile.app/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; }
                         <br/>
                         <br/>
-                        <span class="code-title"># Now you can use transfer command</span>
-                        <br>$ transfer hello.txt
+                        <span class="code-title"># Now you can use 'dfile' command</span>
+                        <br>$ dfile hello.txt
                     </code>
                 </div>
             </div>
+
         </div>
-
-
-        <a class="btn-cta" data-target="#coll" data-toggle="collapse">More examples</a>
-
-        <div class="collapse " id="coll">
-            <div class="row">
-                <div class="col-md-6 ">
-                    <h3>Upload multiple files at once</h3>
-                    <div class="terminal-top">
-                    </div>
-                    <div class="terminal">
-                        <code>
-                            <br>$ curl -i -F filedata=@/tmp/hello.txt -F filedata=@/tmp/hello2.txt https://dfile.app/
-                            <br>
-                            <br>
-                            <span class="code-title"># Combining downloads as zip or tar archive</span>
-                            <br>$ curl https://dfile.app/(15HKz/hello.txt,15HKz/hello.txt).tar.gz
-                            <br/>$ curl https://dfile.app/(15HKz/hello.txt,15HKz/hello.txt).zip
-                        </code>
-                    </div>
-
-
-                </div>
-                <div class="col-md-6 ">
-                    <h3>Encrypt your files before the transfer</h3>
-                    <div class="terminal-top">
-                    </div>
-                    <div class="terminal">
-                        <code>
-                            <span class="code-title"># Encrypt files with password using gpg</span>
-                            <br>$ cat /tmp/hello.txt|gpg -ac -o-|curl -X PUT --upload-file "-" https://dfile.app/test.txt
-                            <br>
-                            <br>
-                            <span class="code-title"># Download and decrypt</span>
-                            <br>$ curl https://dfile.app/1lDau/test.txt|gpg -o- > /tmp/hello.txt
-                        </code>
-                    </div>
-                </div>
-
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>Scan for malware</h3>
-                    <div class="terminal-top">
-                    </div>
-                    <div class="terminal">
-                        <code>
-                            <span class="code-title"># Scan for malware or viruses using Clamav</span>
-                            <br>$ wget http://www.eicar.org/download/eicar.com
-                            <br>$ curl -X PUT --upload-file ./eicar.com https://dfile.app/eicar.com/scan
-                            <br>
-                            <br>
-                            <span class="code-title"># Upload malware to VirusTotal, get a permalink in return</span>
-                            <br>$ curl -X PUT --upload-file nhgbhhj https://dfile.app/test.txt/virustotal
-                            <br>
-                        </code>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <h3>Backup mysql database, encrypt and transfer</h3>
-                    <div class="terminal-top">
-                    </div>
-                    <div class="terminal">
-                        <code>
-                            <span class="code-title"># Backup, encrypt and transfer</span>
-                            <br/>$ mysqldump --all-databases|gzip|gpg -ac -o-|curl -X PUT --upload-file "-" https://dfile.app/test.txt</code>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>Send email with transfer link (uses alias)</h3>
-                    <div class="terminal-top">
-                    </div>
-                    <div class="terminal">
-                        <code>
-                            <span class="code-title"># Transfer and send email with link (uses alias)</span>
-                            <br/>$ transfer /tmp/hello.txt | mail -s "Hello World" user@yourmaildomain.com
-                        </code>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <h3>Using <a href="https://keybase.io/">Keybase.io</a></h3>
-                    <div class="terminal-top">
-                    </div>
-                    <div class="terminal">
-                        <code>
-                            <span class="code-title"># Import keys from keybase</span>
-                            <br/>$ keybase track [them]
-                            <span class="code-title"># Encrypt for recipient(s)</span>
-                            <br/>$ cat somebackupfile.tar.gz | keybase encrypt [them] | curl --upload-file '-' https://dfile.app/test.txt
-                            <span class="code-title"># Decrypt</span>
-                            <br/>$ curl https://dfile.app/sqUFi/test.md |keybase decrypt
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>wget uploads also supported</h3>
-                    <div class="terminal-top">
-                    </div>
-                    <div class="terminal">
-                        <code>
-                            <span class="code-title"># wget</span>
-                            <br/>$ wget --method PUT --body-file=/tmp/file.tar https://dfile.app/file.tar -O - -nv
-                        </code>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <h3>Transfer pound logs</h3>
-                    <div class="terminal-top">
-                    </div>
-                    <div class="terminal">
-                        <code>
-                            <span class="code-title"># grep syslog for pound and transfer</span>
-                            <br/>$ cat /var/log/syslog|grep pound|curl --upload-file - https://dfile.app/pound.log
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-
-                <div class="col-md-6">
-                    <h3>Upload a file using Powershell</h3>
-                    <div class="terminal-top">
-                    </div>
-                    <div class="terminal">
-                        <code>
-                                <span class="code-title"># Upload using Powershell
-                                <br/>
-                                PS H:\&gt; invoke-webrequest -method put -infile .\file.txt https://dfile.app/file.txt
-                        </code>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <h3>Upload a file using HTTPie</h3>
-                    <div class="terminal-top">
-                    </div>
-                    <div class="terminal">
-                        <code>
-                                <span class="code-title"># HTTPie
-                                <br/>
-                                $ http https://dfile.app/ -vv &lt; /tmp/test.log
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>Send us your awesome example</h3>
-                    <div class="terminal-top">
-                    </div>
-                    <div class="terminal">
-                        <code>
-                            <span class="code-title"># Your awesome sample will be put here</span>
-                        </code>
-                    </div>
-                </div>
-            </div>
+        <div>
+            <a href='https://github.com/coolcode/dfile/wiki/Alias-or-Commands' class="btn-cta btn-home" target="_blank">More samples</i> </a>
         </div>
     </div>
 </section>
 
-<section id="github">
+<section class="share">
     <div class="wrapper">
         <h2 class="page-title">Follow on GitHub</h2>
         <br>
@@ -385,128 +229,58 @@
                 height="50"></iframe>
     </div>
 </section>
-<!--<section id="reviews">-->
+<!--<section id="contact">-->
 <!--    <div class="wrapper">-->
-<!--        <div class="row">-->
-<!--            <div class="col-md-8 col-md-offset-2 col-xs-12">-->
-<!--                <blockquote class="twitter-tweet tweet-xl" lang="en">-->
-<!--                    <a href="https://twitter.com/FloifyDave/status/517383101425516544">-->
-<!--                        <img class="twitter-profile" src="/static/img/reviews/dave.jpg" alt="">-->
-<!--                    </a>-->
-<!--                    <p><a href="https://twitter.com/coolcode">@coolcode</a> Thanks for dfile.app. Just used it for a production purpose for a customer. So great, so easy, so https. :)</p>-->
-<!--                    <a href="https://twitter.com/FloifyDave/status/517383101425516544">-->
-<!--                        &mdash; Dave Sims (@FloifyDave)</a>-->
-<!--                </blockquote>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="row">-->
-<!--            <div class="col-md-6 col-xs-12">-->
-<!--                <blockquote class="twitter-tweet" lang="en">-->
-<!--                    <a href="https://twitter.com/kareemk/status/517029789191118849">-->
-<!--                        <img class="twitter-profile" src="/static/img/reviews/kareem.jpg" alt="">-->
-<!--                    </a>-->
-<!--                    <p><a href="https://twitter.com/coolcode">@coolcode</a> love dfile.app! any change we can *pay* for a self-hosted version?</p><a-->
-<!--                        href="https://twitter.com/kareemk/status/517029789191118849">&mdash; Kareem Kouddous (@kareemk) </a>-->
-<!--                </blockquote>-->
-<!--            </div>-->
-<!--            <div class="col-md-6 col-xs-12">-->
-<!--                <blockquote class="twitter-tweet" lang="en">-->
-<!--                    <a href="https://twitter.com/drakpz/status/517008058841829376">-->
-<!--                        <img class="twitter-profile" src="/static/img/reviews/pg.jpeg" alt="">-->
-<!--                    </a>-->
-<!--                    <p><a href="http://t.co/JomAmqWYEB">http://t.co/JomAmqWYEB</a> by <a href="https://twitter.com/coolcode">@coolcode</a> is pure awesomeness! any chance of source on github?-->
-<!--                        :-)</p><a href="https://twitter.com/drakpz/status/517008058841829376">&mdash; PJ Spagnolatti (@drakpz)</a>-->
-<!--                </blockquote>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="row">-->
-<!--            <div class="col-md-6 col-xs-12">-->
-<!--                <blockquote class="twitter-tweet" lang="en">-->
-<!--                    <a href="https://twitter.com/jacoblindgren11/status/516975006501203968">-->
-<!--                        <img class="twitter-profile" src="/static/img/reviews/jacob.jpg" alt="">-->
-<!--                    </a>-->
-<!--                    <p>Love dfile.app! Will be using it from now on! Thanks for the amazing service we can use from the CLI <a href="https://twitter.com/coolcode">@coolcode</a>-->
-<!--                    </p><a href="https://twitter.com/jacoblindgren11/status/516975006501203968">&mdash; Jacob Lindgren (@jacoblindgren11) </a>-->
-<!--                </blockquote>-->
-<!--            </div>-->
-<!--            <div class="col-md-6 col-xs-12">-->
-<!--                <blockquote class="twitter-tweet" lang="en">-->
-<!--                    <a href="https://twitter.com/arvestad/status/519507976491499521">-->
-<!--                        <img class="twitter-profile" src="/static/img/reviews/lars.jpg" alt="">-->
-<!--                    </a>-->
-<!--                    <p>dfile.app is my latest fav service! Try simple command-line and web file sharing! <a href="https://t.co/FSrsb1JKJd">https://t.co/FSrsb1JKJd</a>&#10;Thanks <a-->
-<!--                            href="https://twitter.com/coolcode">@coolcode</a> !</p> <a href="https://twitter.com/arvestad/status/519507976491499521">&mdash; Lars Arvestad (@arvestad)</a>-->
-<!--                </blockquote>-->
-<!--            </div>-->
-<!--        </div>-->
+<!--        <i class="icon-mail"></i>-->
+<!--        <h2 class="page-title">-->
+<!--            Any questions?-->
+<!--        </h2>-->
+<!--        <a href="javascript:void(0)" data-uv-trigger class="btn-cta">Contact us</a>-->
 <!--    </div>-->
 <!--</section>-->
-
-
-<section id="share">
-    <div class="wrapper">
-        <h2 class="page-title">Share the love</h2>
-        <ul class="share-buttons">
-            <li>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fdfile.app&t=" target="_blank"
-                   onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.URL) + '&t=' + encodeURIComponent(document.URL)); return false;"> <i
-                        class="icon-facebook"></i>
-                </a>
-            </li>
-            <li>
-                <a href="https://twitter.com/intent/tweet?source=http%3A%2F%2Fdfile.app&text=:%20http%3A%2F%2Fdfile.app" target="_blank" title="Tweet"
-                   onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20'  + encodeURIComponent(document.URL)); return false;"> <i
-                        class="icon-twitter"></i>
-                </a>
-            </li>
-            <li>
-                <a href="https://plus.google.com/share?url=http%3A%2F%2Fdfile.app" target="_blank" title="Share on Google+"
-                   onclick="window.open('https://plus.google.com/share?url=' + encodeURIComponent(document.URL)); return false;"> <i class="icon-gplus"></i>
-                </a>
-            </li>
-            <li>
-                <a href="http://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fdfile.app&title=&summary=&source=http%3A%2F%2Fdfile.app" target="_blank" title="Share on LinkedIn"
-                   onclick="window.open('http://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(document.URL) + '&title=' +  encodeURIComponent(document.title)); return false;"> <i
-                        class="icon-linkedin"></i>
-                </a>
-            </li>
-        </ul>
-    </div>
-</section>
-
 
 <section id="contact">
     <div class="wrapper">
-        <i class="icon-mail"></i>
-        <h2 class="page-title">
-            Any questions?
-        </h2>
-        <a href="#" data-uv-trigger class="btn-cta">contact us</a>
+        <h2 class="page-title">Contact</h2>
+        <div id="contact-form">
+            <form class="form-group" method="POST" action="https://formspree.io/bruce.meerkat@gmail.com">
+                <div class="form-group">
+<!--                    <label for="email1">Your Email</label>-->
+                    <input type="email" class="form-control" id="email1" name="_replyto" aria-describedby="emailHelp" placeholder="Your email" required>
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+                <div class="form-group">
+<!--                    <label for="message">Message</label>-->
+                    <textarea type="password" class="form-control" id="message" name="message" placeholder="Your message" required></textarea>
+                </div>
+                <input type="hidden" name="_subject" value="Contact request from dfile.app"/>
+                <!--            <input class="form-control" type="email" name="_replyto" placeholder="Your email" required>-->
+                <!--            <textarea class="form-control" name="message" placeholder="Your message" required></textarea>-->
+                <button type="submit" class="btn btn-cta">Send</button>
+            </form>
+        </div>
+        <!-- End #contact-form -->
     </div>
 </section>
-<!--<section id="tor">-->
-<!--    <div class="wrapper">-->
-<!--        <a href="https://www.torproject.org"><img src="/static/img/tor.svg" alt="">-->
-<!--        </a>-->
-<!--        <br/>-->
-<!--        <a href="http://jxm5d6emw5rknovg.onion/">http://jxm5d6emw5rknovg.onion/</a>-->
-<!--    </div>-->
-<!--</section>-->
 
 
 <footer>
     <div class="wrapper">
-        <div style="">
-            <a href="bitcoin:164ybRMLbg1dhhWWiUkXtiNr7jUhMKdJqH" label="Bitcoin+Donation" style="word-wrap: break-word;">
-                <img border="0" src="/static/img/bitcoin.png" style="margin: 0 auto;;">
-            </a>
+        <!--        <div style="">-->
+        <!--            <a href="bitcoin:164ybRMLbg1dhhWWiUkXtiNr7jUhMKdJqH" label="Bitcoin+Donation" style="word-wrap: break-word;">-->
+        <!--                <img border="0" src="/static/img/bitcoin.png" style="margin: 0 auto;;">-->
+        <!--            </a>-->
+        <!--        </div>-->
+        <div>
+            Donate ETH: 0x56C4ECf7fBB1B828319d8ba6033f8F3836772FA9
         </div>
 
         <br/>
         <br/>
-        <img src="/static/img/Logo-orange.png" alt="Founded in Holland">
-        <p>Made with <i class="icon-heart"></i> by <a href="http://blog.coolcode.io/" title="Dutch Coders">Dutch Coders</a>
+        <img src="/static/img/icon.svg" alt="LOGO" class="icon">
+        <p>Made with <i class="icon-heart"></i> by <a href="https://github.com/coolcode" title="Bruce Meerkat">CoolCode</a>
         </p>
+        <p>Learn from <a href="https://transfer.sh" target="_blank">https://transfer.sh </a></p>
     </div>
 
 </footer>
@@ -530,9 +304,9 @@
 </script>
 
 <script
-  src="https://code.jquery.com/jquery-2.2.4.min.js"
-  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-  crossorigin="anonymous"></script>
+        src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
 <script src="/static/scripts/main.js"></script>
 
 

@@ -27,6 +27,7 @@ su = UrlEncoder(alphabet='DEQhd2uFteibPwq0SWBInTpA_jcZL5GKz3YCR14Ulk87Jors9vNHgf
 class File(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     hash = db.Column(db.String(50), unique=True)
+    key = db.Column(db.String(50), unique=True, nullable=True),
     time = db.Column(db.DateTime)
 
     def __init__(self, hash):

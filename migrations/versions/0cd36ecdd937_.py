@@ -18,6 +18,7 @@ def upgrade():
     op.create_table('file',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('hash', sa.String(50), nullable=False),
+    sa.Column('key', sa.String(50), nullable=True),
     sa.Column('time', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('hash')
