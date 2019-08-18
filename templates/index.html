@@ -10,11 +10,7 @@
     <title>dfile.app - Easy and fast file sharing from the command-line.</title>
     <meta name="description" content="Easy and fast file sharing from the command-line.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-            rel="icon"
-            type="image/png"
-            href="/static/img/icon.png"
-    />
+    <link rel="icon" type="image/png" href="/static/img/icon.png"/>
     <link rel="stylesheet" href="/static/styles/main.css">
     <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:100,200,300' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
@@ -43,7 +39,7 @@
 <!--            a.src = g;-->
 <!--            m.parentNode.insertBefore(a, m)-->
 <!--        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');-->
-<!--        ga('create', 'UA-40833733-1', 'transfer.sh');-->
+<!--        ga('create', 'UA-40833733-1', 'dfile.app');-->
 <!--        ga('send', 'pageview');-->
 <!--    </script>-->
 
@@ -62,9 +58,9 @@
         </ul>
     </div>
     <!--    <div style="position: fixed; top: 85%; left: 50%; transform: translate(-50%, -50%); background-color: yellow; padding: 20px 20px; z-index: 100;">-->
-    <!--        <div><b>Don’t Panic! transfer.sh will live on!</b></div>-->
-    <!--        <div>After running and supporting transfer.sh for 4 years on my own, I’m happy to announce we are partnering with <a href="https://storj.io">Storj Labs</a> to keep the project going. From day-->
-    <!--            one, the transfer.sh code has been open source. <a href="https://storj.io">Storj</a> has a commitment to open source sustainability and reached out to help us find a way to keep our-->
+    <!--        <div><b>Don’t Panic! dfile.app will live on!</b></div>-->
+    <!--        <div>After running and supporting dfile.app for 4 years on my own, I’m happy to announce we are partnering with <a href="https://storj.io">Storj Labs</a> to keep the project going. From day-->
+    <!--            one, the dfile.app code has been open source. <a href="https://storj.io">Storj</a> has a commitment to open source sustainability and reached out to help us find a way to keep our-->
     <!--            project alive. Stay tuned for updates on the partnership with <a href="https://storj.io">Storj</a>, but for now, please continue to enjoy the service!<br/>Blue skies, <a-->
     <!--                    href="https://twitter.com/remco_verhoef">Remco Verhoef</a></div>-->
     <!--    </div>-->
@@ -83,12 +79,12 @@
                 <div id="terminal" class="terminal">
                     <code>
                         <span class="code-title"># Upload using cURL</span>
-                        <br>$ curl --upload-file ./hello.txt https://transfer.sh/hello.txt https://transfer.sh/66nb8/hello.txt
+                        <br>$ curl -F'file=@yourfile.png' {{d.url}}
                         <br>
                         <br>
                         <span class="code-title"># Using the alias</span>
                         <br>$ transfer hello.txt
-                        <br>##################################################### 100.0% https://transfer.sh/eibhM/hello.txt
+                        <br>##################################################### 100.0% https://dfile.app/eibhM/hello.txt
                     </code>
                 </div>
                 <div id="web">
@@ -126,6 +122,10 @@
     <div class="wrapper container">
         <div class="row  animated fadeInDown ">
             <div class="col-md-3 col-xs-6">
+                <i class="icon-clock"></i>
+                <h3>Files stored forever</h3>
+            </div>
+            <div class="col-md-3 col-xs-6">
                 <i class="icon-terminal"></i>
                 <h3>Made for use with shell</h3>
             </div>
@@ -137,15 +137,15 @@
                 <i class="icon-database"></i>
                 <h3>Upload up to 10 GB</h3>
             </div>
-            <div class="col-md-3 col-xs-6">
-                <i class="icon-clock"></i>
-                <h3>Files stored for 14 days</h3>
-            </div>
         </div>
         <div class="row  animated fadeInDown">
-            <div class="col-md-offset-3 col-md-3 col-xs-6">
+            <div class="col-md-3 col-xs-6">
                 <i class="icon-tag"></i>
                 <h3>For free</h3>
+            </div>
+            <div class="col-md-3 col-xs-6">
+                <i class="icon-upload-cloud"></i>
+                <h3>IPFS</h3>
             </div>
             <div class="col-md-3 col-xs-6">
                 <i class="icon-lock"></i>
@@ -180,14 +180,14 @@
                 <div class="terminal">
                     <code>
                         <span class="code-title"># Uploading is easy using curl</span>
-                        <br>$ curl --upload-file ./hello.txt https://transfer.sh/hello.txt
-                        <br>https://transfer.sh/66nb8/hello.txt
+                        <br>$ curl --upload-file ./hello.txt https://dfile.app/hello.txt
+                        <br>https://dfile.app/66nb8/hello.txt
                         <br/>
-                        <br>$ curl -H "Max-Downloads: 1" -H "Max-Days: 5" --upload-file ./hello.txt https://transfer.sh/hello.txt
-                        <br>https://transfer.sh/66nb8/hello.txt
+                        <br>$ curl -H "Max-Downloads: 1" -H "Max-Days: 5" --upload-file ./hello.txt https://dfile.app/hello.txt
+                        <br>https://dfile.app/66nb8/hello.txt
                         <br>
                         <span class="code-title"># Download the file</span>
-                        <br>$ curl https://transfer.sh/66nb8/hello.txt -o hello.txt
+                        <br>$ curl https://dfile.app/66nb8/hello.txt -o hello.txt
                     </code>
                 </div>
             </div>
@@ -199,8 +199,8 @@
                     <code>
                         <span class="code-title"># Add this to .bashrc or its equivalent</span>
                         <br/>transfer() { if [ $# -eq 0 ]; then echo -e "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"; return 1; fi <br/>tmpfile=$(
-                        mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >>
-                        $tmpfile; else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; }
+                        mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar --upload-file "$1" "https://dfile.app/$basefile" >>
+                        $tmpfile; else curl --progress-bar --upload-file "-" "https://dfile.app/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; }
                         <br/>
                         <br/>
                         <span class="code-title"># Now you can use transfer command</span>
@@ -221,12 +221,12 @@
                     </div>
                     <div class="terminal">
                         <code>
-                            <br>$ curl -i -F filedata=@/tmp/hello.txt -F filedata=@/tmp/hello2.txt https://transfer.sh/
+                            <br>$ curl -i -F filedata=@/tmp/hello.txt -F filedata=@/tmp/hello2.txt https://dfile.app/
                             <br>
                             <br>
                             <span class="code-title"># Combining downloads as zip or tar archive</span>
-                            <br>$ curl https://transfer.sh/(15HKz/hello.txt,15HKz/hello.txt).tar.gz
-                            <br/>$ curl https://transfer.sh/(15HKz/hello.txt,15HKz/hello.txt).zip
+                            <br>$ curl https://dfile.app/(15HKz/hello.txt,15HKz/hello.txt).tar.gz
+                            <br/>$ curl https://dfile.app/(15HKz/hello.txt,15HKz/hello.txt).zip
                         </code>
                     </div>
 
@@ -239,11 +239,11 @@
                     <div class="terminal">
                         <code>
                             <span class="code-title"># Encrypt files with password using gpg</span>
-                            <br>$ cat /tmp/hello.txt|gpg -ac -o-|curl -X PUT --upload-file "-" https://transfer.sh/test.txt
+                            <br>$ cat /tmp/hello.txt|gpg -ac -o-|curl -X PUT --upload-file "-" https://dfile.app/test.txt
                             <br>
                             <br>
                             <span class="code-title"># Download and decrypt</span>
-                            <br>$ curl https://transfer.sh/1lDau/test.txt|gpg -o- > /tmp/hello.txt
+                            <br>$ curl https://dfile.app/1lDau/test.txt|gpg -o- > /tmp/hello.txt
                         </code>
                     </div>
                 </div>
@@ -258,11 +258,11 @@
                         <code>
                             <span class="code-title"># Scan for malware or viruses using Clamav</span>
                             <br>$ wget http://www.eicar.org/download/eicar.com
-                            <br>$ curl -X PUT --upload-file ./eicar.com https://transfer.sh/eicar.com/scan
+                            <br>$ curl -X PUT --upload-file ./eicar.com https://dfile.app/eicar.com/scan
                             <br>
                             <br>
                             <span class="code-title"># Upload malware to VirusTotal, get a permalink in return</span>
-                            <br>$ curl -X PUT --upload-file nhgbhhj https://transfer.sh/test.txt/virustotal
+                            <br>$ curl -X PUT --upload-file nhgbhhj https://dfile.app/test.txt/virustotal
                             <br>
                         </code>
                     </div>
@@ -274,7 +274,7 @@
                     <div class="terminal">
                         <code>
                             <span class="code-title"># Backup, encrypt and transfer</span>
-                            <br/>$ mysqldump --all-databases|gzip|gpg -ac -o-|curl -X PUT --upload-file "-" https://transfer.sh/test.txt</code>
+                            <br/>$ mysqldump --all-databases|gzip|gpg -ac -o-|curl -X PUT --upload-file "-" https://dfile.app/test.txt</code>
                     </div>
                 </div>
             </div>
@@ -299,9 +299,9 @@
                             <span class="code-title"># Import keys from keybase</span>
                             <br/>$ keybase track [them]
                             <span class="code-title"># Encrypt for recipient(s)</span>
-                            <br/>$ cat somebackupfile.tar.gz | keybase encrypt [them] | curl --upload-file '-' https://transfer.sh/test.txt
+                            <br/>$ cat somebackupfile.tar.gz | keybase encrypt [them] | curl --upload-file '-' https://dfile.app/test.txt
                             <span class="code-title"># Decrypt</span>
-                            <br/>$ curl https://transfer.sh/sqUFi/test.md |keybase decrypt
+                            <br/>$ curl https://dfile.app/sqUFi/test.md |keybase decrypt
                         </code>
                     </div>
                 </div>
@@ -314,7 +314,7 @@
                     <div class="terminal">
                         <code>
                             <span class="code-title"># wget</span>
-                            <br/>$ wget --method PUT --body-file=/tmp/file.tar https://transfer.sh/file.tar -O - -nv
+                            <br/>$ wget --method PUT --body-file=/tmp/file.tar https://dfile.app/file.tar -O - -nv
                         </code>
                     </div>
                 </div>
@@ -325,7 +325,7 @@
                     <div class="terminal">
                         <code>
                             <span class="code-title"># grep syslog for pound and transfer</span>
-                            <br/>$ cat /var/log/syslog|grep pound|curl --upload-file - https://transfer.sh/pound.log
+                            <br/>$ cat /var/log/syslog|grep pound|curl --upload-file - https://dfile.app/pound.log
                         </code>
                     </div>
                 </div>
@@ -340,7 +340,7 @@
                         <code>
                                 <span class="code-title"># Upload using Powershell
                                 <br/>
-                                PS H:\&gt; invoke-webrequest -method put -infile .\file.txt https://transfer.sh/file.txt
+                                PS H:\&gt; invoke-webrequest -method put -infile .\file.txt https://dfile.app/file.txt
                         </code>
                     </div>
                 </div>
@@ -352,7 +352,7 @@
                         <code>
                                 <span class="code-title"># HTTPie
                                 <br/>
-                                $ http https://transfer.sh/ -vv &lt; /tmp/test.log
+                                $ http https://dfile.app/ -vv &lt; /tmp/test.log
                         </code>
                     </div>
                 </div>
@@ -393,7 +393,7 @@
 <!--                    <a href="https://twitter.com/FloifyDave/status/517383101425516544">-->
 <!--                        <img class="twitter-profile" src="/static/img/reviews/dave.jpg" alt="">-->
 <!--                    </a>-->
-<!--                    <p><a href="https://twitter.com/coolcode">@coolcode</a> Thanks for transfer.sh. Just used it for a production purpose for a customer. So great, so easy, so https. :)</p>-->
+<!--                    <p><a href="https://twitter.com/coolcode">@coolcode</a> Thanks for dfile.app. Just used it for a production purpose for a customer. So great, so easy, so https. :)</p>-->
 <!--                    <a href="https://twitter.com/FloifyDave/status/517383101425516544">-->
 <!--                        &mdash; Dave Sims (@FloifyDave)</a>-->
 <!--                </blockquote>-->
@@ -405,7 +405,7 @@
 <!--                    <a href="https://twitter.com/kareemk/status/517029789191118849">-->
 <!--                        <img class="twitter-profile" src="/static/img/reviews/kareem.jpg" alt="">-->
 <!--                    </a>-->
-<!--                    <p><a href="https://twitter.com/coolcode">@coolcode</a> love transfer.sh! any change we can *pay* for a self-hosted version?</p><a-->
+<!--                    <p><a href="https://twitter.com/coolcode">@coolcode</a> love dfile.app! any change we can *pay* for a self-hosted version?</p><a-->
 <!--                        href="https://twitter.com/kareemk/status/517029789191118849">&mdash; Kareem Kouddous (@kareemk) </a>-->
 <!--                </blockquote>-->
 <!--            </div>-->
@@ -425,7 +425,7 @@
 <!--                    <a href="https://twitter.com/jacoblindgren11/status/516975006501203968">-->
 <!--                        <img class="twitter-profile" src="/static/img/reviews/jacob.jpg" alt="">-->
 <!--                    </a>-->
-<!--                    <p>Love transfer.sh! Will be using it from now on! Thanks for the amazing service we can use from the CLI <a href="https://twitter.com/coolcode">@coolcode</a>-->
+<!--                    <p>Love dfile.app! Will be using it from now on! Thanks for the amazing service we can use from the CLI <a href="https://twitter.com/coolcode">@coolcode</a>-->
 <!--                    </p><a href="https://twitter.com/jacoblindgren11/status/516975006501203968">&mdash; Jacob Lindgren (@jacoblindgren11) </a>-->
 <!--                </blockquote>-->
 <!--            </div>-->
@@ -434,7 +434,7 @@
 <!--                    <a href="https://twitter.com/arvestad/status/519507976491499521">-->
 <!--                        <img class="twitter-profile" src="/static/img/reviews/lars.jpg" alt="">-->
 <!--                    </a>-->
-<!--                    <p>transfer.sh is my latest fav service! Try simple command-line and web file sharing! <a href="https://t.co/FSrsb1JKJd">https://t.co/FSrsb1JKJd</a>&#10;Thanks <a-->
+<!--                    <p>dfile.app is my latest fav service! Try simple command-line and web file sharing! <a href="https://t.co/FSrsb1JKJd">https://t.co/FSrsb1JKJd</a>&#10;Thanks <a-->
 <!--                            href="https://twitter.com/coolcode">@coolcode</a> !</p> <a href="https://twitter.com/arvestad/status/519507976491499521">&mdash; Lars Arvestad (@arvestad)</a>-->
 <!--                </blockquote>-->
 <!--            </div>-->
@@ -443,29 +443,29 @@
 <!--</section>-->
 
 
-<section name="share">
+<section id="share">
     <div class="wrapper">
         <h2 class="page-title">Share the love</h2>
         <ul class="share-buttons">
             <li>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Ftransfer.sh&t=" target="_blank"
+                <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fdfile.app&t=" target="_blank"
                    onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.URL) + '&t=' + encodeURIComponent(document.URL)); return false;"> <i
                         class="icon-facebook"></i>
                 </a>
             </li>
             <li>
-                <a href="https://twitter.com/intent/tweet?source=http%3A%2F%2Ftransfer.sh&text=:%20http%3A%2F%2Ftransfer.sh" target="_blank" title="Tweet"
+                <a href="https://twitter.com/intent/tweet?source=http%3A%2F%2Fdfile.app&text=:%20http%3A%2F%2Fdfile.app" target="_blank" title="Tweet"
                    onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20'  + encodeURIComponent(document.URL)); return false;"> <i
                         class="icon-twitter"></i>
                 </a>
             </li>
             <li>
-                <a href="https://plus.google.com/share?url=http%3A%2F%2Ftransfer.sh" target="_blank" title="Share on Google+"
+                <a href="https://plus.google.com/share?url=http%3A%2F%2Fdfile.app" target="_blank" title="Share on Google+"
                    onclick="window.open('https://plus.google.com/share?url=' + encodeURIComponent(document.URL)); return false;"> <i class="icon-gplus"></i>
                 </a>
             </li>
             <li>
-                <a href="http://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Ftransfer.sh&title=&summary=&source=http%3A%2F%2Ftransfer.sh" target="_blank" title="Share on LinkedIn"
+                <a href="http://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fdfile.app&title=&summary=&source=http%3A%2F%2Fdfile.app" target="_blank" title="Share on LinkedIn"
                    onclick="window.open('http://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(document.URL) + '&title=' +  encodeURIComponent(document.title)); return false;"> <i
                         class="icon-linkedin"></i>
                 </a>
@@ -484,14 +484,14 @@
         <a href="#" data-uv-trigger class="btn-cta">contact us</a>
     </div>
 </section>
-<section id="tor">
-    <div class="wrapper">
-        <a href="https://www.torproject.org"><img src="/static/img/tor.svg" alt="">
-        </a>
-        <br/>
-        <a href="http://jxm5d6emw5rknovg.onion/">http://jxm5d6emw5rknovg.onion/</a>
-    </div>
-</section>
+<!--<section id="tor">-->
+<!--    <div class="wrapper">-->
+<!--        <a href="https://www.torproject.org"><img src="/static/img/tor.svg" alt="">-->
+<!--        </a>-->
+<!--        <br/>-->
+<!--        <a href="http://jxm5d6emw5rknovg.onion/">http://jxm5d6emw5rknovg.onion/</a>-->
+<!--    </div>-->
+<!--</section>-->
 
 
 <footer>
