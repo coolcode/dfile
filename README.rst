@@ -13,4 +13,4 @@ Before running the service for the first time, run
 
 Run
 ------------------------------------------
-``./dfile.py runserver --debug``
+``./dfile.py debug``
