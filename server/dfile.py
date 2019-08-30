@@ -2,9 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from flask import Flask, abort, escape, make_response, redirect, request, send_file, send_from_directory, url_for, Response, jsonify, render_template
-from flask_sqlalchemy import SQLAlchemy
 from flask_script import Manager
-from flask_migrate import Migrate, MigrateCommand
+from flask_cors import CORS
 from humanize import naturalsize
 import os, sys
 import requests
@@ -13,26 +12,12 @@ import ipfshttpclient
 from datetime import datetime
 
 app = Flask(__name__)
+CORS(app)
 app.config.from_pyfile('config.py')
 
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-
 manager = Manager(app)
-manager.add_command("db", MigrateCommand)
 
 su = UrlEncoder(alphabet='DEQhd2uFteibPwq0SWBInTpA_jcZL5GKz3YCR14Ulk87Jors9vNHgfaOmMXy6Vx-', block_size=16)
-
-
-class File(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    hash = db.Column(db.String(50), unique=True)
-    key = db.Column(db.String(50), unique=True, nullable=True),
-    time = db.Column(db.DateTime)
-
-    def __init__(self, hash):
-        self.hash = hash
-        self.time = datetime.now()
 
 
 def dfile_url(scheme=None):
@@ -84,7 +69,6 @@ def get(path):
 @app.route("/", methods=["GET", "POST", "PUT"])
 def dfile():
     if request.method == "POST" or request.method == "PUT":
-        sf = None
         print("files: {}".format(len(request.files)))
         if "file" in request.files:
             client = ipfshttpclient.connect(app.config['IPFS_CONNECT_URL'])
@@ -130,22 +114,22 @@ def debug():
     app.config["DFILE_USE_X_ACCEL_REDIRECT"] = False
     app.run(debug=True, port=4562, host="0.0.0.0")
 
-
-@manager.command
-def query(name):
-    id = su.debase(name)
-    f = File.query.get(id)
-
-    if f:
-        f.pprint()
-
-
-@manager.command
-def queryhash(h):
-    f = File.query.filter_by(hash=h).first()
-
-    if f:
-        f.pprint()
+#
+# @manager.command
+# def query(name):
+#     id = su.debase(name)
+#     f = File.query.get(id)
+#
+#     if f:
+#         f.pprint()
+#
+#
+# @manager.command
+# def queryhash(h):
+#     f = File.query.filter_by(hash=h).first()
+#
+#     if f:
+#         f.pprint()
 
 
 if __name__ == "__main__":

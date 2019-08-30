@@ -1,8 +1,9 @@
 SQLAlchemy
-Flask
-Flask_SQLAlchemy
+flask
+flask_sqlalchemy
 flask_migrate
 flask_script
+flask_cors
 humanize
 requests
 short_url

@@ -2,8 +2,7 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 SQLALCHEMY_DATABASE_URI = "sqlite:///db.sqlite"
 PREFERRED_URL_SCHEME = "https"  # nginx users: make sure to have 'uwsgi_param UWSGI_SCHEME $scheme;' in your config
-MAX_CONTENT_LENGTH = 10 * 1024 * 1024
-MAX_URL_LENGTH = 4096
+MAX_CONTENT_LENGTH = 1000 * 1024 * 1024
 FHOST_USE_X_ACCEL_REDIRECT = True  # expect nginx by default
 USE_X_SENDFILE = False
 
