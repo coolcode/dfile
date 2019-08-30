@@ -1,0 +1,66 @@
+{
+  "name": "meerkat-app",
+  "private": true,
+  "description": "Meerkat App",
+  "version": "0.1.0",
+  "author": "Bruce Lee <bruce.meerkat@gmail.com>",
+  "dependencies": {
+    "@zeit/next-css": "^1.0.1",
+    "axios": "^0.19.0",
+    "next": "^8.0.4",
+    "next-compose-plugins": "^2.1.1",
+    "next-i18next": "^0.37.0",
+    "next-routes": "^1.4.2",
+    "next-transpile-modules": "^2.2.0",
+    "nprogress": "^0.2.0",
+    "prop-types": "^15.7.2",
+    "qs": "^6.8.0",
+    "react": "^16.8.6",
+    "react-copy-to-clipboard": "^5.0.1",
+    "react-dom": "^16.8.6",
+    "react-ga": "^2.5.7",
+    "react-helmet": "^5.2.0",
+    "react-no-ssr": "^1.1.0",
+    "react-toastify": "^5.0.0",
+    "semantic-ui-react": "^0.86.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-prettier": "^2.7.0",
+    "gh-pages": "^2.0.0",
+    "husky": "^1.0.1",
+    "lint-staged": "^7.3.0",
+    "prettier": "^1.14.3",
+    "pretty-quick": "^1.7.0",
+    "webpack": "^4.29.6"
+  },
+  "keywords": [
+    "dfile",
+    "meerkat",
+    "bruce",
+    "next.js"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "format": "prettier --write src/**/*.{js,jsx}",
+    "test": "mocha",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "start-pro": "NODE_ENV=production node server.js -p $PORT",
+    "deploy": "gh-pages -d out",
+    "export": "NODE_ENV=production next build && next export",
+    "export-dev": "npm run build && next export",
+    "publish": "npm run export && surge out dfile.app",
+    "publish2": "npm run export && surge out dfile.surge.sh",
+    "sitmap": "node tools/sitemap.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coolcode/dfile"
+  },
+  "bugs": {
+    "url": "https://github.com/coolcode/dfile/issues"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "title": "Dfile",
+  "lang": "Lang",
+  "error-with-status": "A {{statusCode}} error occurred on server",
+  "error-without-status": "An error occurred on the server",
+
+  "ok": "OK",
+  "how-to-play":"How to Use",
+  "tips":"Tips",
+  "learn-more":"Learn more",
+  "copy": "Copy",
+  "copied": "Copied!",
+  "doc":"Docs",
+  "doc-title": "Dfile",
+  "follow-github": "Follow on GitHub",
+  "sub-title":"Easy file sharing from the command line"
+} 

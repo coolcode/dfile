@@ -1,0 +1,16 @@
+{
+  "title": "Dfile",
+  "lang": "语言",
+  "error-with-status": "错误代码： {{statusCode}} 错误！",
+  "error-without-status": "错误",
+
+  "ok": "确定",
+  "how-to-play":"快速上手",
+  "tips":"提示",
+  "learn-more":"更多",
+  "copy": "复制",
+  "copied": "已复制!",
+  "doc":"教程",
+  "doc-title": "Dfile",
+  "follow-github": "关注我的 GitHub"
+}
