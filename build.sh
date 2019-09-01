@@ -1,4 +1,7 @@
 #!/bin/bash
-cd ./app && yarn run export
+cd ./app 
+yarn
+yarn run export
+cp out ../nginx/static
 cd ..
 docker-compose up -d
