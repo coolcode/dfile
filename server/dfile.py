@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from flask import Flask, abort, escape, request, send_file, url_for, render_template
+from flask import Flask, abort, request, send_file, render_template
 from flask_script import Manager
 from flask_cors import CORS
-from humanize import naturalsize
 import os
 import requests
 import ipfshttpclient
@@ -26,23 +25,10 @@ def download(url):
         # TODO: log
         return "IPFS Server Error! \n"
 
-    if "content-length" in r.headers:
-        l = int(r.headers["content-length"])
-
-        if l < app.config["MAX_CONTENT_LENGTH"]:
-            # def urlfile(**kwargs):
-            #     return type('', (), kwargs)()
-
-            # f = urlfile(stream=r.raw, content_type=r.headers["content-type"], filename="")
-
-            return send_file(r.raw, r.headers["content-type"])
-        else:
-            hl = naturalsize(l, binary=True)
-            hml = naturalsize(app.config["MAX_CONTENT_LENGTH"], binary=True)
-
-            return "Remote file too large ({0} > {1}).\n".format(hl, hml), 413
+    if "content-type" in r.headers:
+        return send_file(r.raw, r.headers["content-type"])
     else:
-        return "Could not determine remote file size (no Content-Length in response header; shoot admin).\n", 411
+        return send_file(r.raw)
 
 
 @app.route("/down/<path:path>")
@@ -73,8 +59,7 @@ def up():
 
         abort(400)
     else:
-        maxsize = naturalsize(app.config["MAX_CONTENT_LENGTH"], binary=True)
-        return render_template("index.html", d={'maxsize': maxsize})
+        return render_template("index.html")
 
 
 def legal():
@@ -91,7 +76,6 @@ def legal():
 
 @manager.command
 def debug():
-    app.config["DFILE_USE_X_ACCEL_REDIRECT"] = False
     app.run(debug=True, port=4562, host="0.0.0.0")
 
 
