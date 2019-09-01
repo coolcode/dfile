@@ -10,4 +10,4 @@ COPY static ./static
 
 RUN apt-get update
 RUN apt-get install python-certbot-nginx -y
-RUN certbot --nginx -d dfile.app -d www.dfile.app
+# RUN certbot --nginx -d dfile.app -d www.dfile.app
