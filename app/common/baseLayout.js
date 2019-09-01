@@ -21,7 +21,7 @@ export default class BaseLayout extends React.Component {
             <>
                 <Head>
                     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-                    <meta property="og:title" content="Dfile"/>
+                    <meta property="og:title" content="DFile"/>
                     <meta property="og:type" content="website"/>
                     <meta property="og:url" content="https://dfile.app"/>
                     <meta property="og:image" content="/static/img/icon.svg"/>
@@ -30,7 +30,7 @@ export default class BaseLayout extends React.Component {
                         property="og:description"
                         content="Opensource. A peer-to-peer hypermedia protocol to make the web faster, safer, and more open Free IPFS file upload."
                     />
-                    <title>Dfile - Distributed file upload to IPFS for 100% free | Blockchain</title>
+                    <title>DFile - Distributed file upload to IPFS for 100% free | Blockchain</title>
                     <meta
                         name="keywords"
                         content="dfile, file, upload, ipfs, blockchain, free, opensource, ethereum "

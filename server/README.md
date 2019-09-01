@@ -5,8 +5,10 @@
 Before running the service for the first time, run
 
 ```bash
-./dfile.py db upgrade
+cp config.sample config.py
 ```
+
+Modify onfig.py
 
 ## Run
 

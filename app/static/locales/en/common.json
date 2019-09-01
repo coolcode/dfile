@@ -1,21 +1,28 @@
 {
-  "title": "Dfile",
+  "title": "DFile",
   "lang": "Lang",
   "error-with-status": "A {{statusCode}} error occurred on server",
   "error-without-status": "An error occurred on the server",
 
   "ok": "OK",
-  "how-to-play":"How to Use",
   "tips":"Tips",
   "learn-more":"Learn more",
-  "copy": "Copy",
-  "copied": "Copied!",
   "docs":"Docs",
-  "docs-title": "Dfile",
   "follow-github": "Follow on GitHub",
-  "sub-title":"Easy file sharing from the command line",
+  "sub-title":"DFile: A fancy IPFS-based file sharing mode",
   "go-to-top":"Go to top",
 
+  "comment-curl": "Upload using cURL",
+  "comment-using": "Upload using",
+  "comment-alias": "alias",
+  "comment-web": "Upload from web",
+  "comment-drag": "Drag your files to current black board, or ",
+  "comment-browse": " click to browse.",
+  "comment-download":"Download the file",
+  "comment-add-alias": "Add an alias to .bashrc or .zshrc",
+  "comment-use-alias": "Now you can use 'dfile' command",
+
+  "clear-file": "Clear all",
   "upload-file": "Upload File",
 
   "features": "Features",
@@ -31,7 +38,7 @@
   "eth": "ETH",
   "bitcoin": "BitCoin",
   "buy-me-a-coffee": "Buy me a coffee",
-  "richcat": "RichCat Blockchain Game",
+  "richcat": "Partner: RichCat Blockchain Game",
 
   "contact": "Contact",
   "label-email": "Your email",

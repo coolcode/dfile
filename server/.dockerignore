@@ -1,0 +1,7 @@
+__pycache__/
+.py[cod]
+.sqlite
+.DS_Store
+venv/
+.db
+.idea

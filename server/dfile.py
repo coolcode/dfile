@@ -67,6 +67,8 @@ def get(path):
 
 @app.route("/index", methods=["GET", "POST", "PUT"])
 @app.route("/", methods=["GET", "POST", "PUT"])
+@app.route("/down", methods=["GET"])
+@app.route("/up", methods=["POST", "PUT"])
 def dfile():
     if request.method == "POST" or request.method == "PUT":
         print("files: {}".format(len(request.files)))
@@ -113,23 +115,6 @@ def notfound():
 def debug():
     app.config["DFILE_USE_X_ACCEL_REDIRECT"] = False
     app.run(debug=True, port=4562, host="0.0.0.0")
-
-#
-# @manager.command
-# def query(name):
-#     id = su.debase(name)
-#     f = File.query.get(id)
-#
-#     if f:
-#         f.pprint()
-#
-#
-# @manager.command
-# def queryhash(h):
-#     f = File.query.filter_by(hash=h).first()
-#
-#     if f:
-#         f.pprint()
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-# Dfile frontend
+# DFile frontend
 
 Install yarn first: https://yarnpkg.com/lang/en/docs/install/
 

@@ -112,7 +112,7 @@ h1, h2, h3, h4, h5, label {
 
 /* terminal */
 .term, .term-mini {
-    height: 400px;
+    /*height: 400px;*/
     width: 800px;
     min-width: 300px;
     max-width: 1280px;
@@ -127,6 +127,15 @@ h1, h2, h3, h4, h5, label {
 .term-mini {
     width: 98% !important;
     margin: 5px;
+    height: 350px;
+    overflow-y: scroll;
+    overflow: -moz-scrollbars-none; /* firefox */
+    -ms-overflow-style: none; /* ie10+ */
+}
+
+/* chrome */
+.term-mini::-webkit-scrollbar {
+    width: 0 !important
 }
 
 @media only screen and (min-width: 992px) {
@@ -257,5 +266,15 @@ h1, h2, h3, h4, h5, label {
 .feature {
     width: 180px;
     text-align: center;
-    margin: 5px
+    margin: 5px;
+    display: inline-block;
+}
+
+img.clear {
+    width: 16px;
+    height: auto;
+}
+
+a.clear {
+    color: #E24C4B;
 }

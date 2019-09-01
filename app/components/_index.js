@@ -10,13 +10,14 @@ class _index extends Component {
         super(props);
         this.state = {
             loading: true,
-            files: [{name: 'foo.txt', url:'https://xxx'}]
+            files: []
         };
 
         this.onChange = this.onChange.bind(this);
         this.onUpload = this.onUpload.bind(this);
         this.onDrag = this.onDrag.bind(this);
         this.onDragOver = this.onDragOver.bind(this);
+        this.onClear = this.onClear.bind(this);
     }
 
     static async getInitialProps() {
@@ -25,13 +26,7 @@ class _index extends Component {
         }
     }
 
-
     onChange(e) {
-        // this.setState({
-        //     files: [],
-        //     loading: true,
-        // });
-
         if (e.target.files.length > 0) {
             console.log("file: ", e.target.files[0]);
             this.upload(e.target.files);
@@ -40,23 +35,23 @@ class _index extends Component {
 
     upload(files) {
         for (let i = 0; i < files.length; i++) {
-            this.upload_file(files[i])
+            this.upload_file(files[i]);
         }
     }
 
     upload_file(file) {
-        let file_url = "http://localhost:4562";
+        let upload_file_url = (process.env.NODE_ENV == 'production' ? "https://dfile.app" : "http://localhost:4562");
         const data = new FormData();
         data.append('file', file);
         const self = this;
-        axios.post(file_url, data, {
+        axios.post(upload_file_url, data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         }).then(res => {
             console.log('res: ', res);
             const upload_result = {name: file.name, url: res.data}
-            const list =  self.state.files.concat(upload_result);
+            const list = self.state.files.concat(upload_result);
             self.setState({files: list});
         })
     }
@@ -78,7 +73,7 @@ class _index extends Component {
                 // If dropped items aren't files, reject them
                 if (e.dataTransfer.items[i].kind === 'file') {
                     const file = e.dataTransfer.items[i].getAsFile();
-                    console.log('... file[' + i + '].name = ' + file.name);
+                    //console.log('... file[' + i + '].name = ' + file.name);
                     this.upload_file(file);
                 }
             }
@@ -86,7 +81,7 @@ class _index extends Component {
             // Use DataTransfer interface to access the file(s)
             for (let i = 0; i < e.dataTransfer.files.length; i++) {
                 const file = e.dataTransfer.files[i];
-                console.log('... file[' + i + '].name = ' + file.name);
+                //console.log('... file[' + i + '].name = ' + file.name);
                 this.upload_file(file);
             }
         }
@@ -95,6 +90,11 @@ class _index extends Component {
     onDragOver(e) {
         e.preventDefault();
         console.log('File(s) in drop zone');
+    }
+
+    onClear(e) {
+        e.preventDefault();
+        this.setState({files: []});
     }
 
     render() {
@@ -116,37 +116,39 @@ class _index extends Component {
                     <Grid centered>
 
                         <Grid.Column textAlign="center">
-                            <h1 className="title">{t("title")}</h1>
+                            <h1 className="title">{t("sub-title")}</h1>
                             <div className="term" onDrop={this.onDrag} onDragOver={this.onDragOver}>
                                 <div className="term-header">
                                     <button className="term-header-button term-header-button-close"></button>
                                     <button className="term-header-button term-header-button-minimize"></button>
                                     <button className="term-header-button term-header-button-expand"></button>
                                     <div className="term-header-title">
-                                        <span>&#11014; Dfile@bruce-macbook-pro: ~ (dfile)</span>
+                                        <span>&#11014; DFile@bruce-macbook-pro: ~ (dfile)</span>
                                     </div>
                                 </div>
                                 <div className="term-content">
                                     <div className="term-content-row">
-                                        <span className="term-content-comment"># Upload using cURL</span><br/>
+                                        <span className="term-content-comment"># {t('comment-curl')}</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                                         <span className="term-content-caret">curl -F file=@yourfile.txt https://dfile.app</span>
                                         <p className="term-content-output">https://dfile.app/QmV...HZ</p>
                                     </div>
                                     <div className="term-content-row">
-                                        <span className="term-content-comment"># Upload using <a href='https://github.com/coolcode/dfile/wiki/Alias-or-Commands'
-                                                                                                 target="_blank">'dfile'</a> alias,&nbsp;
-                                            <a href='https://github.com/coolcode/dfile/wiki/Alias-or-Commands' target="_blank">{t("learn-more")}</a>
+                                        <span className="term-content-comment"># {t('comment-using')} <a href='https://github.com/coolcode/dfile/issues/1'
+                                                                                                         target="_blank">'dfile'</a> {t('comment-alias')},&nbsp;
+                                            <a href='https://github.com/coolcode/dfile/issues/1' target="_blank">{t("learn-more")}</a>
                                         </span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                                         <span className="term-content-caret">dfile yourfile.txt</span>
                                         <p className="term-content-output">https://dfile.app/QmV...HZ</p>
-
                                     </div>
                                     <div className="term-content-row">
-                                        <span className="term-content-comment"># Upload from web</span><br/>
+                                        <span className="term-content-comment"># {t('comment-web')}</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
-                                        <span className="term-content-ouput">Drag your files here, or <a className="browse" onClick={this.onUpload}> click to browse.</a> </span>
+                                        <span className="term-content-ouput">{t('comment-drag')}<a href='' className="browse" onClick={this.onUpload}>{t('comment-browse')}</a>
+                                            {(this.state.files.length > 0) && (
+                                                <a className="clear" href='' onClick={this.onClear}>{t('clear-file')} <img src='/static/img/close.svg' className="clear"/></a>)}
+                                           </span>
                                         <input ref={input => this.file_input = input} type="file" name="file" multiple="multiple" style={{display: "none"}} onChange={this.onChange}/>
                                         <div className="term-content-output">
                                             {this.state.files.map(item => (
@@ -176,10 +178,10 @@ class _index extends Component {
                         <Grid.Row>
                             <Grid.Column textAlign="center">
                                 <Card.Group stackable centered>
-                                    {features.map(item => (
-                                        <div className="feature">
+                                    {features.map((item, i) => (
+                                        <div className="feature" key={i}>
                                             <Image src={item.img} size="small"/>
-                                            <h1 textAlign="center">{item.text}</h1>
+                                            <h1>{item.text}</h1>
                                         </div>
                                     ))}
                                 </Card.Group>
@@ -204,21 +206,23 @@ class _index extends Component {
                                     <button className="term-header-button term-header-button-minimize"></button>
                                     <button className="term-header-button term-header-button-expand"></button>
                                     <div className="term-header-title">
-                                        <span>&#11014; Dfile@bruce-macbook-pro: ~ (dfile)</span>
+                                        <span>&#11014; DFile@bruce-macbook-pro: ~ (dfile)</span>
                                     </div>
                                 </div>
                                 <div className="term-content">
                                     <div className="term-content-row">
-                                        <span className="term-content-comment"># Upload using cURL</span><br/>
+                                        <span className="term-content-comment"># {t('comment-curl')}</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                                         <span className="term-content-caret">curl -F file=@yourfile.txt https://dfile.app</span>
                                         <p className="term-content-output">https://dfile.app/QmV...HZ</p>
                                     </div>
                                     <div className="term-content-row">
-                                        <span className="term-content-comment"># Download the file</span><br/>
+                                        <span className="term-content-comment"># {t('comment-download')}</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                                         <span className="term-content-caret">curl https://dfile.app/QmV...HZ -o yourfile.txt</span>
                                         <p className="term-content-output"></p>
+                                    </div>
+                                    <div className="term-content-row">
                                     </div>
                                 </div>
                             </div>
@@ -231,16 +235,16 @@ class _index extends Component {
                                     <button className="term-header-button term-header-button-minimize"></button>
                                     <button className="term-header-button term-header-button-expand"></button>
                                     <div className="term-header-title">
-                                        <span>&#11014; Dfile@bruce-macbook-pro: ~ (dfile)</span>
+                                        <span>&#11014; DFile@bruce-macbook-pro: ~ (dfile)</span>
                                     </div>
                                 </div>
                                 <div className="term-content">
                                     <div className="term-content-row">
-                                         <span className="term-content-comment"># Upload using <a href='https://github.com/coolcode/dfile/wiki/Alias-or-Commands'
-                                                                                                  target="_blank">'dfile'</a> alias,&nbsp;
-                                             <a href='https://github.com/coolcode/dfile/wiki/Alias-or-Commands' target="_blank">{t("learn-more")}</a>
+                                        <span className="term-content-comment"># {t('comment-using')} <a href='https://github.com/coolcode/dfile/issues/1'
+                                                                                                         target="_blank">'dfile'</a> {t('comment-alias')},&nbsp;
+                                            <a href='https://github.com/coolcode/dfile/issues/1' target="_blank">{t("learn-more")}</a>
                                         </span><br/>
-                                        <span className="term-content-comment"># Add an alias to .bashrc or .zshrc </span><br/>
+                                        <span className="term-content-comment"># {t('comment-add-alias')} </span><br/>
 
                                         <span className="term-content-caret"><code>
                                             {`dfile() { if [ $# -eq 0 ]; then echo -e "No arguments specified. Usage:\necho dfile /tmp/test.md\ncat /tmp/test.md | dfile test.md"; return 1; fi <br/>tmpfile=$(
@@ -250,7 +254,7 @@ class _index extends Component {
                                         <p className="term-content-output"></p>
                                     </div>
                                     <div className="term-content-row">
-                                        <span className="term-content-comment"># Now you can use 'dfile' command</span><br/>
+                                        <span className="term-content-comment"># {t('comment-use-alias')}</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                                         <span className="term-content-caret">dfile yourfile.txt</span>
                                         <p className="term-content-output">https://dfile.app/QmV...HZ</p>
@@ -296,8 +300,8 @@ class _index extends Component {
                                     <Form method="POST" action="https://formspree.io/bruce.meerkat@gmail.com">
                                         <Form.Field inline>
                                             <label>{t("label-email")}:</label>
-                                            <div className="ui small input">
-                                                <input type="email" id="email1" name="_replyto" aria-describedby="emailHelp" placeholder={t("label-email")} required style={{width: "200px"}}/>
+                                            <div className="ui small input" style={{margin: "5px"}}>
+                                                <input type="email" name="_replyto" aria-describedby="emailHelp" placeholder={t("label-email")} required style={{width: "200px"}}/>
                                             </div>
                                             &nbsp;
                                             <Label pointing='left'>{t("tips-email")} </Label>
