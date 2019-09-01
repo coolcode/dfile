@@ -1,3 +1,3 @@
-# Dfile
+# DFile: A fancy IPFS-based file sharing mode
 
-This is a no-bullshit file hosting and URL shortening service that also runs on [https://dfile.app](https://dfile.app)
+This is a no-bullshit and IPFS-based file hosting that also runs on [https://dfile.app](https://dfile.app)
