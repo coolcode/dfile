@@ -147,7 +147,7 @@ class _index extends Component {
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                                         <span className="term-content-ouput">{t('comment-drag')}<a href='' className="browse" onClick={this.onUpload}>{t('comment-browse')}</a>
                                             {(this.state.files.length > 0) && (
-                                                <a className="clear" href='' onClick={this.onClear}>{t('clear-file')} <img src='/static/img/close.svg' className="clear"/></a>)}
+                                                <a className="clear" href='' onClick={this.onClear}>&nbsp;{t('clear-file')} <img src='/static/img/close.svg' className="clear"/></a>)}
                                            </span>
                                         <input ref={input => this.file_input = input} type="file" name="file" multiple="multiple" style={{display: "none"}} onChange={this.onChange}/>
                                         <div className="term-content-output">
