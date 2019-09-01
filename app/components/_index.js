@@ -10,11 +10,13 @@ class _index extends Component {
         super(props);
         this.state = {
             loading: true,
-            files: []
+            files: [{name: 'foo.txt', url:'https://xxx'}]
         };
 
         this.onChange = this.onChange.bind(this);
         this.onUpload = this.onUpload.bind(this);
+        this.onDrag = this.onDrag.bind(this);
+        this.onDragOver = this.onDragOver.bind(this);
     }
 
     static async getInitialProps() {
@@ -25,10 +27,10 @@ class _index extends Component {
 
 
     onChange(e) {
-        this.setState({
-            files: e.target.files,
-            loading: false,
-        });
+        // this.setState({
+        //     files: [],
+        //     loading: true,
+        // });
 
         if (e.target.files.length > 0) {
             console.log("file: ", e.target.files[0]);
@@ -37,23 +39,62 @@ class _index extends Component {
     }
 
     upload(files) {
-        let file_url = "http://localhost:4562";
         for (let i = 0; i < files.length; i++) {
-            const data = new FormData();
-            data.append('file', files[i]);
-            axios.post(file_url, data, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            }).then(res => {
-                console.log('res: ', res)
-            })
+            this.upload_file(files[i])
         }
+    }
+
+    upload_file(file) {
+        let file_url = "http://localhost:4562";
+        const data = new FormData();
+        data.append('file', file);
+        const self = this;
+        axios.post(file_url, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(res => {
+            console.log('res: ', res);
+            const upload_result = {name: file.name, url: res.data}
+            const list =  self.state.files.concat(upload_result);
+            self.setState({files: list});
+        })
     }
 
     onUpload(e) {
         e.preventDefault()
         this.file_input.click();
+    }
+
+    onDrag(e) {
+        e.preventDefault();
+        if (!e.dataTransfer) {
+            console.log('e: ', e);
+            return;
+        }
+        if (e.dataTransfer.items) {
+            // Use DataTransferItemList interface to access the file(s)
+            for (let i = 0; i < e.dataTransfer.items.length; i++) {
+                // If dropped items aren't files, reject them
+                if (e.dataTransfer.items[i].kind === 'file') {
+                    const file = e.dataTransfer.items[i].getAsFile();
+                    console.log('... file[' + i + '].name = ' + file.name);
+                    this.upload_file(file);
+                }
+            }
+        } else {
+            // Use DataTransfer interface to access the file(s)
+            for (let i = 0; i < e.dataTransfer.files.length; i++) {
+                const file = e.dataTransfer.files[i];
+                console.log('... file[' + i + '].name = ' + file.name);
+                this.upload_file(file);
+            }
+        }
+    }
+
+    onDragOver(e) {
+        e.preventDefault();
+        console.log('File(s) in drop zone');
     }
 
     render() {
@@ -76,7 +117,7 @@ class _index extends Component {
 
                         <Grid.Column textAlign="center">
                             <h1 className="title">{t("title")}</h1>
-                            <div className="term">
+                            <div className="term" onDrop={this.onDrag} onDragOver={this.onDragOver}>
                                 <div className="term-header">
                                     <button className="term-header-button term-header-button-close"></button>
                                     <button className="term-header-button term-header-button-minimize"></button>
@@ -93,7 +134,8 @@ class _index extends Component {
                                         <p className="term-content-output">https://dfile.app/QmV...HZ</p>
                                     </div>
                                     <div className="term-content-row">
-                                        <span className="term-content-comment"># Upload using <a href='https://github.com/coolcode/dfile/wiki/Alias-or-Commands' target="_blank">'dfile'</a> alias,
+                                        <span className="term-content-comment"># Upload using <a href='https://github.com/coolcode/dfile/wiki/Alias-or-Commands'
+                                                                                                 target="_blank">'dfile'</a> alias,&nbsp;
                                             <a href='https://github.com/coolcode/dfile/wiki/Alias-or-Commands' target="_blank">{t("learn-more")}</a>
                                         </span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
@@ -106,7 +148,11 @@ class _index extends Component {
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                                         <span className="term-content-ouput">Drag your files here, or <a className="browse" onClick={this.onUpload}> click to browse.</a> </span>
                                         <input ref={input => this.file_input = input} type="file" name="file" multiple="multiple" style={{display: "none"}} onChange={this.onChange}/>
-                                        <p className="term-content-output"></p>
+                                        <div className="term-content-output">
+                                            {this.state.files.map(item => (
+                                                <>{item.name}: <a href={item.url} target="_blank">{item.url}</a><br/></>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -169,13 +215,10 @@ class _index extends Component {
                                         <p className="term-content-output">https://dfile.app/QmV...HZ</p>
                                     </div>
                                     <div className="term-content-row">
-                                        <span className="term-content-comment"># Upload using <a href='https://github.com/coolcode/dfile/wiki/Alias-or-Commands' target="_blank">'dfile'</a> alias,
-                                            <a href='https://github.com/coolcode/dfile/wiki/Alias-or-Commands' target="_blank">{t("learn-more")}</a>
-                                        </span><br/>
+                                        <span className="term-content-comment"># Download the file</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
-                                        <span className="term-content-caret">dfile yourfile.txt</span>
-                                        <p className="term-content-output">https://dfile.app/QmV...HZ</p>
-
+                                        <span className="term-content-caret">curl https://dfile.app/QmV...HZ -o yourfile.txt</span>
+                                        <p className="term-content-output"></p>
                                     </div>
                                 </div>
                             </div>
@@ -193,15 +236,21 @@ class _index extends Component {
                                 </div>
                                 <div className="term-content">
                                     <div className="term-content-row">
-                                        <span className="term-content-comment"># Upload using cURL</span><br/>
-                                        <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
-                                        <span className="term-content-caret">curl -F file=@yourfile.txt https://dfile.app</span>
-                                        <p className="term-content-output">https://dfile.app/QmV...HZ</p>
+                                         <span className="term-content-comment"># Upload using <a href='https://github.com/coolcode/dfile/wiki/Alias-or-Commands'
+                                                                                                  target="_blank">'dfile'</a> alias,&nbsp;
+                                             <a href='https://github.com/coolcode/dfile/wiki/Alias-or-Commands' target="_blank">{t("learn-more")}</a>
+                                        </span><br/>
+                                        <span className="term-content-comment"># Add an alias to .bashrc or .zshrc </span><br/>
+
+                                        <span className="term-content-caret"><code>
+                                            {`dfile() { if [ $# -eq 0 ]; then echo -e "No arguments specified. Usage:\necho dfile /tmp/test.md\ncat /tmp/test.md | dfile test.md"; return 1; fi <br/>tmpfile=$(
+                                            mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar -F file=@"$1" "https://dfile.app" >>
+                                            $tmpfile; else curl --progress-bar -F file=@"-" "https://dfile.app/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; }`}
+                                        </code></span>
+                                        <p className="term-content-output"></p>
                                     </div>
                                     <div className="term-content-row">
-                                        <span className="term-content-comment"># Upload using <a href='https://github.com/coolcode/dfile/wiki/Alias-or-Commands' target="_blank">'dfile'</a> alias,
-                                            <a href='https://github.com/coolcode/dfile/wiki/Alias-or-Commands' target="_blank">{t("learn-more")}</a>
-                                        </span><br/>
+                                        <span className="term-content-comment"># Now you can use 'dfile' command</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                                         <span className="term-content-caret">dfile yourfile.txt</span>
                                         <p className="term-content-output">https://dfile.app/QmV...HZ</p>
