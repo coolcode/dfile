@@ -8,3 +8,4 @@ humanize
 requests
 short_url
 ipfshttpclient
+gunicorn==19.8.1

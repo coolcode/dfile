@@ -2,6 +2,6 @@
 cd ./app 
 yarn
 yarn run export
-cp out ../nginx/static
+cp -r out ../nginx/static
 cd ..
-docker-compose up -d
+docker-compose up --build -d
