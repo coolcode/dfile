@@ -1,29 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from flask import Flask, abort, escape, make_response, redirect, request, send_file, send_from_directory, url_for, Response, jsonify, render_template
+from flask import Flask, abort, escape, request, send_file, url_for, render_template
 from flask_script import Manager
 from flask_cors import CORS
 from humanize import naturalsize
-import os, sys
+import os
 import requests
-from short_url import UrlEncoder
 import ipfshttpclient
-from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)
 app.config.from_pyfile('config.py')
 
 manager = Manager(app)
-
-
-def dfile_url(scheme=None):
-    return app.config['DOMAIN']
-    if not scheme:
-        return url_for(".dfile", _external=True).rstrip("/")
-    else:
-        return url_for(".dfile", _external=True, _scheme=scheme).rstrip("/")
 
 
 def download(url):
@@ -33,14 +23,15 @@ def download(url):
     try:
         r.raise_for_status()
     except requests.exceptions.HTTPError as e:
-        return str(e) + "\n"
+        # TODO: log
+        return "IPFS Server Error! \n"
 
     if "content-length" in r.headers:
         l = int(r.headers["content-length"])
 
         if l < app.config["MAX_CONTENT_LENGTH"]:
-            def urlfile(**kwargs):
-                return type('', (), kwargs)()
+            # def urlfile(**kwargs):
+            #     return type('', (), kwargs)()
 
             # f = urlfile(stream=r.raw, content_type=r.headers["content-type"], filename="")
 
@@ -55,18 +46,21 @@ def download(url):
 
 
 @app.route("/down/<path:path>")
-def get(path):
-    p = os.path.splitext(path)
-    hash = str(p[0])
-    url = app.config['IPFS_FILE_URL'] + hash
+def down(path):
+    try:
+        p = os.path.splitext(path)
+        hash = str(p[0])
+        url = app.config['IPFS_FILE_URL'] + hash
 
-    return download(url)
+        return download(url)
+    except Exception as e:
+        # TODO:log
+        return "Download Error! \n"
 
 
-@app.route("/index", methods=["GET", "POST", "PUT"])
 @app.route("/", methods=["GET", "POST", "PUT"])
 @app.route("/up", methods=["POST", "PUT"])
-def dfile():
+def up():
     if request.method == "POST" or request.method == "PUT":
         print("files: {}".format(len(request.files)))
         if "file" in request.files:
@@ -74,39 +68,26 @@ def dfile():
             res = client.add(request.files["file"])
             print("res: {}".format(res))
             # url = app.config['IPFS_FILE_URL'] + str(res['Hash'])
-            url = dfile_url() + '/down/' + str(res['Hash'])
+            url = app.config['DOMAIN'] + '/down/' + str(res['Hash'])
             return url
 
         abort(400)
     else:
         maxsize = naturalsize(app.config["MAX_CONTENT_LENGTH"], binary=True)
-        return render_template("index.html", d={'url': dfile_url(), 'maxsize': maxsize})
-
-
-@app.route("/robots.txt")
-def robots():
-    return """User-agent: *
-Disallow: /
-"""
+        return render_template("index.html", d={'maxsize': maxsize})
 
 
 def legal():
     return "451 Unavailable For Legal Reasons\n", 451
 
 
-@app.errorhandler(400)
-@app.errorhandler(404)
-@app.errorhandler(414)
-@app.errorhandler(415)
-def segfault(e):
-    return "Segmentation fault\n", e.code
-
-
-@app.errorhandler(404)
-@app.route('/404')
-def notfound():
-    return render_template('404.html', d={'pid': os.getpid(), 'id': id(app), 'path': escape(request.path)})
-
+# @app.errorhandler(400)
+# @app.errorhandler(404)
+# @app.errorhandler(414)
+# @app.errorhandler(415)
+# def segfault(e):
+#     return "Segmentation fault\n", e.code
+#
 
 @manager.command
 def debug():
