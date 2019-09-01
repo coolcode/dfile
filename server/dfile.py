@@ -17,8 +17,6 @@ app.config.from_pyfile('config.py')
 
 manager = Manager(app)
 
-su = UrlEncoder(alphabet='DEQhd2uFteibPwq0SWBInTpA_jcZL5GKz3YCR14Ulk87Jors9vNHgfaOmMXy6Vx-', block_size=16)
-
 
 def dfile_url(scheme=None):
     return app.config['DOMAIN']
@@ -56,7 +54,7 @@ def download(url):
         return "Could not determine remote file size (no Content-Length in response header; shoot admin).\n", 411
 
 
-@app.route("/<path:path>")
+@app.route("/down/<path:path>")
 def get(path):
     p = os.path.splitext(path)
     hash = str(p[0])
@@ -67,7 +65,6 @@ def get(path):
 
 @app.route("/index", methods=["GET", "POST", "PUT"])
 @app.route("/", methods=["GET", "POST", "PUT"])
-@app.route("/down", methods=["GET"])
 @app.route("/up", methods=["POST", "PUT"])
 def dfile():
     if request.method == "POST" or request.method == "PUT":
@@ -77,7 +74,7 @@ def dfile():
             res = client.add(request.files["file"])
             print("res: {}".format(res))
             # url = app.config['IPFS_FILE_URL'] + str(res['Hash'])
-            url = dfile_url() + '/' + str(res['Hash'])
+            url = dfile_url() + '/down/' + str(res['Hash'])
             return url
 
         abort(400)
