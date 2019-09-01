@@ -47,6 +47,7 @@ export default class BaseLayout extends React.Component {
 					/> */}
                     <link rel="stylesheet" href="/static/theme.css"/>
                     <link rel="stylesheet" href="/static/style.css"/>
+                    <script async defer src="/static/scripts/buttons.js"></script>
                 </Head>
                 <ToastContainer
                     position="top-center"

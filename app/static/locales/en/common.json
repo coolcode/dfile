@@ -10,8 +10,32 @@
   "learn-more":"Learn more",
   "copy": "Copy",
   "copied": "Copied!",
-  "doc":"Docs",
-  "doc-title": "Dfile",
+  "docs":"Docs",
+  "docs-title": "Dfile",
   "follow-github": "Follow on GitHub",
-  "sub-title":"Easy file sharing from the command line"
+  "sub-title":"Easy file sharing from the command line",
+  "go-to-top":"Go to top",
+
+  "upload-file": "Upload File",
+
+  "features": "Features",
+  "feature-free": "FREE",
+  "feature-ipfs": "IPFS",
+  "feature-time": "Files stored forever",
+  "feature-storage": "Unlimited storage",
+  "feature-terminal": "Made for use with shell",
+  "feature-link": "Share files with a URL",
+  "feature-blockchain": "Blockchain Tech",
+
+  "donate": "Donate",
+  "eth": "ETH",
+  "bitcoin": "BitCoin",
+  "buy-me-a-coffee": "Buy me a coffee",
+  "richcat": "RichCat Blockchain Game",
+
+  "contact": "Contact",
+  "label-email": "Your email",
+  "tips-email": "We'll never store or share your email.",
+  "tips-message": "Your message",
+  "send": "Send"
 } 

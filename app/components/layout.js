@@ -17,7 +17,8 @@ export default class Layout extends React.Component {
 		];
 
         const rightItems = [
-            { as: "a", content: t("doc"), key: "doc", href: "/#doc" },
+            { as: "a", content: t("features"), key: "features", href: "/#features" },
+            { as: "a", content: t("docs"), key: "docs", href: "/#docs" },
             // {
             // 	as: "a",
             // 	content: "",
