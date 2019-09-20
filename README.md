@@ -2,6 +2,8 @@
 
 This is a no-bullshit and IPFS-based file hosting that also runs on [https://dfile.app](https://dfile.app)
 
+![img](https://github.com/coolcode/dfile/blob/master/share/img/dfile.png?raw=true)
+
 # DFile backend (server)
 
 ## Initialize DB
