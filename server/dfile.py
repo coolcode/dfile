@@ -31,10 +31,12 @@ def download(url):
         return send_file(r.raw)
 
 
+@app.route("/<path:path>")
 @app.route("/down/<path:path>")
 def down(path):
     try:
         p = os.path.splitext(path)
+        print(p)
         hash = str(p[0])
         url = app.config['IPFS_FILE_URL'] + hash
 

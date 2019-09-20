@@ -40,7 +40,8 @@ class _index extends Component {
     }
 
     upload_file(file) {
-        let upload_file_url = (process.env.NODE_ENV == 'production' ? "https://dfile.app/up" : "http://localhost:4562/up");
+        const upload_file_url = (process.env.NODE_ENV == 'production' ? "https://dfile.app" : "http://localhost:4562");
+        //const upload_file_url="https://dfile.app";
         const data = new FormData();
         data.append('file', file);
         const self = this;
