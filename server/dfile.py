@@ -31,6 +31,20 @@ def download(url):
         return send_file(r.raw)
 
 
+def upload(url, file):
+    h = {"Accept-Encoding": "identity"}
+    d = {"path": file}
+    r = requests.post(url, files=d, stream=True, verify=False, headers=h)
+
+    try:
+        r.raise_for_status()
+        return r.json()
+    except requests.exceptions.HTTPError as e:
+        print(e)
+        # TODO: log
+        return "IPFS Upload Error! \n"
+
+
 @app.route("/<path:path>")
 @app.route("/down/<path:path>")
 def down(path):
@@ -38,7 +52,10 @@ def down(path):
         p = os.path.splitext(path)
         print(p)
         hash = str(p[0])
-        url = app.config['IPFS_FILE_URL'] + hash
+        if 'IPFS_API_URL' in app.config:
+            url = app.config['IPFS_API_URL'] + '/cat/' + hash
+        else:
+            url = app.config['IPFS_FILE_URL'] + hash
 
         return download(url)
     except Exception as e:
@@ -52,10 +69,15 @@ def up():
     if request.method == "POST" or request.method == "PUT":
         print("files: {}".format(len(request.files)))
         if "file" in request.files:
-            client = ipfshttpclient.connect(app.config['IPFS_CONNECT_URL'])
-            res = client.add(request.files["file"])
+            if 'IPFS_API_URL' in app.config:
+                url = app.config['IPFS_API_URL'] + '/add'
+                res = upload(url, request.files["file"])
+            else:
+                client = ipfshttpclient.connect(app.config['IPFS_CONNECT_URL'])
+                res = client.add(request.files["file"])
+                print("res: {}".format(res))
+
             print("res: {}".format(res))
-            # url = app.config['IPFS_FILE_URL'] + str(res['Hash'])
             url = app.config['DOMAIN'] + '/down/' + str(res['Hash'])
             return url
 
