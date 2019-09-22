@@ -7,12 +7,30 @@ from flask_cors import CORS
 import os
 import requests
 import ipfshttpclient
+import logging
+from logdna import LogDNAHandler
 
 app = Flask(__name__)
 CORS(app)
 app.config.from_pyfile('config.py')
 
 manager = Manager(app)
+
+logdna_key = app.config['LOGDNA_KEY']
+log = logging.getLogger('logdna')
+log.setLevel(logging.INFO)
+
+options = {
+    'hostname': 'dapp',
+    'ip': '127.0.0.1',
+    'index_meta': True
+}
+
+console = logging.StreamHandler()
+root = logging.getLogger('')
+root.addHandler(console)
+if logdna_key != "":
+    root.addHandler(LogDNAHandler(logdna_key, options))
 
 
 def download(url):
@@ -22,8 +40,8 @@ def download(url):
     try:
         r.raise_for_status()
     except requests.exceptions.HTTPError as e:
-        # TODO: log
-        return "IPFS Server Error! \n"
+        log.exception("IPFS Server Error! url:{0}, exception:{1}".format(url, str(e)))
+        return "IPFS Server Error! \n", 503
 
     if "content-type" in r.headers:
         return send_file(r.raw, r.headers["content-type"])
@@ -40,8 +58,7 @@ def upload(url, file):
         r.raise_for_status()
         return r.json()
     except requests.exceptions.HTTPError as e:
-        print(e)
-        # TODO: log
+        log.exception("Upload Error! file name:{0}, exception:{1}".format(file.filename, str(e)))
         return "IPFS Upload Error! \n"
 
 
@@ -50,8 +67,13 @@ def upload(url, file):
 def down(path):
     try:
         p = os.path.splitext(path)
-        print(p)
         hash = str(p[0])
+
+        if not hash or not hash.startswith('Qm'):
+            return "<Invalid Path>", 404
+
+        log.info("hash:{0}".format(hash), {'app': 'dfile-down-req'})
+
         if 'IPFS_API_URL' in app.config:
             url = app.config['IPFS_API_URL'] + '/cat/' + hash
         else:
@@ -59,31 +81,34 @@ def down(path):
 
         return download(url)
     except Exception as e:
-        # TODO:log
-        return "Download Error! \n"
+        log.exception("Download Error! path:{0}, exception:{1}".format(path, str(e)))
+        return "Download Error! \n", 503
 
 
-@app.route("/", methods=["GET", "POST", "PUT"])
+@app.route("/", methods=["POST", "PUT"])
 @app.route("/up", methods=["POST", "PUT"])
 def up():
-    if request.method == "POST" or request.method == "PUT":
-        print("files: {}".format(len(request.files)))
+    try:
         if "file" in request.files:
+            file = request.files["file"]
+            log.info("file name: {}".format(file.filename), {'app': 'dfile-up-req'})
             if 'IPFS_API_URL' in app.config:
                 url = app.config['IPFS_API_URL'] + '/add'
-                res = upload(url, request.files["file"])
+                res = upload(url, file)
             else:
                 client = ipfshttpclient.connect(app.config['IPFS_CONNECT_URL'])
-                res = client.add(request.files["file"])
+                res = client.add(file)
                 print("res: {}".format(res))
 
-            print("res: {}".format(res))
+            log.info("upload res: {}".format(res), {'app': 'dfile-up-res'})
             url = app.config['DOMAIN'] + '/down/' + str(res['Hash'])
             return url
 
         abort(400)
-    else:
-        return render_template("index.html")
+
+    except Exception as e:
+        log.exception("Upload Error! exception:{}".format(str(e)))
+        return "Upload Error! \n", 503
 
 
 def legal():
@@ -101,7 +126,9 @@ def legal():
 @manager.command
 def debug():
     app.run(debug=True, port=5000, host="0.0.0.0")
+    log.info("DFile is debugging.")
 
 
 if __name__ == "__main__":
     manager.run()
+    log.info("DFile is running.")
