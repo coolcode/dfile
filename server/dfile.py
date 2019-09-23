@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from flask import Flask, abort, request, send_file, render_template
+from flask import Flask, abort, request, send_file
 from flask_script import Manager
 from flask_cors import CORS
 import os
@@ -101,7 +101,7 @@ def up():
                 print("res: {}".format(res))
 
             log.info("upload res: {}".format(res), {'app': 'dfile-up-res'})
-            url = app.config['DOMAIN'] + '/down/' + str(res['Hash'])
+            url = app.config['DOMAIN'] + '/' + str(res['Hash'])
             return url
 
         abort(400)
