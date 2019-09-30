@@ -7,3 +7,4 @@ flask_cors
 requests
 ipfshttpclient
 gunicorn==19.8.1
+logdna==1.4.2

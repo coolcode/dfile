@@ -278,3 +278,9 @@ img.clear {
 a.clear {
     color: #E24C4B;
 }
+
+img.small-icon {
+    width: 32px;
+    height: auto;
+    margin-right: 5px;
+}

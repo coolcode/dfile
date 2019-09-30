@@ -40,3 +40,13 @@ yarn dev
 # export to production
 yarn export
 ```
+
+## How to use
+
+```bash
+# Upload using cURL
+➜ curl -F file=@yourfile.txt https://dfile.app
+https://dfile.app/QmV...HZ
+# Download the file
+➜ curl https://dfile.app/QmV...HZ -o yourfile.txt
+```

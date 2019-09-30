@@ -18,7 +18,7 @@ export default ({t}) => (
                 <Grid.Column textAlign="center">© 2019 {t('title')} - {config.version()}</Grid.Column>
                 <Grid.Column textAlign="right" style={{paddingRight: "2em"}}>
                     <a href="javascript:window.scrollTo(0, 0);">↑{t("go-to-top")}</a>
-                    <a href="https://github/coolcode/dfile" target="_blank">
+                    <a href="https://github.com/coolcode/dfile" target="_blank">
                         <img src="/static/img/github.svg" className="ui mini spaced image" title="GitHub"/>
                     </a>
                 </Grid.Column>
