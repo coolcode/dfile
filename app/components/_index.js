@@ -350,6 +350,9 @@ class _index extends Component {
                                     <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=4CL7P88WYLH5J&item_name=To+make+the+service+and+the+world+better%21&currency_code=AUD&source=url"
                                        target="_blank"><img src="https://www.paypalobjects.com/webstatic/logo/logo_paypal_106x27.png"/>&nbsp;{t("buy-me-a-coffee")}</a>
                                 </p>
+                                <p>
+                                    <a href="https://www.patreon.com/xbruce" target="_blank"><img src="/static/img/patreon-square.png" className="small-icon"/>Become a Patron!</a>
+                                </p>
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
