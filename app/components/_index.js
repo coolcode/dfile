@@ -351,7 +351,7 @@ class _index extends Component {
                                        target="_blank"><img src="https://www.paypalobjects.com/webstatic/logo/logo_paypal_106x27.png"/>&nbsp;{t("buy-me-a-coffee")}</a>
                                 </p>
                                 <p>
-                                    <a href="https://www.patreon.com/xbruce" target="_blank"><img src="/static/img/patreon-square.png" className="small-icon"/>Become a Patron!</a>
+                                    <a href="https://www.patreon.com/xbruce" target="_blank"><img src="/static/img/patreon-square.png" className="small-icon" style={{width:"32px",marginRight:"5px"}}/>Become a Patron!</a>
                                 </p>
                             </Grid.Column>
                         </Grid.Row>

@@ -5,7 +5,8 @@ import React from "react";
 export default ({t}) => (
     <Segment inverted centered="true" vertical>
         <Divider horizontal inverted>
-            ~ {t('title')} ~
+             {t('host')}&nbsp;@&nbsp;
+            <a href="https://m.do.co/c/0f9c9b9aace1" target="_blank"><img className="digitalocean" src="/static/img/digitalocean.svg"/></a>
         </Divider>
         <Grid columns={3} divided centered>
             <Grid.Row centered className="center">
@@ -15,7 +16,7 @@ export default ({t}) => (
                         <a href="https://richcat.app" target="_blank">{t("richcat")}</a>
                     </div>
                 </Grid.Column>
-                <Grid.Column textAlign="center">© 2019 {t('title')} - {config.version()}</Grid.Column>
+                <Grid.Column textAlign="center">© 2019 {t('title')} - {config.version()} </Grid.Column>
                 <Grid.Column textAlign="right" style={{paddingRight: "2em"}}>
                     <a href="javascript:window.scrollTo(0, 0);">↑{t("go-to-top")}</a>
                     <a href="https://github.com/coolcode/dfile" target="_blank">
