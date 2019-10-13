@@ -10,6 +10,7 @@ from logdna import LogDNAHandler
 import boto3
 from botocore.exceptions import ClientError
 from ipfs import ipfs_hash
+import urllib
 
 app = Flask(__name__)
 CORS(app)
@@ -67,7 +68,7 @@ def upload_file(file, bucket='dfile', object_name=None):
         # ExtraArgs:['ACL', 'CacheControl', 'ContentDisposition', 'ContentEncoding', 'ContentLanguage', 'ContentType', 'Expires', 'GrantFullControl',
         # 'GrantRead', 'GrantReadACP', 'GrantWriteACP', 'Metadata', 'RequestPayer', 'ServerSideEncryption', 'StorageClass', 'SSECustomerAlgorithm',
         # 'SSECustomerKey', 'SSECustomerKeyMD5', 'SSEKMSKeyId', 'WebsiteRedirectLocation']
-        extra_args = {'ACL': 'public-read', 'ContentType': file.content_type, 'Metadata': {'name': file_name}}
+        extra_args = {'ACL': 'public-read', 'ContentType': file.content_type, 'Metadata': {'name': urllib.parse.quote(file_name, safe='') }}
         response = client.upload_fileobj(file, bucket, object_name, ExtraArgs=extra_args)
         # log.info('res: {}'.format(response))
         return {'hash': object_name}
