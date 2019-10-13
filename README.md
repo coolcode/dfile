@@ -30,7 +30,7 @@ Run it
 
 ## DFile frontend (app)
 
-Install yarn first: https://yarnpkg.com/lang/en/docs/install/
+Install yarn first: [https://yarnpkg.com/lang/en/docs/install/](https://yarnpkg.com/lang/en/docs/install/)
 
 ```bash
 # run
@@ -48,5 +48,5 @@ yarn export
 ➜ curl -F file=@yourfile.txt https://dfile.app
 https://dfile.app/QmV...HZ
 # Download the file
-➜ curl https://dfile.app/QmV...HZ -o yourfile.txt
+➜ curl -L https://dfile.app/QmV...HZ -o yourfile.txt
 ```
