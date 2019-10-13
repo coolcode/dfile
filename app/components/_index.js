@@ -220,7 +220,7 @@ class _index extends Component {
                                     <div className="term-content-row">
                                         <span className="term-content-comment"># {t('comment-download')}</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
-                                        <span className="term-content-caret">curl https://dfile.app/QmV...HZ -o yourfile.txt</span>
+                                        <span className="term-content-caret">curl -L https://dfile.app/QmV...HZ -o yourfile.txt</span>
                                         <p className="term-content-output"></p>
                                     </div>
                                     <div className="term-content-row">
