@@ -87,7 +87,7 @@ def up():
 
             log.info("upload res: {}".format(res), {'app': 'dfile-up-res'})
             if not res['hash']:
-                return res
+                return res['error']
 
             url = app.config['DOMAIN'] + '/' + str(res['hash'])
             return url
