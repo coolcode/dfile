@@ -6,9 +6,13 @@ from flask_script import Manager
 from flask_cors import CORS
 import os
 import requests
-import ipfshttpclient
 import logging
 from logdna import LogDNAHandler
+import boto3
+from botocore.client import Config
+from botocore.exceptions import ClientError
+from ipfs import encode
+from io import BytesIO
 
 app = Flask(__name__)
 CORS(app)
@@ -31,6 +35,51 @@ root = logging.getLogger('')
 root.addHandler(console)
 if logdna_key != "":
     root.addHandler(LogDNAHandler(logdna_key, options))
+
+
+def upload_file(file, bucket='dfile', object_name=None):
+    """Upload a file to an S3 bucket
+
+    :param file: File to upload
+    :param bucket: Bucket to upload to
+    :param object_name: S3 object name. If not specified then file_name is used
+    :return: True if file was uploaded, else False
+    """
+
+    # Upload the file
+    try:
+        # If S3 object_name was not specified, use file_name
+        file_name = file.filename
+        if object_name is None:
+            object_name = file_name
+        log.info('content_type: {}'.format(file.content_type))
+        bytes = file.read()
+        hash = encode(bytes)
+        name, ext = os.path.splitext(file_name)
+        log.info('hash: {}, ext: {}'.format(hash, ext))
+
+        if object_name is None:
+            # object_name = file_name
+            object_name = '{}{}'.format(hash, ext)
+
+        session = boto3.session.Session()
+        client = session.client('s3',
+                                region_name=app.config['S3_REGION'],
+                                endpoint_url=app.config['S3_ENDPOINT'],
+                                aws_access_key_id=app.config['S3_KEY'],
+                                aws_secret_access_key=app.config['S3_SECRET'])
+        file.seek(0,0)
+        x = file.read()
+        print("x: {}".format(len(x)))
+        response = client.upload_fileobj(BytesIO(bytes), bucket, object_name, ExtraArgs={'ACL': 'public-read', 'ContentType': file.content_type})
+        log.info('res: {}'.format(response))
+        return response
+    except ClientError as e:
+        log.exception("S3 Client Error! file name:{0}, exception:{1}".format(file.filename, str(e)))
+        return "S3 Client Error! \n"
+    except Exception as e:
+        log.exception("S3 Upload Error! file name:{0}, exception:{1}".format(file.filename, str(e)))
+        return "S3 Upload Error! \n"
 
 
 def download(url):
@@ -91,24 +140,20 @@ def up():
     try:
         if "file" in request.files:
             file = request.files["file"]
+
             log.info("file name: {}".format(file.filename), {'app': 'dfile-up-req'})
-            if 'IPFS_API_URL' in app.config:
-                url = app.config['IPFS_API_URL'] + '/add'
-                res = upload(url, file)
-            else:
-                client = ipfshttpclient.connect(app.config['IPFS_CONNECT_URL'])
-                res = client.add(file)
-                print("res: {}".format(res))
+
+            res = upload_file(file)
 
             log.info("upload res: {}".format(res), {'app': 'dfile-up-res'})
-            url = app.config['DOMAIN'] + '/' + str(res['Hash'])
+            url = app.config['DOMAIN']  # + '/' + str(res['Hash'])
             return url
 
         abort(400)
 
     except Exception as e:
         log.exception("Upload Error! exception:{}".format(str(e)))
-        return "Upload Error! \n", 503
+    return "Upload Error! \n", 503
 
 
 def legal():

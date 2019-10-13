@@ -8,3 +8,5 @@ requests
 ipfshttpclient
 gunicorn==19.8.1
 logdna==1.4.2
+boto3==1.9.248
+base58==1.0.3
