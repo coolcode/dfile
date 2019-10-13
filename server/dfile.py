@@ -63,7 +63,12 @@ def upload_file(file, bucket='dfile', object_name=None):
                                 aws_access_key_id=app.config['S3_KEY'],
                                 aws_secret_access_key=app.config['S3_SECRET'])
         file.seek(0, 0)
-        response = client.upload_fileobj(file, bucket, object_name, ExtraArgs={'ACL': 'public-read', 'ContentType': file.content_type})
+        # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/customizations/s3.html#boto3.s3.transfer.S3Transfer.ALLOWED_UPLOAD_ARGS
+        # ExtraArgs:['ACL', 'CacheControl', 'ContentDisposition', 'ContentEncoding', 'ContentLanguage', 'ContentType', 'Expires', 'GrantFullControl',
+        # 'GrantRead', 'GrantReadACP', 'GrantWriteACP', 'Metadata', 'RequestPayer', 'ServerSideEncryption', 'StorageClass', 'SSECustomerAlgorithm',
+        # 'SSECustomerKey', 'SSECustomerKeyMD5', 'SSEKMSKeyId', 'WebsiteRedirectLocation']
+        extra_args = {'ACL': 'public-read', 'ContentType': file.content_type, 'Metadata': {'name': file_name}}
+        response = client.upload_fileobj(file, bucket, object_name, ExtraArgs=extra_args)
         log.info('res: {}'.format(response))
         return {'hash': object_name}
     except ClientError as e:
