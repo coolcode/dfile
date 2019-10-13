@@ -69,7 +69,7 @@ def upload_file(file, bucket='dfile', object_name=None):
         # 'SSECustomerKey', 'SSECustomerKeyMD5', 'SSEKMSKeyId', 'WebsiteRedirectLocation']
         extra_args = {'ACL': 'public-read', 'ContentType': file.content_type, 'Metadata': {'name': file_name}}
         response = client.upload_fileobj(file, bucket, object_name, ExtraArgs=extra_args)
-        log.info('res: {}'.format(response))
+        # log.info('res: {}'.format(response))
         return {'hash': object_name}
     except ClientError as e:
         log.exception("S3 Client Error! file name:{0}, exception:{1}".format(file.filename, str(e)))
@@ -102,6 +102,25 @@ def up():
     except Exception as e:
         log.exception("Upload Error! exception:{}".format(str(e)))
         return "Upload Error! \n", 503
+
+
+@app.route("/<path:path>")
+@app.route("/down/<path:path>")
+def down(path):
+    try:
+        log.info("path:{0}".format(path), {'app': 'dfile-down-req'})
+        p = os.path.splitext(path)
+        hash = str(p[0])
+
+        if not hash:
+            return "<Invalid Path>", 404
+
+        log.info("hash:{0}".format(hash), {'app': 'dfile-down-req'})
+
+        return hash
+    except Exception as e:
+        log.exception("Download Error! path:{0}, exception:{1}".format(path, str(e)))
+        return "Download Error! \n", 503
 
 
 def legal():
