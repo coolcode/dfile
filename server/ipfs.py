@@ -1,5 +1,4 @@
 import hashlib
-#from collections import namedtuple
 
 from base58 import b58encode, b58decode
 
@@ -13,30 +12,7 @@ hash_functions = {
     SHA512: hashlib.sha512,
 }
 
-# DecodedMultihash = namedtuple('DecodedMultihash', ['code', 'digest'])
-#
-#
-# def decode(hashstr):
-#     hashbytes = b58decode(hashstr)
-#
-#     if len(hashbytes) < 3:
-#         raise Exception("Multihash must be at least 3 bytes")
-#     if len(hashbytes) > 129:
-#         raise Exception("Multihash too long. must be < 129 bytes")
-#
-#     hash_func_id, hash_length = list(bytearray(hashbytes[0:2]))
-#     hash_contents = hashbytes[2:]
-#
-#     if hash_length != len(hashbytes)-2:
-#         raise Exception("Multihash length inconsistent")
-#
-#     return DecodedMultihash(
-#         code=hash_func_id,
-#         digest=hash_contents,
-#     )
-#
-
-def encode(bytes, func_id=SHA256):
+def ipfs_hash(bytes, func_id=SHA256):
     try:
         hash_func = hash_functions[func_id]
     except KeyError:
@@ -53,5 +29,4 @@ def encode(bytes, func_id=SHA256):
     return str(b58encode(output), 'latin-1')
 
 if __name__ == "__main__":
-    print(encode(b"Hash me!") == b"QmepSLzJZG2LpJi9fak5Sgg4nQ2y7MaMGbD54DWyDrrxJt")
-    #print(decode(b"QmepSLzJZG2LpJi9fak5Sgg4nQ2y7MaMGbD54DWyDrrxJt").digest == hashlib.sha256(b"Hash me!").digest())
+    print(ipfs_hash(b"Hash me!") == b"QmepSLzJZG2LpJi9fak5Sgg4nQ2y7MaMGbD54DWyDrrxJt")
