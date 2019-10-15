@@ -6,11 +6,12 @@ from flask_script import Manager
 from flask_cors import CORS
 import os
 import logging
-from logdna import LogDNAHandler
 import boto3
 from botocore.exceptions import ClientError
 from ipfs import ipfs_hash
 import urllib
+import time
+from log import init_log
 
 app = Flask(__name__)
 CORS(app)
@@ -18,21 +19,9 @@ app.config.from_pyfile('config.py')
 
 manager = Manager(app)
 
-logdna_key = app.config['LOGDNA_KEY']
+init_log(app.config['LOGDNA_KEY'])
 log = logging.getLogger('logdna')
-log.setLevel(logging.INFO)
 
-options = {
-    'hostname': 'dapp',
-    'ip': '127.0.0.1',
-    'index_meta': True
-}
-
-console = logging.StreamHandler()
-root = logging.getLogger('')
-root.addHandler(console)
-if logdna_key != "":
-    root.addHandler(LogDNAHandler(logdna_key, options))
 
 global file_count
 file_count = int(app.config['INIT_FILE_COUNT'])
@@ -49,10 +38,12 @@ def upload_file(file, bucket='dfile', object_name=None):
 
     # Upload the file
     try:
+        start1 = time.time()
         file_name = file.filename
         log.info('content_type: {}'.format(file.content_type))
         bytes = file.read()
         hash = ipfs_hash(bytes)
+        log.info("ipfs hash: {0:.2f}s".format(time.time() - start1))
         name, ext = os.path.splitext(file_name)
         log.info('hash: {}, ext: {}'.format(hash, ext))
 
@@ -72,7 +63,10 @@ def upload_file(file, bucket='dfile', object_name=None):
         # 'GrantRead', 'GrantReadACP', 'GrantWriteACP', 'Metadata', 'RequestPayer', 'ServerSideEncryption', 'StorageClass', 'SSECustomerAlgorithm',
         # 'SSECustomerKey', 'SSECustomerKeyMD5', 'SSEKMSKeyId', 'WebsiteRedirectLocation']
         extra_args = {'ACL': 'public-read', 'ContentType': file.content_type, 'Metadata': {'name': urllib.parse.quote(file_name, safe='')}}
+        start2 = time.time()
         response = client.upload_fileobj(file, bucket, object_name, ExtraArgs=extra_args)
+        log.info("s3 upload: {0:.2f}s".format(time.time() - start2))
+        log.info("total: {0:.2f}s".format(time.time() - start1))
         # log.info('res: {}'.format(response))
         return {'hash': object_name}
     except ClientError as e:

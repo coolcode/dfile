@@ -6,3 +6,4 @@ venv/
 .db
 .idea
 /config.py
+logs/

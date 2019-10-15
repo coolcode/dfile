@@ -13,7 +13,7 @@ class _index extends Component {
         this.state = {
             loading: true,
             files: [],
-            file_count: 1000
+            file_count: 1212
         };
 
         this.onChange = this.onChange.bind(this);
@@ -37,7 +37,7 @@ class _index extends Component {
         try{
             axios.get(this.server_endpoint+"/stat")
             .then(res=>{
-                console.log(res.data);
+                //console.log(res.data);
                 this.setState({file_count: res.data.file_count});
             })
         }catch(e){
@@ -53,14 +53,21 @@ class _index extends Component {
     }
 
     upload(files) {
+        const list = [... this.state.files];
+        const count = this.state.files.length;
+        for (let i = 0; i < files.length; i++) {
+            const upload_item = {key:'key'+i, name: files[i].name, status:'uploading', url:''};
+            list.push(upload_item);
+        }
+        this.setState({files: list});
         for (let i = 0; i < files.length; i++) {
             this.upload_file(files[i]);
         }
+        
     }
 
     upload_file(file) {
         const upload_file_url = this.server_endpoint;
-        //const upload_file_url="https://dfile.app";
         const data = new FormData();
         data.append('file', file);
         const self = this;
@@ -69,10 +76,22 @@ class _index extends Component {
                 'Content-Type': 'multipart/form-data'
             }
         }).then(res => {
-            console.log('res: ', res);
-            const upload_result = {name: file.name, url: res.data}
-            const list = self.state.files.concat(upload_result);
-            self.setState({files: list});
+            console.log(file.name, ': ', res);
+
+            this.setState(state => {
+                const list = state.files.map(item => {
+                    if(item.name == file.name){
+                        item.url = res.data;
+                        item.status = 'done';
+                    }
+                    return item;
+                });
+                return {
+                    list,
+                };
+            });
+
+            self.reload();
         })
     }
 
@@ -87,24 +106,24 @@ class _index extends Component {
             console.log('e: ', e);
             return;
         }
+        const files = []
         if (e.dataTransfer.items) {
             // Use DataTransferItemList interface to access the file(s)
             for (let i = 0; i < e.dataTransfer.items.length; i++) {
                 // If dropped items aren't files, reject them
                 if (e.dataTransfer.items[i].kind === 'file') {
                     const file = e.dataTransfer.items[i].getAsFile();
-                    //console.log('... file[' + i + '].name = ' + file.name);
-                    this.upload_file(file);
+                    files.push(file);
                 }
             }
         } else {
             // Use DataTransfer interface to access the file(s)
             for (let i = 0; i < e.dataTransfer.files.length; i++) {
                 const file = e.dataTransfer.files[i];
-                //console.log('... file[' + i + '].name = ' + file.name);
-                this.upload_file(file);
+                files.push(file);
             }
         }
+        this.upload(files);
     }
 
     onDragOver(e) {
@@ -117,9 +136,11 @@ class _index extends Component {
         this.setState({files: []});
     }
 
-    render_file_link(item){
-        if(item.url.startsWith("http")){
+    render_file_link(t, item){
+        if(item.status == 'done' && item.url.startsWith("http")){
             return <>{item.name}: <a href={item.url} target="_blank">{item.url}</a><br/></>
+        }else if(item.status == 'uploading'){
+            return <>{item.name}: <span className="message">{t('uploading')}</span><br/></>
         }else{
             return <>{item.name}: <span className="red message">{item.url}</span><br/></>
         }
@@ -146,7 +167,7 @@ class _index extends Component {
                         <Grid.Column textAlign="center">
                             <h1 className="title">{t("sub-title")}</h1>
                             <div>
-                                <Statistic color="pink" size="medium">
+                                <Statistic color="pink" size="small">
                                     <Statistic.Value>
                                         <span>
                                             <span className="pink">
@@ -196,7 +217,7 @@ class _index extends Component {
                                            </span>
                                         <input ref={input => this.file_input = input} type="file" name="file" multiple="multiple" style={{display: "none"}} onChange={this.onChange}/>
                                         <div className="term-content-output">
-                                            {this.state.files.map(this.render_file_link)}
+                                            {this.state.files.map(item=>this.render_file_link(t, item))}
                                         </div>
                                     </div>
                                 </div>
