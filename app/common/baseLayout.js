@@ -28,13 +28,14 @@ export default class BaseLayout extends React.Component {
                     <meta property="og:site_name" content="dfile.app"/>
                     <meta
                         property="og:description"
-                        content="Opensource. A peer-to-peer hypermedia protocol to make the web faster, safer, and more open Free IPFS file upload."
+                        content="DFile is a free and anonymous file-sharing platform. You can store and share data of all types (files, images, music, videos etc...). There is no limit, you download at the maximum speed of your connection and everything is free."
                     />
                     <title>DFile - Distributed file upload to IPFS for 100% free | Blockchain</title>
                     <meta
                         name="keywords"
-                        content="dfile, file, upload, ipfs, blockchain, free, opensource, ethereum "
+                        content="dfile,file,download,upload,free,ipfs,blockchain,host,storage,share,big,file,video,image,audio,opensource,ethereum "
                     />
+                    <meta name="description" content="DFile is a free and anonymous file-sharing platform. You can store and share data of all types (files, images, music, videos etc...). There is no limit, you download at the maximum speed of your connection and everything is free." />
 
                     <link rel="icon" sizes="32x32" href="/static/img/favicon.ico"/>
                     <link rel="apple-touch-icon" href="/static/img/icon.svg"/>
