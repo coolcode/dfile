@@ -5,4 +5,4 @@ __pycache__/
 venv/
 .db
 .idea
-logs/
+.log
