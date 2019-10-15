@@ -112,8 +112,7 @@ def up():
 @app.route("/stat", methods=["GET"])
 def stat():
     try:
-        count = int(app.config['INIT_FILE_COUNT']) + file_count
-        return jsonify({'file_count': count})
+        return jsonify({'file_count': file_count})
 
     except Exception as e:
         log.exception("Upload Error! exception:{}".format(str(e)))
