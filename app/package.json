@@ -16,6 +16,7 @@
     "prop-types": "^15.7.2",
     "qs": "^6.8.0",
     "react": "^16.8.6",
+    "react-countup": "^4.0.0",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.6",
     "react-ga": "^2.5.7",

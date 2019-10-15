@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from flask import Flask, abort, request
+from flask import Flask, abort, request, jsonify
 from flask_script import Manager
 from flask_cors import CORS
 import os
@@ -33,6 +33,9 @@ root = logging.getLogger('')
 root.addHandler(console)
 if logdna_key != "":
     root.addHandler(LogDNAHandler(logdna_key, options))
+
+global file_count
+file_count = int(app.config['INIT_FILE_COUNT'])
 
 
 def upload_file(file, bucket='dfile', object_name=None):
@@ -68,7 +71,7 @@ def upload_file(file, bucket='dfile', object_name=None):
         # ExtraArgs:['ACL', 'CacheControl', 'ContentDisposition', 'ContentEncoding', 'ContentLanguage', 'ContentType', 'Expires', 'GrantFullControl',
         # 'GrantRead', 'GrantReadACP', 'GrantWriteACP', 'Metadata', 'RequestPayer', 'ServerSideEncryption', 'StorageClass', 'SSECustomerAlgorithm',
         # 'SSECustomerKey', 'SSECustomerKeyMD5', 'SSEKMSKeyId', 'WebsiteRedirectLocation']
-        extra_args = {'ACL': 'public-read', 'ContentType': file.content_type, 'Metadata': {'name': urllib.parse.quote(file_name, safe='') }}
+        extra_args = {'ACL': 'public-read', 'ContentType': file.content_type, 'Metadata': {'name': urllib.parse.quote(file_name, safe='')}}
         response = client.upload_fileobj(file, bucket, object_name, ExtraArgs=extra_args)
         # log.info('res: {}'.format(response))
         return {'hash': object_name}
@@ -95,6 +98,7 @@ def up():
             if not res['hash']:
                 return res['error']
 
+            file_count += 1
             url = app.config['DOMAIN'] + '/' + str(res['hash'])
             return url
 
@@ -105,23 +109,15 @@ def up():
         return "Upload Error! \n", 503
 
 
-@app.route("/<path:path>")
-@app.route("/down/<path:path>")
-def down(path):
+@app.route("/stat", methods=["GET"])
+def stat():
     try:
-        log.info("path:{0}".format(path), {'app': 'dfile-down-req'})
-        p = os.path.splitext(path)
-        hash = str(p[0])
+        count = int(app.config['INIT_FILE_COUNT']) + file_count
+        return jsonify({'file_count': count})
 
-        if not hash:
-            return "<Invalid Path>", 404
-
-        log.info("hash:{0}".format(hash), {'app': 'dfile-down-req'})
-
-        return hash
     except Exception as e:
-        log.exception("Download Error! path:{0}, exception:{1}".format(path, str(e)))
-        return "Download Error! \n", 503
+        log.exception("Upload Error! exception:{}".format(str(e)))
+        return "Upload Error! \n", 503
 
 
 def legal():

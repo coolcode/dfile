@@ -5,12 +5,13 @@
   "error-without-status": "An error occurred on the server",
 
   "ok": "OK",
-  "tips":"Tips",
-  "learn-more":"Learn more",
-  "docs":"Docs",
+  "tips": "Tips",
+  "learn-more": "Learn more",
+  "docs": "Docs",
+  "files": "Files",
   "follow-github": "Follow on GitHub",
-  "sub-title":"DFile: A fancy IPFS-based file sharing mode",
-  "go-to-top":"Go to top",
+  "sub-title": "DFile: A fancy IPFS-based file sharing mode",
+  "go-to-top": "Go to top",
 
   "comment-curl": "Upload using cURL",
   "comment-using": "Upload using",
@@ -18,7 +19,7 @@
   "comment-web": "Upload from web",
   "comment-drag": "Drag your files to current black board, or ",
   "comment-browse": " click to browse.",
-  "comment-download":"Download the file",
+  "comment-download": "Download the file",
   "comment-add-alias": "Add an alias to .bashrc or .zshrc",
   "comment-use-alias": "Now you can use 'dfile' command",
 
@@ -45,4 +46,4 @@
   "tips-email": "We'll never store or share your email.",
   "tips-message": "Your message",
   "send": "Send"
-} 
+}

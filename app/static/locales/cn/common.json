@@ -5,12 +5,13 @@
   "error-without-status": "错误",
 
   "ok": "确定",
-  "tips":"提示",
-  "learn-more":"查看更多...",
-  "docs":"教程",
+  "tips": "提示",
+  "learn-more": "查看更多...",
+  "docs": "怎么用",
+  "files": "文档",
   "follow-github": "关注我的 GitHub",
-  "sub-title":"DFile：一种极简的基于 IPFS 的文件上传模式",
-  "go-to-top":"回到顶部",
+  "sub-title": "DFile：一种极简的基于 IPFS 的文件上传模式",
+  "go-to-top": "回到顶部",
 
   "comment-curl": "使用 cURL 命令上传",
   "comment-using": "使用",
@@ -18,7 +19,7 @@
   "comment-web": "在线上传",
   "comment-drag": "拖拉文件到当前黑框框，或者",
   "comment-browse": "点击浏览文件上传。",
-  "comment-download":"下载文件",
+  "comment-download": "下载文件",
   "comment-add-alias": "添加命令到 .bashrc 或 .zshrc",
   "comment-use-alias": "现在你可以使用 'dfile' 命令上传 :)",
 

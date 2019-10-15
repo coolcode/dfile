@@ -6,3 +6,4 @@ S3_REGION = "sgp1"
 S3_ENDPOINT = "https://dfile.sgp1.digitaloceanspaces.com"
 S3_KEY = ""
 S3_SECRET = ""
+INIT_FILE_COUNT = 0

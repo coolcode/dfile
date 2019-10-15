@@ -1,16 +1,19 @@
 import React, {Component} from "react"
-import {Segment, Grid, Button, Card, Image, Form, Label, Icon} from 'semantic-ui-react';
+import {Segment, Grid, Button, Card, Image, Form, Label, Icon, Statistic} from 'semantic-ui-react';
 import {i18n, Link, withNamespaces} from '../i18n'
 import Layout from "./layout"
 import axios from 'axios';
-import {Menu} from "semantic-ui-react/dist/commonjs/collections/Menu/Menu";
+import CountUp from "react-countup";
 
-class _index extends Component {
+class _index extends Component {   
+
     constructor(props) {
         super(props);
+        this.server_endpoint = (process.env.NODE_ENV == 'production' ? "https://dfile.app" : "http://localhost:5000");
         this.state = {
             loading: true,
-            files: []
+            files: [],
+            file_count: 1000
         };
 
         this.onChange = this.onChange.bind(this);
@@ -23,6 +26,22 @@ class _index extends Component {
     static async getInitialProps() {
         return {
             namespacesRequired: ['common'],
+        }
+    }
+    
+	async componentDidMount() {
+		this.reload();
+	}
+
+    async reload() {
+        try{
+            axios.get(this.server_endpoint+"/stat")
+            .then(res=>{
+                console.log(res.data);
+                this.setState({file_count: res.data.file_count});
+            })
+        }catch(e){
+            console.error(e);
         }
     }
 
@@ -40,7 +59,7 @@ class _index extends Component {
     }
 
     upload_file(file) {
-        const upload_file_url = (process.env.NODE_ENV == 'production' ? "https://dfile.app" : "http://localhost:5000");
+        const upload_file_url = this.server_endpoint;
         //const upload_file_url="https://dfile.app";
         const data = new FormData();
         data.append('file', file);
@@ -90,12 +109,20 @@ class _index extends Component {
 
     onDragOver(e) {
         e.preventDefault();
-        console.log('File(s) in drop zone');
+        //console.log('File(s) in drop zone');
     }
 
     onClear(e) {
         e.preventDefault();
         this.setState({files: []});
+    }
+
+    render_file_link(item){
+        if(item.url.startsWith("http")){
+            return <>{item.name}: <a href={item.url} target="_blank">{item.url}</a><br/></>
+        }else{
+            return <>{item.name}: <span className="red message">{item.url}</span><br/></>
+        }
     }
 
     render() {
@@ -118,6 +145,23 @@ class _index extends Component {
 
                         <Grid.Column textAlign="center">
                             <h1 className="title">{t("sub-title")}</h1>
+                            <div>
+                                <Statistic color="pink" size="medium">
+                                    <Statistic.Value>
+                                        <span>
+                                            <span className="pink">
+                                                <i className=" file icon" />
+                                            </span>
+                                            &nbsp;
+                                            <CountUp start={0} end={this.state.file_count} duration={3} />
+                                            &nbsp;
+                                            <label className="label" style={{fontSize:"16px"}}>{t("files")}</label>
+                                        </span>
+                                    </Statistic.Value>
+                                    <Statistic.Label content="" />
+                                </Statistic>
+                            </div>
+                            <p></p>
                             <div className="term" onDrop={this.onDrag} onDragOver={this.onDragOver}>
                                 <div className="term-header">
                                     <button className="term-header-button term-header-button-close"></button>
@@ -152,9 +196,7 @@ class _index extends Component {
                                            </span>
                                         <input ref={input => this.file_input = input} type="file" name="file" multiple="multiple" style={{display: "none"}} onChange={this.onChange}/>
                                         <div className="term-content-output">
-                                            {this.state.files.map(item => (
-                                                <>{item.name}: <a href={item.url} target="_blank">{item.url}</a><br/></>
-                                            ))}
+                                            {this.state.files.map(this.render_file_link)}
                                         </div>
                                     </div>
                                 </div>
