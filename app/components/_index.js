@@ -13,7 +13,7 @@ class _index extends Component {
         this.state = {
             loading: true,
             files: [],
-            file_count: 1212
+            file_count: 1212 
         };
 
         this.onChange = this.onChange.bind(this);
@@ -50,11 +50,12 @@ class _index extends Component {
             console.log("file: ", e.target.files[0]);
             this.upload(e.target.files);
         }
+        e.target.value = null;
     }
 
     upload(files) {
         const list = [... this.state.files];
-        const count = this.state.files.length;
+        //const count = this.state.files.length;
         for (let i = 0; i < files.length; i++) {
             const upload_item = {key:'key'+i, name: files[i].name, status:'uploading', url:''};
             list.push(upload_item);
@@ -70,6 +71,7 @@ class _index extends Component {
         const upload_file_url = this.server_endpoint;
         const data = new FormData();
         data.append('file', file);
+        data.append('t', new Date().getTime());
         const self = this;
         axios.post(upload_file_url, data, {
             headers: {
