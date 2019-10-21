@@ -2,7 +2,6 @@ import React from "react";
 import Head from "next/head";
 import {initGA, logPageView} from "./analytics";
 import {ToastContainer, toast} from "react-toastify";
-//import SEO from "./seo";
 // webpack will take this css shit away!!!
 //import "react-toastify/dist/ReactToastify.css";
 import "./toasts.css";
