@@ -1,4 +1,5 @@
 flask==1.1.1
+flask_cors==3.0.8
 requests==2.23.0
 gunicorn==19.8.1
 logdna==1.4.2

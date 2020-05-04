@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from flask import Flask, abort, request, jsonify
-from flask_script import Manager
 from flask_cors import CORS
 import os
 import logging
@@ -18,7 +17,6 @@ app = Flask(__name__)
 CORS(app)
 app.config.from_pyfile(config_file)
 
-manager = Manager(app)
 
 init_log(app.config['LOGDNA_KEY'])
 log = logging.getLogger('logdna')
@@ -114,16 +112,10 @@ def stat():
         return "Upload Error! \n", 503
 
 
-def legal():
-    return "451 Unavailable For Legal Reasons\n", 451
-
-
-@manager.command
 def debug():
     app.run(debug=True, port=5000, host="0.0.0.0")
     log.info("DFile is debugging.")
 
 
 if __name__ == "__main__":
-    manager.run()
-    log.info("DFile is running.")
+    debug()
