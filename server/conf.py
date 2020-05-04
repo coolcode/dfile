@@ -10,9 +10,10 @@ config_file = ''
 
 if config_value:
     print(f'config: \n{config_value}')
-    config_file = "_config"
-    full_config_name = config_file + '.py'
-    with open(os.path.join(APP_DIR, full_config_name), "w") as file:
+    config_filename = "_config"
+    full_config_name = config_filename + '.py'
+    config_file = os.path.join(APP_DIR, full_config_name)
+    with open(config_file, "w") as file:
         file.write(config_value)
         file.close()
 else:
