@@ -6,3 +6,7 @@
 [[redirects]]
   from = "/Qm*"
   to = "https://dfile.s3-us-west-2.amazonaws.com/dfile/Qm:splat"
+
+[[redirects]]
+  from = "/d/*"
+  to = "https://dfile.s3-us-west-2.amazonaws.com/dfile/:splat"
