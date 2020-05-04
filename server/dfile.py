@@ -107,15 +107,12 @@ def up():
 @app.route("/down/<path:path>", methods=["GET"])
 def down(path):
     try:
-        p = os.path.splitext(path)
-        hash = str(p[0])
-
-        if not hash:
+        if not path:
             return "DFile API v1.20.0505. Github: https://github.com/coolcode/dfile", 200
 
-        log.info("hash:{0}".format(hash), {'app': 'dfile-down-req'})
+        log.info("path:{0}".format(path), {'app': 'dfile-down-req'})
 
-        url = f"{app.config['S3_ENDPOINT']}/{BUCKET_NAME}/{hash}"
+        url = f"{app.config['S3_ENDPOINT']}/{BUCKET_NAME}/{path}"
 
         return redirect(url, code=302)
     except Exception as e:
