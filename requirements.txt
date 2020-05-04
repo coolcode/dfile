@@ -1,11 +1,5 @@
-SQLAlchemy
-flask
-flask_sqlalchemy
-flask_migrate
-flask_script
-flask_cors
-requests
-ipfshttpclient
+flask==1.1.1
+requests==2.23.0
 gunicorn==19.8.1
 logdna==1.4.2
 boto3==1.9.248
