@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from flask import Flask, abort, request, jsonify
+from flask import Flask, abort, request, jsonify, redirect
 from flask_cors import CORS
 import os
 import logging
@@ -100,6 +100,26 @@ def up():
     except Exception as e:
         log.exception("Upload Error! exception:{}".format(str(e)))
         return "Upload Error! \n", 503
+
+
+@app.route("/<path:path>", methods=["GET"])
+@app.route("/down/<path:path>", methods=["GET"])
+def down(path):
+    try:
+        p = os.path.splitext(path)
+        hash = str(p[0])
+
+        if not hash:
+            return "DFile API v1.20.0505. Github: https://github.com/coolcode/dfile", 200
+
+        log.info("hash:{0}".format(hash), {'app': 'dfile-down-req'})
+
+        url = app.config['S3_ENDPOINT'] + '/' + hash
+
+        return redirect(url, code=302)
+    except Exception as e:
+        log.exception("Download Error! path:{0}, exception:{1}".format(path, str(e)))
+        return "Download Error! \n", 503
 
 
 @app.route("/stat", methods=["GET"])
