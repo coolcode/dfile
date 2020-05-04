@@ -49,7 +49,6 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "start-pro": "NODE_ENV=production node server.js -p $PORT",
     "deploy": "gh-pages -d out",
     "export": "NODE_ENV=production next build && next export",
     "export-dev": "npm run build && next export",
