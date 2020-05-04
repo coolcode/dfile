@@ -4,3 +4,4 @@
 *.yml
 *.sh
 *.md
+*.toml

@@ -40,7 +40,7 @@ def upload_file(file, bucket=BUCKET_NAME, object_name=None):
     try:
         start1 = time.time()
         file_name = file.filename
-        log.info('content_type: {}'.format(file.content_type))
+        log.info(f'content_type: {file.content_type}')
         bytes = file.read()
         hash = ipfs_hash(bytes)
         log.info("ipfs hash: {0:.2f}s".format(time.time() - start1))
@@ -49,7 +49,7 @@ def upload_file(file, bucket=BUCKET_NAME, object_name=None):
 
         # If S3 object_name was not specified, use ipfs hash
         if object_name is None:
-            object_name = '{}{}'.format(hash, ext)
+            object_name = f'{hash}{ext}'
 
         session = boto3.session.Session()
         client = session.client('s3',
@@ -84,11 +84,11 @@ def up():
         if "file" in request.files:
             file = request.files["file"]
 
-            log.info("file name: {}".format(file.filename), {'app': 'dfile-up-req'})
+            log.info(f"file name: {file.filename}", {'app': 'dfile-up-req'})
 
             res = upload_file(file)
 
-            log.info("upload res: {}".format(res), {'app': 'dfile-up-res'})
+            log.info(f"upload res: {res}", {'app': 'dfile-up-res'})
             if not res['hash']:
                 return res['error']
             global file_count
@@ -110,7 +110,7 @@ def down(path):
         if not path:
             return "DFile API v1.20.0505. Github: https://github.com/coolcode/dfile", 200
 
-        log.info("path:{0}".format(path), {'app': 'dfile-down-req'})
+        log.info(f"path:{path}", {'app': 'dfile-down-req'})
 
         url = f"{app.config['S3_ENDPOINT']}/{BUCKET_NAME}/{path}"
 

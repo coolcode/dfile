@@ -1,0 +1,4 @@
+[build]
+  base = "app"
+  command = "npm run netlify"
+  publish = "out"
