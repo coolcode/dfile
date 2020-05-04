@@ -8,14 +8,15 @@ import os
 import logging
 import boto3
 from botocore.exceptions import ClientError
-from ipfs import ipfs_hash
 import urllib
 import time
-from log import init_log
+from .ipfs import ipfs_hash
+from .log import init_log
+from .conf import config_file
 
 app = Flask(__name__)
 CORS(app)
-app.config.from_pyfile('config.py')
+app.config.from_pyfile(config_file)
 
 manager = Manager(app)
 

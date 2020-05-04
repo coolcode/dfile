@@ -1,0 +1,1 @@
+web: gunicorn --chdir ./ -t 300 --graceful-timeout 60 app:app --log-file -
