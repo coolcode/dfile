@@ -8,5 +8,12 @@
   to = "https://dfile.s3-us-west-2.amazonaws.com/dfile/Qm:splat"
 
 [[redirects]]
-  from = "/d/*"
-  to = "https://dfile.s3-us-west-2.amazonaws.com/dfile/:splat"
+  from = "/google"
+  to = "https://google.com"
+  force = true
+
+[[redirects]]
+  from = "/d/:hash"
+  to = "https://dfile.s3-us-west-2.amazonaws.com/dfile/:hash"
+  status = 200
+  force = true
