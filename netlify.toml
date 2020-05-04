@@ -2,3 +2,7 @@
   base = "app"
   command = "npm run export"
   publish = "out"
+
+[[redirects]]
+  from = "/Qm*"
+  to = "https://dfile.s3-us-west-2.amazonaws.com/dfile/Qm:splat"

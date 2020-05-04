@@ -199,8 +199,8 @@ class _index extends Component {
                                     <div className="term-content-row">
                                         <span className="term-content-comment"># {t('comment-curl')}</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
-                                        <span className="term-content-caret">curl -F file=@yourfile.txt https://dfile.app</span>
-                                        <p className="term-content-output">https://dfile.app/QmV...HZ</p>
+                                        <span className="term-content-caret">curl -F file=@yourfile.txt https://dfile.herokuapp.com</span>
+                                        <p className="term-content-output">https://dfile.herokuapp.com/QmV...HZ</p>
                                     </div>
                                     <div className="term-content-row">
                                         <span className="term-content-comment"># {t('comment-using')} <a href='https://github.com/coolcode/dfile/issues/1'
@@ -209,7 +209,7 @@ class _index extends Component {
                                         </span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                                         <span className="term-content-caret">dfile yourfile.txt</span>
-                                        <p className="term-content-output">https://dfile.app/QmV...HZ</p>
+                                        <p className="term-content-output">https://dfile.herokuapp.com/QmV...HZ</p>
                                     </div>
                                     <div className="term-content-row">
                                         <span className="term-content-comment"># {t('comment-web')}</span><br/>
