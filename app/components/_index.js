@@ -10,7 +10,7 @@ class _index extends Component {
     constructor(props) {
         super(props);
         this.server_endpoint = (process.env.NODE_ENV == 'production' ? "https://dfile.herokuapp.com" : "http://localhost:5000");
-        this.server_endpoint = "https://dfile.herokuapp.com"
+
         this.state = {
             loading: true,
             files: [],
