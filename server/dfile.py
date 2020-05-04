@@ -25,8 +25,9 @@ log = logging.getLogger('logdna')
 global file_count
 file_count = int(app.config['INIT_FILE_COUNT'])
 
+BUCKET_NAME = 'dfile'
 
-def upload_file(file, bucket='dfile', object_name=None):
+def upload_file(file, bucket=BUCKET_NAME, object_name=None):
     """Upload a file to an S3 bucket
 
     :param file: File to upload
@@ -92,7 +93,7 @@ def up():
                 return res['error']
             global file_count
             file_count += 1
-            url = app.config['DOMAIN'] + '/' + str(res['hash'])
+            url = f"{app.config['DOMAIN']}/{res['hash']}" 
             return url
 
         abort(400)
@@ -114,7 +115,7 @@ def down(path):
 
         log.info("hash:{0}".format(hash), {'app': 'dfile-down-req'})
 
-        url = app.config['S3_ENDPOINT'] + '/' + hash
+        url = f"{app.config['S3_ENDPOINT']}/{BUCKET_NAME}/{hash}"
 
         return redirect(url, code=302)
     except Exception as e:
