@@ -35,5 +35,5 @@ def init_log(logdna_key=""):
         'index_meta': True
     }
 
-    if logdna_key != "":
+    if logdna_key:
         logging.getLogger('').addHandler(LogDNAHandler(logdna_key, options))

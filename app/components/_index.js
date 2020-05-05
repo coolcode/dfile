@@ -5,11 +5,12 @@ import Layout from "./layout"
 import axios from 'axios';
 import CountUp from "react-countup";
 
+const API_ENDPOINT = (process.env.NODE_ENV == 'production' ? "https://dfile.herokuapp.com" : "http://localhost:5000");
+
 class _index extends Component {   
 
     constructor(props) {
         super(props);
-        this.server_endpoint = (process.env.NODE_ENV == 'production' ? "https://dfile.herokuapp.com" : "http://localhost:5000");
 
         this.state = {
             loading: true,
@@ -36,7 +37,7 @@ class _index extends Component {
 
     async reload() {
         try{
-            axios.get(this.server_endpoint+"/stat")
+            axios.get(`${API_ENDPOINT}/stat`)
             .then(res=>{
                 //console.log(res.data);
                 this.setState({file_count: res.data.file_count});
@@ -69,7 +70,7 @@ class _index extends Component {
     }
 
     upload_file(file) {
-        const upload_file_url = this.server_endpoint;
+        const upload_file_url = API_ENDPOINT;
         const data = new FormData();
         data.append('file', file);
         data.append('t', new Date().getTime());
@@ -199,8 +200,8 @@ class _index extends Component {
                                     <div className="term-content-row">
                                         <span className="term-content-comment"># {t('comment-curl')}</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
-                                        <span className="term-content-caret">curl -F file=@yourfile.txt https://dfile.herokuapp.com</span>
-                                        <p className="term-content-output">https://dfile.herokuapp.com/QmV...HZ</p>
+                                        <span className="term-content-caret">curl -F file=@yourfile.txt {API_ENDPOINT}</span>
+                                        <p className="term-content-output">{API_ENDPOINT}/QmV...HZ</p>
                                     </div>
                                     <div className="term-content-row">
                                         <span className="term-content-comment"># {t('comment-using')} <a href='https://github.com/coolcode/dfile/issues/1'
@@ -209,7 +210,7 @@ class _index extends Component {
                                         </span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                                         <span className="term-content-caret">dfile yourfile.txt</span>
-                                        <p className="term-content-output">https://dfile.herokuapp.com/QmV...HZ</p>
+                                        <p className="term-content-output">{API_ENDPOINT}/QmV...HZ</p>
                                     </div>
                                     <div className="term-content-row">
                                         <span className="term-content-comment"># {t('comment-web')}</span><br/>
@@ -280,13 +281,13 @@ class _index extends Component {
                                     <div className="term-content-row">
                                         <span className="term-content-comment"># {t('comment-curl')}</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
-                                        <span className="term-content-caret">curl -F file=@yourfile.txt https://dfile.app</span>
-                                        <p className="term-content-output">https://dfile.app/QmV...HZ</p>
+                                        <span className="term-content-caret">curl -F file=@yourfile.txt {API_ENDPOINT}</span>
+                                        <p className="term-content-output">{API_ENDPOINT}/QmV...HZ</p>
                                     </div>
                                     <div className="term-content-row">
                                         <span className="term-content-comment"># {t('comment-download')}</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
-                                        <span className="term-content-caret">curl -L https://dfile.app/QmV...HZ -o yourfile.txt</span>
+                                        <span className="term-content-caret">curl -L {API_ENDPOINT}/QmV...HZ -o yourfile.txt</span>
                                         <p className="term-content-output"></p>
                                     </div>
                                     <div className="term-content-row">
@@ -315,8 +316,8 @@ class _index extends Component {
 
                                         <span className="term-content-caret"><code>
                                             {`dfile() { if [ $# -eq 0 ]; then echo -e "No arguments specified. Usage:\necho dfile /tmp/test.md\ncat /tmp/test.md | dfile test.md"; return 1; fi <br/>tmpfile=$(
-                                            mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar -F file=@"$1" "https://dfile.app" >>
-                                            $tmpfile; else curl --progress-bar -F file=@"-" "https://dfile.app/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; }`}
+                                            mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar -F file=@"$1" "${API_ENDPOINT}" >>
+                                            $tmpfile; else curl --progress-bar -F file=@"-" "${API_ENDPOINT}/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; }`}
                                         </code></span>
                                         <p className="term-content-output"></p>
                                     </div>
@@ -324,7 +325,7 @@ class _index extends Component {
                                         <span className="term-content-comment"># {t('comment-use-alias')}</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                                         <span className="term-content-caret">dfile yourfile.txt</span>
-                                        <p className="term-content-output">https://dfile.app/QmV...HZ</p>
+                                        <p className="term-content-output">{API_ENDPOINT}/QmV...HZ</p>
 
                                     </div>
                                 </div>
@@ -371,7 +372,7 @@ class _index extends Component {
                                                 <input type="email" name="_replyto" aria-describedby="emailHelp" placeholder={t("label-email")} required style={{width: "200px"}}/>
                                             </div>
                                             &nbsp;
-                                            <Label pointing='left'>{t("tips-email")} </Label>
+                                            {/* <Label pointing='left'>{t("tips-email")} </Label> */}
 
                                         </Form.Field>
                                         <Form.Field inline>

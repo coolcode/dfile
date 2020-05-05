@@ -10,10 +10,13 @@
 [[redirects]]
   from = "/google"
   to = "https://google.com"
+  status = 301
   force = true
 
 [[redirects]]
-  from = "/d/:hash"
-  to = "https://dfile.s3-us-west-2.amazonaws.com/dfile/:hash"
+  from = "/d/*"
+  to = "https://dfile.s3-us-west-2.amazonaws.com/dfile/:splat"
   status = 200
   force = true
+  [redirects.headers]
+    X-From = "Netlify"

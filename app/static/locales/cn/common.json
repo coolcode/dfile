@@ -3,7 +3,6 @@
   "lang": "语言",
   "error-with-status": "错误代码： {{statusCode}} 错误！",
   "error-without-status": "错误",
-
   "ok": "确定",
   "tips": "提示",
   "learn-more": "查看更多...",
@@ -12,7 +11,6 @@
   "follow-github": "关注我的 GitHub",
   "sub-title": "DFile：一种极简的基于 IPFS 的文件上传模式",
   "go-to-top": "回到顶部",
-
   "comment-curl": "使用 cURL 命令上传",
   "comment-using": "使用",
   "comment-alias": "别名",
@@ -22,11 +20,9 @@
   "comment-download": "下载文件",
   "comment-add-alias": "添加命令到 .bashrc 或 .zshrc",
   "comment-use-alias": "现在你可以使用 'dfile' 命令上传 :)",
-
   "clear-file": "清除上传记录",
   "upload-file": "上传文件",
   "uploading": "上传中...",
-
   "features": "特色",
   "feature-free": "完全免费",
   "feature-ipfs": "IPFS 技术",
@@ -35,16 +31,14 @@
   "feature-terminal": "终端上传",
   "feature-link": "分享链接",
   "feature-blockchain": "区块链技术",
-
   "contact": "吐槽一下",
   "label-email": "您的邮箱",
   "tips-email": "请放心您的邮箱地址不会被保存",
   "tips-message": "您的建议",
   "send": "发送",
-
   "donate": "支持开源项目",
   "eth": "以太坊",
   "bitcoin": "比特币",
   "buy-me-a-coffee": "打赏一杯咖啡钱",
-  "richcat": "合作商：RichCat 区块链游戏"
+  "neehow": "合作商：nee.how 在线中文学习"
 }

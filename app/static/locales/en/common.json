@@ -3,7 +3,6 @@
   "lang": "Lang",
   "error-with-status": "A {{statusCode}} error occurred on server",
   "error-without-status": "An error occurred on the server",
-
   "ok": "OK",
   "tips": "Tips",
   "learn-more": "Learn more",
@@ -12,7 +11,6 @@
   "follow-github": "Follow on GitHub",
   "sub-title": "DFile: A fancy IPFS-based file sharing mode",
   "go-to-top": "Go to top",
-
   "comment-curl": "Upload using cURL",
   "comment-using": "Upload using",
   "comment-alias": "alias",
@@ -22,11 +20,9 @@
   "comment-download": "Download the file",
   "comment-add-alias": "Add an alias to .bashrc or .zshrc",
   "comment-use-alias": "Now you can use 'dfile' command",
-
   "clear-file": "Clear all",
   "upload-file": "Upload File",
   "uploading": "Uploading...",
-
   "features": "Features",
   "feature-free": "FREE",
   "feature-ipfs": "IPFS",
@@ -35,16 +31,14 @@
   "feature-terminal": "Made for use with shell",
   "feature-link": "Share files with a URL",
   "feature-blockchain": "Blockchain Tech",
-
-  "donate": "Donate",
-  "eth": "ETH",
-  "bitcoin": "BitCoin",
-  "buy-me-a-coffee": "Buy me a coffee",
-  "richcat": "Partner: RichCat Blockchain Game",
-
   "contact": "Contact",
   "label-email": "Your email",
   "tips-email": "We'll never store or share your email.",
   "tips-message": "Your message",
-  "send": "Send"
+  "send": "Send",
+  "donate": "Donate",
+  "eth": "ETH",
+  "bitcoin": "BitCoin",
+  "buy-me-a-coffee": "Buy me a coffee",
+  "neehow": "Partner: Online Learning Chinese"
 }
