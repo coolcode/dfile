@@ -13,6 +13,7 @@ if config_value:
     print(f'** config: \n{config_value}')
     config_filename = "_config"
     full_config_name = config_filename + '.py'
+    config_file = os.path.join(api_dir, full_config_name)
     print(f'** write to {config_file}')
     with open(config_file, "w") as file:
         file.write(config_value)
@@ -20,8 +21,7 @@ if config_value:
 else:
     config_filename = os.environ.get('CONFIG_NAME') or 'config'
     full_config_name = config_filename + '.py'
-
-config_file = os.path.join(api_dir, full_config_name)
+    config_file = os.path.join(api_dir, full_config_name)
 
 log_dir = os.path.join(APP_DIR, 'logs')
 if not os.path.exists(log_dir):
