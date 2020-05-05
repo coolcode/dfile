@@ -9,7 +9,7 @@
   "docs": "怎么用",
   "files": "文档",
   "follow-github": "关注我的 GitHub",
-  "sub-title": "DFile：一种极简的基于 IPFS 的文件上传模式",
+  "sub-title": "DFile：一种极简的文件上传模式",
   "go-to-top": "回到顶部",
   "comment-curl": "使用 cURL 命令上传",
   "comment-using": "使用",

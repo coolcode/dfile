@@ -42,11 +42,11 @@ class S3:
             start = time.perf_counter()
             print(f'content_type: {file.content_type}')
             # bytes = file.read()
-            hash = snowflake_id() # ipfs_hash(bytes)
+            hash = snowflake_id() 
             name, ext = os.path.splitext(filename)
             print(f'hash: {hash}, ext: {ext}')
 
-            # If S3 object_name was not specified, use ipfs hash
+            # If S3 object_name was not specified, use hash
             if object_name is None:
                 object_name = f'{hash}{ext}'
 

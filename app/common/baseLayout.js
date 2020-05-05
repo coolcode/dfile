@@ -29,10 +29,10 @@ export default class BaseLayout extends React.Component {
                         property="og:description"
                         content="DFile is a free and anonymous file-sharing platform. You can store and share data of all types (files, images, music, videos etc...). There is no limit, you download at the maximum speed of your connection and everything is free."
                     />
-                    <title>DFile - Distributed file upload to IPFS for 100% free | Blockchain</title>
+                    <title>DFile - Distributed file upload to S3 for 100% free | Blockchain</title>
                     <meta
                         name="keywords"
-                        content="dfile,file,download,upload,free,ipfs,blockchain,host,storage,share,big,file,video,image,audio,opensource,ethereum "
+                        content="dfile,file,download,upload,free,s3,blockchain,host,storage,share,big,file,video,image,audio,opensource,ethereum "
                     />
                     <meta name="description" content="DFile is a free and anonymous file-sharing platform. You can store and share data of all types (files, images, music, videos etc...). There is no limit, you download at the maximum speed of your connection and everything is free." />
 
