@@ -25,7 +25,7 @@
   "uploading": "Uploading...",
   "features": "Features",
   "feature-free": "FREE",
-  "feature-ipfs": "IPFS",
+  "feature-cloud": "AWS S3 Cloud",
   "feature-time": "Files stored forever",
   "feature-storage": "Unlimited storage",
   "feature-terminal": "Made for use with shell",

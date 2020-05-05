@@ -25,7 +25,7 @@
   "uploading": "上传中...",
   "features": "特色",
   "feature-free": "完全免费",
-  "feature-ipfs": "IPFS 技术",
+  "feature-cloud": "AWS S3 Cloud",
   "feature-time": "永久存储",
   "feature-storage": "无限空间",
   "feature-terminal": "终端上传",

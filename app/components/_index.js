@@ -154,12 +154,12 @@ class _index extends Component {
         const {t} = this.props;
         const features = [
             {img: '/static/img/free.svg', text: t('feature-free')},
-            {img: '/static/img/cloud.svg', text: t('feature-ipfs')},
+            {img: '/static/img/cloud.svg', text: t('feature-cloud')},
             {img: '/static/img/clock.svg', text: t('feature-time')},
             {img: '/static/img/database.svg', text: t('feature-storage')},
             {img: '/static/img/terminal.svg', text: t('feature-terminal')},
             {img: '/static/img/link.svg', text: t('feature-link')},
-            {img: '/static/img/blockchain.svg', text: t('feature-blockchain')}
+            // {img: '/static/img/blockchain.svg', text: t('feature-blockchain')}
         ];
 
         return (
@@ -249,7 +249,7 @@ class _index extends Component {
                                     {features.map((item, i) => (
                                         <div className="feature" key={i}>
                                             <Image src={item.img} size="small"/>
-                                            <h1>{item.text}</h1>
+                                            <h2>{item.text}</h2>
                                         </div>
                                     ))}
                                 </Card.Group>
@@ -326,7 +326,6 @@ class _index extends Component {
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                                         <span className="term-content-caret">dfile yourfile.txt</span>
                                         <p className="term-content-output">{API_ENDPOINT}/QmV...HZ</p>
-
                                     </div>
                                 </div>
                             </div>
