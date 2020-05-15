@@ -3,7 +3,7 @@ import os
 
 APP_DIR = os.path.abspath(os.path.dirname(__file__))
 APP_DIR = os.path.abspath(os.path.join(APP_DIR, os.pardir))
-api_dir = os.path.join(APP_DIR, 'api')
+api_dir = os.path.join(APP_DIR, '')
 
 config = Config(api_dir)
 config_value = os.environ.get('CONFIG')
@@ -22,9 +22,10 @@ else:
     config_filename = os.environ.get('CONFIG_NAME') or 'config'
     full_config_name = config_filename + '.py'
     config_file = os.path.join(api_dir, full_config_name)
+    print(f'->> config: {config_file}')
 
 log_dir = os.path.join(APP_DIR, 'logs')
 if not os.path.exists(log_dir):
     os.makedirs(log_dir)
 
-config.from_pyfile(full_config_name)
+config.from_pyfile(config_file)

@@ -4,7 +4,7 @@ from botocore.exceptions import ClientError
 import urllib
 import time
 import os
-from .util import snowflake_id
+from ..yopo.util import snowflake_id
 
 from logging import getLogger
 
@@ -56,11 +56,11 @@ class S3:
             # 'GrantRead', 'GrantReadACP', 'GrantWriteACP', 'Metadata', 'RequestPayer', 'ServerSideEncryption', 'StorageClass', 'SSECustomerAlgorithm',
             # 'SSECustomerKey', 'SSECustomerKeyMD5', 'SSEKMSKeyId', 'WebsiteRedirectLocation']
             extra_args = {'ACL': 'public-read', 'ContentType': file.content_type, 'Metadata': {'name': urllib.parse.quote(filename, safe='')}}
-            start2 = time.time()
+
             response = self.s3.upload_fileobj(file, bucket, object_name, ExtraArgs=extra_args)
             span = round(time.perf_counter() - start, 2)
             self.log.info(f"s3 upload: {span}s")
-            return {'hash': object_name}
+            return {'hash': hash, 'oname': object_name}
         except ClientError as e:
             self.log.exception(f"S3 Client Error! file name:{filename}, exception:{e}")
             return {'hash': '', 'error': "S3 Client Error! \n"}
