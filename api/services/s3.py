@@ -47,7 +47,7 @@ class S3:
 
             response = self.s3.upload_fileobj(file, bucket, object_name, ExtraArgs=extra_args)
             span = round(time.perf_counter() - start, 2)
-            self.log.info(f"s3 upload: {span}s")
+            self.log.info(f"**[time] s3 upload: {span}s")
             return True, {'fid': fid, 'slug': slug, 'oname': object_name, 'ext': ext}, None
         except ClientError as e:
             self.log.exception(f"s3 client error! file name:{filename}, exception:{e}")

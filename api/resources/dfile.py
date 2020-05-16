@@ -1,6 +1,6 @@
 from flask import request, jsonify, redirect
 from datetime import datetime as dt
-import os
+import os, time
 from ..yopo.app_context import app_context
 from ..services import S3, ipfs_hash, shorty
 from ..models import db, File
@@ -36,16 +36,25 @@ def up():
         app.log.info(f"file name: {file.filename}, empty request", {'app': 'dfile-up-req'})
         return 'empty request.', 400
 
+    start = time.perf_counter()
+
     ok, file_hash, err = __read_file_hash(file)
     if not ok and err == 'empty':
         app.log.info(f"file name: {file.filename}, empty file", {'app': 'dfile-up-req'})
         return 'empty file.', 400
 
+    span = round(time.perf_counter() - start, 2)
+    app.log.info(f"**[time] read_file_hash: {span}s")
+
+    start = time.perf_counter()
     if file_hash:
         f = db.session.query(File.filename, File.path).filter_by(hash=file_hash).first()
         if f:
             app.log.info(f"file name: {file.filename}, exists", {'app': 'dfile-up-res'})
             return f"{app.config['DOMAIN']}/d/{f.path}"
+
+    span = round(time.perf_counter() - start, 2)
+    app.log.info(f"**[time] query file: {span}s")
 
     s3 = S3(app.config, app.log)
 
@@ -54,6 +63,7 @@ def up():
     if not ok:
         return err, 503
 
+    start = time.perf_counter()
     app.log.info(f"upload res: {res}", {'app': 'dfile-up-res'})
     source = request.user_agent.browser or 'shell'
     if len(source) > 32:
@@ -75,6 +85,9 @@ def up():
     f.status = 'Y'
     r = f.save()
     app.log.info(f"save res: {r}")
+
+    span = round(time.perf_counter() - start, 2)
+    app.log.info(f"**[time] save db: {span}s")
 
     url = f"{app.config['DOMAIN']}/d/{path}"
     return url
