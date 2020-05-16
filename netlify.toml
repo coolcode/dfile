@@ -1,6 +1,6 @@
 [build]
   base = "app"
-  command = "yarn build"
+  command = "npm run build"
   publish = "out"
   functions = "functions"
 
