@@ -24,9 +24,10 @@ else:
     config_file = os.path.join(api_dir, full_config_name)
     print(f'-> config: {config_file}')
 
-log_dir = os.path.join(APP_DIR, 'logs')
+log_dir = os.path.join(api_dir, os.pardir, 'logs')
 if not os.path.exists(log_dir):
     os.makedirs(log_dir)
-    print(f'-> created log dir: {log_dir}')
+
+print(f'-> log dir: {log_dir}')
 
 config.from_pyfile(config_file)
