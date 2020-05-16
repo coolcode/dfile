@@ -6,10 +6,6 @@ import time
 import os
 from ..yopo.util import snowflake_id
 
-from logging import getLogger
-
-log = getLogger(__name__)
-
 measurable_metrics = [
     ('BucketSizeBytes', 'StandardStorage', 'Megabytes'),
     ('NumberOfObjects', 'AllStorageTypes', 'Count'), 

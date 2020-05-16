@@ -80,7 +80,7 @@ class _index extends Component {
                 'Content-Type': 'multipart/form-data'
             }
         }).then(res => {
-            console.log(file.name, ': ', res);
+            console.info(file.name, ': ', res);
 
             this.setState(state => {
                 const list = state.files.map(item => {
@@ -96,6 +96,25 @@ class _index extends Component {
             });
 
             self.reload();
+        }).catch(error => {
+            console.error(error)
+
+            this.setState(state => {
+                const list = state.files.map(item => {
+                    if(item.name == file.name){
+                        item.status = 'fail';
+                        if(error.response && error.response.data){
+                            item.error = error.response.data;
+                        }else{
+                            item.error = error.toString();
+                        }
+                    }
+                    return item;
+                });
+                return {
+                    list,
+                };
+            });
         })
     }
 
@@ -145,8 +164,10 @@ class _index extends Component {
             return <>{item.name}: <a href={item.url} target="_blank">{item.url}</a><br/></>
         }else if(item.status == 'uploading'){
             return <>{item.name}: <span className="message">{t('uploading')}</span><br/></>
+        }else if(item.status == 'fail'){
+            return <>{item.name}: <span className="red message">{item.error}</span><br/></>
         }else{
-            return <>{item.name}: <span className="red message">{item.url}</span><br/></>
+            return <>{item.name}: <span className="message">{item.url}</span><br/></>
         }
     }
 

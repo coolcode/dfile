@@ -83,11 +83,6 @@ def to_dict(instance):
     if isinstance(instance, dict):
         return instance
     if hasattr(instance, 'dict'):
-        # if include_user:
-        #     ins = instance.dict
-        #     ins['user'] = user_info(instance.user)
-        #     # print('ins user: {}'.format(ins['user']))
-        #     return ins
         return instance.dict
     return instance
 

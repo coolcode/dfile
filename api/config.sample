@@ -1,5 +1,3 @@
-USE_X_SENDFILE = False
-
 DOMAIN = "http://localhost:5000"
 S3_REGION = "<s3 region>"
 S3_ENDPOINT = "https://s3-domain.com"
@@ -7,3 +5,7 @@ S3_KEY = ""
 S3_SECRET = ""
 LOGDNA_KEY = ""
 INIT_FILE_COUNT = 0
+SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/dfile.db'
+# SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/dfile'
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.

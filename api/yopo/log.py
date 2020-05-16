@@ -38,13 +38,13 @@ def init_log(logdna_key=""):
     error_handler.setLevel(logging.ERROR)
     logging.getLogger('').addHandler(error_handler)
 
-    options = {
-        'hostname': HOSTNAME,
-        'ip': '127.0.0.1',
-        'index_meta': True
-    }
+    # options = {
+    #     'hostname': HOSTNAME,
+    #     'ip': '127.0.0.1',
+    #     'index_meta': True
+    # }
 
-    print(f'disable logdna')
+    # print(f'disable logdna')
     # if logdna_key:
     #     print(f'logdna_key: ***')
     #     logging.getLogger('').addHandler(LogDNAHandler(logdna_key, options))

@@ -1,8 +1,5 @@
 from flask import Flask, Response, request, has_request_context, g
 from flask_cors import CORS
-from .extensions import cache, db, migrate, cors
-
-from . import log
 from werkzeug.exceptions import NotFound
 import time
 import os
@@ -10,6 +7,8 @@ import os
 from pkgutil import iter_modules, extend_path
 from pathlib import Path
 from importlib import import_module
+from .extensions import cache, db, migrate, cors
+from . import log
 from .conf import config_file
 
 
@@ -24,8 +23,8 @@ def create_app(config_object=None):
     app.url_map.strict_slashes = False
 
     if not config_object:
-        print('****************************************')
-        print(f'******* {config_file}')
+        # print('****************************************')
+        # print(f'******* {config_file}')
         config_object = config_file
 
     if isinstance(config_object, str):
@@ -155,7 +154,7 @@ Hack loggers for automatically logging http request info
 """
 
 # maximum json request size: 2M = 2 * 1024 * 1024 bytes
-MAXIMUM_JSON_REQUEST_SIZE = 2 * 1024 * 1024
+# MAXIMUM_JSON_REQUEST_SIZE = 2 * 1024 * 1024
 
 
 def register_http_request(app):
@@ -175,8 +174,8 @@ def register_http_request(app):
         try:
             app_logger.info('[access], {}, {}, {}, len: {}'.format(request.remote_addr, request.method, request.url, request.content_length))
 
-            if request.content_length and request.content_length > MAXIMUM_JSON_REQUEST_SIZE:
-                return 'Request length limited.', 400
+            # if request.content_length and request.content_length > MAXIMUM_JSON_REQUEST_SIZE:
+            #     return 'Request length limited.', 400
             # if request.content_length:
             #     app_logger.info(f'content length: {request.content_length}')
 

@@ -1,6 +1,5 @@
 from flask import Blueprint, request
 from functools import wraps
-# from flask_jwt_extended import current_user, jwt_required, jwt_optional, verify_jwt_in_request, get_jwt_claims
 from inspect import isfunction, getfullargspec
 from . import util
 from .conf import config
@@ -30,9 +29,6 @@ class _AppContext:
     def __init__(self, name, url_prefix='/'):
         self.log = getLogger(name)
         self.blueprint = Blueprint(name, name, url_prefix=url_prefix)
-        # self.token_required = jwt_required
-        # self.token_optional = jwt_optional
-        # self.admin_required = jwt_admin_required
         self.config = config
 
     # @property
@@ -123,17 +119,3 @@ class _AppContext:
 
         return 'ok', 200
 
-
-# Here is a custom decorator that verifies the JWT is present in the request, as well as insuring that this user has a role of `admin` in the access token
-# def jwt_admin_required(fn):
-#     @wraps(fn)
-#     def wrapper(*args, **kwargs):
-#         verify_jwt_in_request()
-#         claims = get_jwt_claims()
-#         print(f'claims-------: {claims}')
-#         if 'role' not in claims or claims['role'] != 'admin':
-#             return 'Admin only!', 403
-#         else:
-#             return fn(*args, **kwargs)
-#
-#     return wrapper
