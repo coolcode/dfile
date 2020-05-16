@@ -54,8 +54,8 @@ yarn export
 
 ```bash
 # Upload using cURL
-➜ curl -F file=@yourfile.txt https://dfile.herokuapp.com
-https://dfile.herokuapp.com/QmV...HZ
+➜ curl -F file=@yourfile.png https://dfile.herokuapp.com
+https://dfile.app/d/F5r3yiDM.png
 # Download the file
-➜ curl -L https://dfile.herokuapp.com/QmV...HZ -o yourfile.txt
+➜ curl -# -L https://dfile.app/d/F5r3yiDM.png -o xxx.png
 ```
