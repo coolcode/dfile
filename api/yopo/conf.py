@@ -10,11 +10,11 @@ config_value = os.environ.get('CONFIG')
 config_file = ''
 
 if config_value:
-    # print(f'** config: \n{config_value}')
+    print(f'** config: \n{config_value}')
     config_filename = "_config"
     full_config_name = config_filename + '.py'
     config_file = os.path.join(api_dir, full_config_name)
-    # print(f'** write to {config_file}')
+    print(f'** write to {config_file}')
     with open(config_file, "w") as file:
         file.write(config_value)
         file.close()
@@ -27,5 +27,6 @@ else:
 log_dir = os.path.join(APP_DIR, 'logs')
 if not os.path.exists(log_dir):
     os.makedirs(log_dir)
+    print(f'-> created log dir: {log_dir}')
 
 config.from_pyfile(config_file)
