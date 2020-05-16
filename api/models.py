@@ -5,6 +5,7 @@ from .yopo.database import db, Model, reference_col, relationship, SurrogatePK
 
 class File(Model, SurrogatePK):
     __tablename__ = 'file'
+    id = db.Column(db.BigInteger, primary_key=True)
     slug = db.Column(db.String(32), unique=True, nullable=False, index=True)
     filename = db.Column(db.String(256), unique=False, nullable=False)
     size = db.Column(db.Integer, nullable=True)

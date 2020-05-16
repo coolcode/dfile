@@ -159,15 +159,15 @@ class _index extends Component {
         this.setState({files: []});
     }
 
-    render_file_link(t, item){
+    render_file_link(t, item, key){
         if(item.status == 'done' && item.url.startsWith("http")){
-            return <>{item.name}: <a href={item.url} target="_blank">{item.url}</a><br/></>
+            return <div key={key}>{item.name}: <a href={item.url} target="_blank">{item.url}</a></div>
         }else if(item.status == 'uploading'){
-            return <>{item.name}: <span className="message">{t('uploading')}</span><br/></>
+            return <div key={key}>{item.name}: <span className="message">{t('uploading')}</span></div>
         }else if(item.status == 'fail'){
-            return <>{item.name}: <span className="red message">{item.error}</span><br/></>
+            return <div key={key}>{item.name}: <span className="red message">{item.error}</span></div>
         }else{
-            return <>{item.name}: <span className="message">{item.url}</span><br/></>
+            return <div key={key}>{item.name}: <span className="message">{item.url}</span></div>
         }
     }
 
@@ -242,7 +242,7 @@ class _index extends Component {
                                            </span>
                                         <input ref={input => this.file_input = input} type="file" name="file" multiple="multiple" style={{display: "none"}} onChange={this.onChange}/>
                                         <div className="term-content-output">
-                                            {this.state.files.map(item=>this.render_file_link(t, item))}
+                                            {this.state.files.map((item, key)=>this.render_file_link(t, item, key))}
                                         </div>
                                     </div>
                                 </div>

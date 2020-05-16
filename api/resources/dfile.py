@@ -1,7 +1,8 @@
 from flask import request, jsonify, redirect
 from datetime import datetime as dt
+import os
 from ..yopo.app_context import app_context
-from ..services import S3, ipfs_hash
+from ..services import S3, ipfs_hash, shorty
 from ..models import db, File
 
 app = app_context(__name__)
@@ -41,49 +42,59 @@ def up():
         return 'empty file.', 400
 
     if file_hash:
-        f = File.filter_by(hash=file_hash).first()
+        f = db.session.query(File.filename, File.path).filter_by(hash=file_hash).first()
         if f:
             app.log.info(f"file name: {file.filename}, exists", {'app': 'dfile-up-res'})
-            return f"{app.config['DOMAIN']}/{f.path}"
+            return f"{app.config['DOMAIN']}/d/{f.path}"
 
     s3 = S3(app.config, app.log)
-    res = s3.upload_file(file, BUCKET_NAME)
+
+    ok, res, err = s3.upload_file(file, BUCKET_NAME)
+
+    if not ok:
+        return err, 503
 
     app.log.info(f"upload res: {res}", {'app': 'dfile-up-res'})
-    if not res['hash']:
-        return res['error'], 503
-    else:
-        source = request.user_agent.browser or 'shell'
-        if len(source) > 32:
-            source = source[:32]
+    source = request.user_agent.browser or 'shell'
+    if len(source) > 32:
+        source = source[:32]
 
-        f = File()
-        f.hash = file_hash
-        f.slug = str(res['hash'])
-        f.filename = file.filename
-        f.path = res['oname']
-        f.size = request.content_length or 0
-        f.source = source
-        f.dl_num = 0
-        f.status = 'Y'
-        r = f.save()
-        app.log.info(f"save res: {r}")
+    fid = res['fid']
+    path = res['oname']
+    slug = res['slug']
 
-    url = f"{app.config['DOMAIN']}/{res['oname']}"
+    f = File()
+    f.id = fid
+    f.hash = file_hash
+    f.slug = slug
+    f.filename = file.filename
+    f.path = path
+    f.size = request.content_length or 0
+    f.source = source
+    f.dl_num = 0
+    f.status = 'Y'
+    r = f.save()
+    app.log.info(f"save res: {r}")
+
+    url = f"{app.config['DOMAIN']}/d/{path}"
     return url
 
 
-@app.route("/<path:path>", methods=["GET"])
+@app.route("/d/<path:path>", methods=["GET"])
 # @app.route("/down/<path:path>", methods=["GET"])
 def down(path):
     app.log.info(f"path: {path}", {'app': 'dfile-down-req'})
 
-    if not path or str(path)[:1] not in '0123456789':
+    if not path:
         return f'invalid path: {path}', 404
 
-    f = db.session.query(File).filter(File.path == path).first()
+    slug, ext = os.path.splitext(path)  # str(path)[1:]
+    fid = shorty.i58decode(slug)
+    f = File.get_by_id(fid)
     if not f:
         return f'file does not exist: {path}', 404
+
+    path = f.path
     f.dl_num += 1
     f.lastdl_at = dt.utcnow()
     db.commit()
@@ -95,7 +106,7 @@ def down(path):
 
 @app.route("/stat", methods=["GET"])
 def stat():
-    file_count = File.count()
+    file_count = File.count() + app.config['INIT_FILE_COUNT']
     return {'file_count': file_count}
 
 

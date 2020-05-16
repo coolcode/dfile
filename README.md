@@ -42,6 +42,7 @@ Install yarn first: [https://yarnpkg.com/lang/en/docs/install/](https://yarnpkg.
 
 ```bash
 # run
+cd app
 yarn
 yarn dev
 

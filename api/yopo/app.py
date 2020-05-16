@@ -36,9 +36,6 @@ def create_app(config_object=None):
     if 'DATABASE_URL' in os.environ:
         app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 
-    if 'HEROKU_POSTGRESQL_COPPER_URL' in os.environ:
-        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('HEROKU_POSTGRESQL_COPPER_URL')
-
     register_extensions(app)
     register_routes(app)
     register_errorhandlers(app)
@@ -49,11 +46,9 @@ def create_app(config_object=None):
 
 def register_extensions(app):
     """Register Flask extensions."""
-    # bcrypt.init_app(app)
     cache.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
-    # jwt.init_app(app)
     log.init_log(app.config.get('LOGDNA_KEY'))
 
 
@@ -62,7 +57,7 @@ def register_routes(app):
     origins = app.config.get('CORS_ORIGIN_WHITELIST', '*')
 
     package = app.config.get('RESOURCE_PACKAGE_NAME', 'api.resources')
-    path = package.replace('.', '/')  # Path(__file__).parent.joinpath('resources')
+    path = package.replace('.', '/')
 
     app_logger = log.getLogger(__name__)
     app_logger.info(f'dynamically loading package: {package}, path: {path} ')
@@ -81,12 +76,6 @@ def register_routes(app):
 def load_mod(path, package):
     # print(f'loading {package} from {path}')
     for (_, name, ispkg) in iter_modules([path]):
-        # print(f'name: {name}, ispkg: {ispkg}')
-        # if is_package and name != '__pycache__':
-        #     p = os.path.join(path, name)
-        #     for mod in load_mod(p, f'{package}.{p.name}'):
-        #         yield mod
-
         mod = import_module('.' + name, package)
         # mod_name = f'{package}.{name}'
         # print(f'mod: {mod_name}')
@@ -100,37 +89,16 @@ def load_mod(path, package):
 
 
 def register_errorhandlers(app):
-    # def error_handler(error: InvalidUsage):
-    #     # app.logger.error('error: {}'.format(error))
-    #     # app.logger.error('error json: {}'.format(error.to_json()))
-    #     response = error_json(error.status_code, 'fail', "ERROR: {}".format(error.message))
-    #     # response.status_code = error.status_code
-    #     return response, error.status_code
-    #
-    # app.errorhandler(InvalidUsage)(error_handler)
-
     def notfound_handler(error: NotFound):
         # app.logger.error('error: {}'.format(error))
-        response = "NOT FOUND"  # {"msg": "NOT FOUND", "status": 404}  # error_json(404, 'fail', "NOT FOUND: {}".format(request.url))
-        # response.status_code = 404
+        response = "NOT FOUND"
         return response, 404
 
     app.errorhandler(404)(notfound_handler)
 
-    # not work
-    # def auth_error_handler(error):
-    #     response = error_json(401, 'fail', "{}".format(error))
-    #     response.status_code = 401
-    #     return response
-    #
-    # app.errorhandler(401)(auth_error_handler)
-    # app.errorhandler(403)(auth_error_handler)
-
     def exception_handler(error: Exception):
         app.logger.exception('error: {}'.format(error))
-        # response = "ERROR: {}".format(error)
         # don't show the exception info to client
-        # response.status_code = 503
         return 'Unexpected error occurs when the server is unable to handle requests.', 503
 
     app.errorhandler(Exception)(exception_handler)
@@ -152,6 +120,7 @@ def register_shellcontext(app):
 """
 Hack loggers for automatically logging http request info
 """
+
 
 # maximum json request size: 2M = 2 * 1024 * 1024 bytes
 # MAXIMUM_JSON_REQUEST_SIZE = 2 * 1024 * 1024
@@ -195,22 +164,6 @@ def register_http_request(app):
             r = response.get_data(True)
             app_logger.debug('[resp], {}, {}'.format(msg, r if len(r) < 1000 else str(r)[:1000]))
 
-            #
-            # if r and response.is_json:
-            #     r_json = json.loads(r)
-            # else:
-            #     r_json = r
-            #
-            # if response.status_code == 200:
-            #     response.set_data(dumps({'status': 'success', 'msg': '', 'r': r_json}))
-            # else:
-            #     if (isinstance(r_json, set) or isinstance(r_json, dict)) and r_json['msg']:
-            #         r_json = r_json['msg']
-            #
-            #     response.set_data(dumps({'status': 'fail', 'status_code': response.status_code, 'msg': r_json}))
-
-            # app_logger.debug('[resp], {}, {}'.format(msg, json.dumps(r_json)))
-
         except Exception as ex:
             app_logger.exception('Error on after_request. {}'.format(ex))
 
@@ -225,13 +178,3 @@ def register_http_request(app):
                 app_logger.exception(f'Error on log_performance: {ex}')
             except:
                 pass
-
-    # def dumps(data):
-    #     indent = None
-    #     separators = (",", ":")
-    #
-    #     if app.config["JSONIFY_PRETTYPRINT_REGULAR"] or app.debug:
-    #         indent = 2
-    #         separators = (", ", ": ")
-    #
-    #     return json.dumps(data, indent=indent, separators=separators)

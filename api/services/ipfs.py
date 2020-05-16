@@ -12,6 +12,7 @@ hash_functions = {
     SHA512: hashlib.sha512,
 }
 
+
 def ipfs_hash(bytes, func_id=SHA256):
     try:
         hash_func = hash_functions[func_id]
@@ -27,6 +28,7 @@ def ipfs_hash(bytes, func_id=SHA256):
 
     output = chr(func_id).encode('ascii') + chr(size).encode('ascii') + data
     return str(b58encode(output), 'latin-1')
+
 
 if __name__ == "__main__":
     print(ipfs_hash(b"Hash me!") == b"QmepSLzJZG2LpJi9fak5Sgg4nQ2y7MaMGbD54DWyDrrxJt")
