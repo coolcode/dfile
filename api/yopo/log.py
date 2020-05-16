@@ -1,13 +1,12 @@
 from flask import request, has_request_context
 import logging
 from logging.handlers import TimedRotatingFileHandler
-# from .logdna import LogDNAHandler
 
 HOSTNAME = 'dfile.app'
 APPNAME = 'api'
 
 
-def init_log(logdna_key=""):
+def init_log():
     # set a format which is simpler for console use
     formatter = logging.Formatter('%(asctime)s %(name)-12s: %(levelname)-8s %(message)s')
     # set up logging to file - see previous section for more details
@@ -37,17 +36,6 @@ def init_log(logdna_key=""):
     error_handler.setFormatter(formatter)
     error_handler.setLevel(logging.ERROR)
     logging.getLogger('').addHandler(error_handler)
-
-    # options = {
-    #     'hostname': HOSTNAME,
-    #     'ip': '127.0.0.1',
-    #     'index_meta': True
-    # }
-
-    # print(f'disable logdna')
-    # if logdna_key:
-    #     print(f'logdna_key: ***')
-    #     logging.getLogger('').addHandler(LogDNAHandler(logdna_key, options))
 
 
 class _Logger:

@@ -6,6 +6,7 @@ import axios from 'axios';
 import CountUp from "react-countup";
 
 const API_ENDPOINT = (process.env.NODE_ENV == 'production' ? "https://dfile.herokuapp.com" : "http://localhost:5000");
+const DOWN_ENDPOINT = (process.env.NODE_ENV == 'production' ? "https://dfile.app/d" : "http://localhost:5000");
 
 class _index extends Component {   
 
@@ -222,7 +223,7 @@ class _index extends Component {
                                         <span className="term-content-comment"># {t('comment-curl')}</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                                         <span className="term-content-caret">curl -F file=@yourfile.txt {API_ENDPOINT}</span>
-                                        <p className="term-content-output">{API_ENDPOINT}/QmV...HZ</p>
+                                        <p className="term-content-output">{DOWN_ENDPOINT}/QmV...HZ</p>
                                     </div>
                                     <div className="term-content-row">
                                         <span className="term-content-comment"># {t('comment-using')} <a href='https://github.com/coolcode/dfile/issues/1'
@@ -231,7 +232,7 @@ class _index extends Component {
                                         </span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                                         <span className="term-content-caret">dfile yourfile.txt</span>
-                                        <p className="term-content-output">{API_ENDPOINT}/QmV...HZ</p>
+                                        <p className="term-content-output">{DOWN_ENDPOINT}/QmV...HZ</p>
                                     </div>
                                     <div className="term-content-row">
                                         <span className="term-content-comment"># {t('comment-web')}</span><br/>
@@ -303,12 +304,12 @@ class _index extends Component {
                                         <span className="term-content-comment"># {t('comment-curl')}</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                                         <span className="term-content-caret">curl -F file=@yourfile.txt {API_ENDPOINT}</span>
-                                        <p className="term-content-output">{API_ENDPOINT}/QmV...HZ</p>
+                                        <p className="term-content-output">{DOWN_ENDPOINT}/QmV...HZ</p>
                                     </div>
                                     <div className="term-content-row">
                                         <span className="term-content-comment"># {t('comment-download')}</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
-                                        <span className="term-content-caret">curl -L {API_ENDPOINT}/QmV...HZ -o yourfile.txt</span>
+                                        <span className="term-content-caret">curl -L {DOWN_ENDPOINT}/QmV...HZ -o yourfile.txt</span>
                                         <p className="term-content-output"></p>
                                     </div>
                                     <div className="term-content-row">
@@ -346,7 +347,7 @@ class _index extends Component {
                                         <span className="term-content-comment"># {t('comment-use-alias')}</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                                         <span className="term-content-caret">dfile yourfile.txt</span>
-                                        <p className="term-content-output">{API_ENDPOINT}/QmV...HZ</p>
+                                        <p className="term-content-output">{DOWN_ENDPOINT}/QmV...HZ</p>
                                     </div>
                                 </div>
                             </div>

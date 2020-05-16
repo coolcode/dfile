@@ -49,7 +49,7 @@ def register_extensions(app):
     cache.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
-    log.init_log(app.config.get('LOGDNA_KEY'))
+    log.init_log()
 
 
 def register_routes(app):
