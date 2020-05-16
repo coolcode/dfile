@@ -56,6 +56,27 @@ yarn export
 # Upload using cURL
 ➜ curl -F file=@yourfile.png https://dfile.herokuapp.com
 https://dfile.app/d/F5r3yiDM.png
+
 # Download the file
 ➜ curl -# -L https://dfile.app/d/F5r3yiDM.png -o xxx.png
 ```
+
+## Release History
+
+- 2020/05/16: https://github.com/coolcode/dfile/tree/v0.20.0516
+    - File server changed from DigitalOcean to AWS S3
+    - API server changed from Singapore to USA (us-west-2)
+    - Saved uploads and downloads to Postgresql (us-west-2)
+    - API changed to https://dfile.herokuapp.com
+    - Shorten file url, easy to share file. https://dfile.app/d/F5r3yiDM.png
+    - Breaking changes, old files in Singapore server would be removed.
+
+- 2019/10/21: https://github.com/coolcode/dfile/tree/v0.19.1021
+    - S3-based file sharing mode
+    - Deployed to DigitalOcean
+    - All servers were in Singapore
+        
+- 2019/10/03: https://github.com/coolcode/dfile/tree/v0.19.1003
+    - IPFS-based file sharing mode
+    - Deployed to DigitalOcean
+    - All servers were in Singapore
