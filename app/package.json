@@ -57,8 +57,8 @@
     "publish2": "npm run export && surge out dfile.surge.sh",
     "sitmap": "node tools/sitemap.js",
     "start:server": "netlify-lambda serve ./lambda",
-    "build:server": "netlify-lambda build ./lambda",
-    "build": "yarn export && yarn build:server"
+    "build:server": "NODE_ENV=production netlify-lambda build ./lambda",
+    "build": "npm run export && npm run build:server"
   },
   "repository": {
     "type": "git",
