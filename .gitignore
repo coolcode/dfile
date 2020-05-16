@@ -1,2 +1,10 @@
 .DS_Store
 .idea
+__pycache__/
+.py[cod]
+.sqlite
+venv/
+.db
+config.py
+*.log*
+app/functions

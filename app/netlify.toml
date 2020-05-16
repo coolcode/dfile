@@ -1,0 +1,29 @@
+[build]
+  command = "npm run build"
+  publish = "out"
+  functions = "functions"
+
+
+[[redirects]]
+  from = "/hello"
+  to = "/.netlify/functions/hello"
+  status = 200
+  force = true
+  [redirects.headers]
+    X-From = "Netlify"
+
+[[redirects]]
+  from = "/up"
+  to = "https://dfile.herokuapp.com/"
+  status = 200
+  force = true
+  [redirects.headers]
+    X-From = "Netlify"
+
+[[redirects]]
+  from = "/d/*"
+  to = "https://dfile.herokuapp.com/d/:splat"
+  status = 200
+  force = true
+  [redirects.headers]
+    X-From = "Netlify"

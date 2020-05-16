@@ -1,0 +1,23 @@
+[build]
+  base = "app"
+  command = "npm run build"
+  publish = "out"
+  functions = "functions"
+
+[[redirects]]
+  from = "/Qm*"
+  to = "https://dfile.s3-us-west-2.amazonaws.com/dfile/Qm:splat"
+
+[[redirects]]
+  from = "/google"
+  to = "https://google.com"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/d/*"
+  to = "https://dfile.s3-us-west-2.amazonaws.com/dfile/:splat"
+  status = 200
+  force = true
+  [redirects.headers]
+    X-From = "Netlify"

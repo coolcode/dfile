@@ -1,0 +1,1 @@
+web: python api/gen_config.py && gunicorn --chdir ./ -t 300 --graceful-timeout 60 app:app --log-file -

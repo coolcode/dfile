@@ -1,16 +1,22 @@
 import React, {Component} from "react"
-import {Segment, Grid, Button, Card, Image, Form, Label, Icon} from 'semantic-ui-react';
+import {Segment, Grid, Button, Card, Image, Form, Label, Icon, Statistic} from 'semantic-ui-react';
 import {i18n, Link, withNamespaces} from '../i18n'
 import Layout from "./layout"
 import axios from 'axios';
-import {Menu} from "semantic-ui-react/dist/commonjs/collections/Menu/Menu";
+import CountUp from "react-countup";
 
-class _index extends Component {
+const API_ENDPOINT = (process.env.NODE_ENV == 'production' ? "https://dfile.herokuapp.com" : "http://localhost:5000");
+const DOWN_ENDPOINT = (process.env.NODE_ENV == 'production' ? "https://dfile.app/d" : "http://localhost:5000");
+
+class _index extends Component {   
+
     constructor(props) {
         super(props);
+
         this.state = {
             loading: true,
-            files: []
+            files: [],
+            file_count: 1212 
         };
 
         this.onChange = this.onChange.bind(this);
@@ -25,35 +31,91 @@ class _index extends Component {
             namespacesRequired: ['common'],
         }
     }
+    
+	async componentDidMount() {
+		this.reload();
+	}
+
+    async reload() {
+        try{
+            axios.get(`${API_ENDPOINT}/stat`)
+            .then(res=>{
+                //console.log(res.data);
+                this.setState({file_count: res.data.file_count});
+            })
+        }catch(e){
+            console.error(e);
+        }
+    }
 
     onChange(e) {
         if (e.target.files.length > 0) {
             console.log("file: ", e.target.files[0]);
             this.upload(e.target.files);
         }
+        e.target.value = null;
     }
 
     upload(files) {
+        const list = [... this.state.files];
+        //const count = this.state.files.length;
+        for (let i = 0; i < files.length; i++) {
+            const upload_item = {key:'key'+i, name: files[i].name, status:'uploading', url:''};
+            list.push(upload_item);
+        }
+        this.setState({files: list});
         for (let i = 0; i < files.length; i++) {
             this.upload_file(files[i]);
         }
+        
     }
 
     upload_file(file) {
-        const upload_file_url = (process.env.NODE_ENV == 'production' ? "https://dfile.app" : "http://localhost:5000");
-        //const upload_file_url="https://dfile.app";
+        const upload_file_url = API_ENDPOINT;
         const data = new FormData();
         data.append('file', file);
+        data.append('t', new Date().getTime());
         const self = this;
         axios.post(upload_file_url, data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         }).then(res => {
-            console.log('res: ', res);
-            const upload_result = {name: file.name, url: res.data}
-            const list = self.state.files.concat(upload_result);
-            self.setState({files: list});
+            console.info(file.name, ': ', res);
+
+            this.setState(state => {
+                const list = state.files.map(item => {
+                    if(item.name == file.name){
+                        item.url = res.data;
+                        item.status = 'done';
+                    }
+                    return item;
+                });
+                return {
+                    list,
+                };
+            });
+
+            self.reload();
+        }).catch(error => {
+            console.error(error)
+
+            this.setState(state => {
+                const list = state.files.map(item => {
+                    if(item.name == file.name){
+                        item.status = 'fail';
+                        if(error.response && error.response.data){
+                            item.error = error.response.data;
+                        }else{
+                            item.error = error.toString();
+                        }
+                    }
+                    return item;
+                });
+                return {
+                    list,
+                };
+            });
         })
     }
 
@@ -68,29 +130,29 @@ class _index extends Component {
             console.log('e: ', e);
             return;
         }
+        const files = []
         if (e.dataTransfer.items) {
             // Use DataTransferItemList interface to access the file(s)
             for (let i = 0; i < e.dataTransfer.items.length; i++) {
                 // If dropped items aren't files, reject them
                 if (e.dataTransfer.items[i].kind === 'file') {
                     const file = e.dataTransfer.items[i].getAsFile();
-                    //console.log('... file[' + i + '].name = ' + file.name);
-                    this.upload_file(file);
+                    files.push(file);
                 }
             }
         } else {
             // Use DataTransfer interface to access the file(s)
             for (let i = 0; i < e.dataTransfer.files.length; i++) {
                 const file = e.dataTransfer.files[i];
-                //console.log('... file[' + i + '].name = ' + file.name);
-                this.upload_file(file);
+                files.push(file);
             }
         }
+        this.upload(files);
     }
 
     onDragOver(e) {
         e.preventDefault();
-        console.log('File(s) in drop zone');
+        //console.log('File(s) in drop zone');
     }
 
     onClear(e) {
@@ -98,16 +160,28 @@ class _index extends Component {
         this.setState({files: []});
     }
 
+    render_file_link(t, item, key){
+        if(item.status == 'done' && item.url.startsWith("http")){
+            return <div key={key}>{item.name}: <a href={item.url} target="_blank">{item.url}</a></div>
+        }else if(item.status == 'uploading'){
+            return <div key={key}>{item.name}: <span className="message">{t('uploading')}</span></div>
+        }else if(item.status == 'fail'){
+            return <div key={key}>{item.name}: <span className="red message">{item.error}</span></div>
+        }else{
+            return <div key={key}>{item.name}: <span className="message">{item.url}</span></div>
+        }
+    }
+
     render() {
         const {t} = this.props;
         const features = [
             {img: '/static/img/free.svg', text: t('feature-free')},
-            {img: '/static/img/cloud.svg', text: t('feature-ipfs')},
+            {img: '/static/img/cloud.svg', text: t('feature-cloud')},
             {img: '/static/img/clock.svg', text: t('feature-time')},
             {img: '/static/img/database.svg', text: t('feature-storage')},
             {img: '/static/img/terminal.svg', text: t('feature-terminal')},
             {img: '/static/img/link.svg', text: t('feature-link')},
-            {img: '/static/img/blockchain.svg', text: t('feature-blockchain')}
+            // {img: '/static/img/blockchain.svg', text: t('feature-blockchain')}
         ];
 
         return (
@@ -118,6 +192,23 @@ class _index extends Component {
 
                         <Grid.Column textAlign="center">
                             <h1 className="title">{t("sub-title")}</h1>
+                            <div>
+                                <Statistic color="pink" size="small">
+                                    <Statistic.Value>
+                                        <span>
+                                            <span className="pink">
+                                                <i className=" file icon" />
+                                            </span>
+                                            &nbsp;
+                                            <CountUp start={0} end={this.state.file_count} duration={3} />
+                                            &nbsp;
+                                            <label className="label" style={{fontSize:"16px"}}>{t("files")}</label>
+                                        </span>
+                                    </Statistic.Value>
+                                    <Statistic.Label content="" />
+                                </Statistic>
+                            </div>
+                            <p></p>
                             <div className="term" onDrop={this.onDrag} onDragOver={this.onDragOver}>
                                 <div className="term-header">
                                     <button className="term-header-button term-header-button-close"></button>
@@ -131,8 +222,8 @@ class _index extends Component {
                                     <div className="term-content-row">
                                         <span className="term-content-comment"># {t('comment-curl')}</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
-                                        <span className="term-content-caret">curl -F file=@yourfile.txt https://dfile.app</span>
-                                        <p className="term-content-output">https://dfile.app/QmV...HZ</p>
+                                        <span className="term-content-caret">curl -F file=@yourfile.txt {API_ENDPOINT}</span>
+                                        <p className="term-content-output">{DOWN_ENDPOINT}/xxx.txt</p>
                                     </div>
                                     <div className="term-content-row">
                                         <span className="term-content-comment"># {t('comment-using')} <a href='https://github.com/coolcode/dfile/issues/1'
@@ -141,7 +232,7 @@ class _index extends Component {
                                         </span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                                         <span className="term-content-caret">dfile yourfile.txt</span>
-                                        <p className="term-content-output">https://dfile.app/QmV...HZ</p>
+                                        <p className="term-content-output">{DOWN_ENDPOINT}/xxx.txt</p>
                                     </div>
                                     <div className="term-content-row">
                                         <span className="term-content-comment"># {t('comment-web')}</span><br/>
@@ -152,9 +243,7 @@ class _index extends Component {
                                            </span>
                                         <input ref={input => this.file_input = input} type="file" name="file" multiple="multiple" style={{display: "none"}} onChange={this.onChange}/>
                                         <div className="term-content-output">
-                                            {this.state.files.map(item => (
-                                                <>{item.name}: <a href={item.url} target="_blank">{item.url}</a><br/></>
-                                            ))}
+                                            {this.state.files.map((item, key)=>this.render_file_link(t, item, key))}
                                         </div>
                                     </div>
                                 </div>
@@ -182,7 +271,7 @@ class _index extends Component {
                                     {features.map((item, i) => (
                                         <div className="feature" key={i}>
                                             <Image src={item.img} size="small"/>
-                                            <h1>{item.text}</h1>
+                                            <h2>{item.text}</h2>
                                         </div>
                                     ))}
                                 </Card.Group>
@@ -214,13 +303,13 @@ class _index extends Component {
                                     <div className="term-content-row">
                                         <span className="term-content-comment"># {t('comment-curl')}</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
-                                        <span className="term-content-caret">curl -F file=@yourfile.txt https://dfile.app</span>
-                                        <p className="term-content-output">https://dfile.app/QmV...HZ</p>
+                                        <span className="term-content-caret">curl -F file=@yourfile.txt {API_ENDPOINT}</span>
+                                        <p className="term-content-output">{DOWN_ENDPOINT}/xxx.txt</p>
                                     </div>
                                     <div className="term-content-row">
                                         <span className="term-content-comment"># {t('comment-download')}</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
-                                        <span className="term-content-caret">curl https://dfile.app/QmV...HZ -o yourfile.txt</span>
+                                        <span className="term-content-caret">curl -L {DOWN_ENDPOINT}/xxx.txt -o yourfile.txt</span>
                                         <p className="term-content-output"></p>
                                     </div>
                                     <div className="term-content-row">
@@ -249,8 +338,8 @@ class _index extends Component {
 
                                         <span className="term-content-caret"><code>
                                             {`dfile() { if [ $# -eq 0 ]; then echo -e "No arguments specified. Usage:\necho dfile /tmp/test.md\ncat /tmp/test.md | dfile test.md"; return 1; fi <br/>tmpfile=$(
-                                            mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar -F file=@"$1" "https://dfile.app" >>
-                                            $tmpfile; else curl --progress-bar -F file=@"-" "https://dfile.app/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; }`}
+                                            mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar -F file=@"$1" "${API_ENDPOINT}" >>
+                                            $tmpfile; else curl --progress-bar -F file=@"-" "${API_ENDPOINT}/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; }`}
                                         </code></span>
                                         <p className="term-content-output"></p>
                                     </div>
@@ -258,8 +347,7 @@ class _index extends Component {
                                         <span className="term-content-comment"># {t('comment-use-alias')}</span><br/>
                                         <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                                         <span className="term-content-caret">dfile yourfile.txt</span>
-                                        <p className="term-content-output">https://dfile.app/QmV...HZ</p>
-
+                                        <p className="term-content-output">{DOWN_ENDPOINT}/xxx.txt</p>
                                     </div>
                                 </div>
                             </div>
@@ -305,7 +393,7 @@ class _index extends Component {
                                                 <input type="email" name="_replyto" aria-describedby="emailHelp" placeholder={t("label-email")} required style={{width: "200px"}}/>
                                             </div>
                                             &nbsp;
-                                            <Label pointing='left'>{t("tips-email")} </Label>
+                                            {/* <Label pointing='left'>{t("tips-email")} </Label> */}
 
                                         </Form.Field>
                                         <Form.Field inline>

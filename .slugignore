@@ -1,0 +1,7 @@
+/app
+/nginx
+/share
+*.yml
+*.sh
+*.md
+*.toml

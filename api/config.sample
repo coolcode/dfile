@@ -1,0 +1,17 @@
+DOMAIN = "http://localhost:5000"
+S3_REGION = "<s3 region>"
+S3_ENDPOINT = "https://s3-domain.com"
+S3_KEY = ""
+S3_SECRET = ""
+INIT_FILE_COUNT = 0
+SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/dfile.db'
+# SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/dfile'
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
+
+CORS_ORIGIN_WHITELIST = [
+    'http://0.0.0.0:3000',
+    'http://0.0.0.0:3001',
+    'http://localhost:3000'
+    'http://localhost:3001',
+]
