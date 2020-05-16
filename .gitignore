@@ -7,3 +7,4 @@ venv/
 .db
 config.py
 *.log*
+app/functions

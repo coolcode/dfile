@@ -1,18 +1,16 @@
 [build]
-  base = "app"
-  command = "yarn build"
+  command = "yarn export"
   publish = "out"
   functions = "functions"
 
-[[redirects]]
-  from = "/Qm*"
-  to = "https://dfile.s3-us-west-2.amazonaws.com/dfile/Qm:splat"
 
 [[redirects]]
-  from = "/google"
-  to = "https://google.com"
-  status = 301
+  from = "/hello"
+  to = "/.netlify/functions/hello"
+  status = 200
   force = true
+  [redirects.headers]
+    X-From = "Netlify"
 
 [[redirects]]
   from = "/d/*"
