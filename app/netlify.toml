@@ -5,8 +5,8 @@
 
 
 [[redirects]]
-  from = "/hello"
-  to = "/.netlify/functions/hello"
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
   status = 200
   force = true
   [redirects.headers]
@@ -14,7 +14,7 @@
 
 [[redirects]]
   from = "/up"
-  to = "https://dfile.herokuapp.com/"
+  to = "/.netlify/functions/up"
   status = 200
   force = true
   [redirects.headers]
@@ -22,7 +22,7 @@
 
 [[redirects]]
   from = "/d/*"
-  to = "https://dfile.herokuapp.com/d/:splat"
+  to = "/.netlify/functions/d/:splat"
   status = 200
   force = true
   [redirects.headers]

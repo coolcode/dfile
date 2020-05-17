@@ -61,13 +61,26 @@ const getAllFiles = async () => {
     return items
 }
 
-const saveFile = async (params) => {
-    const result = await File.create(params)
+const saveFile = async (item) => {
+    const result = await File.create(item)
     console.info(result)
 }
 
+const updateFile = async (id, item) => {
+    const file = await File.update(item, {where: {id}})
+    console.info('file:', file)
+    return file
+}
+
+const getFile = async (id) => {
+    const file = await File.findByPk(id)
+    console.info('file:', file)
+    return file
+}
 
 module.exports = {
     getAllFiles,
     saveFile,
+    updateFile,
+    getFile,
 }
