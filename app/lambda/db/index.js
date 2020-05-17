@@ -1,35 +1,68 @@
-const {Pool} = require('pg')
+const Sequelize = require('sequelize')
+const pg = require('pg');
 
 require('dotenv').config()
-const pool = new Pool()
-
-// the pool will emit an error on behalf of any idle clients
-// it contains if a backend error or network partition happens
-pool.on('error', (err, client) => {
-    console.error('Unexpected error on idle client', err)
-    // process.exit(-1)
-})
-
-pool.connect((err) => {
-    if (err) {
-        console.error(err)
-    } else {
-        console.info('Successfully connected to host')
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: 'postgres',
+    dialectModule: pg,
+    define: {
+        createdAt: false,
+        updatedAt: false,
+        deletedAt: false,
+        timestamps: false
     }
+});
+
+const File = sequelize.define('file', {
+    id: {
+        type: Sequelize.BIGINT, primaryKey: true
+    },
+    slug: {
+        type: Sequelize.STRING(32)
+    },
+    filename: {
+        type: Sequelize.STRING(256)
+    },
+    size: {
+        type: Sequelize.INTEGER, defaultValue: 0
+    },
+    path: {
+        type: Sequelize.STRING(256)
+    },
+    source: {
+        type: Sequelize.STRING(32), defaultValue: 'web'
+    },
+    dl_num: {
+        type: Sequelize.INTEGER, defaultValue: 0, field: 'dl_num'
+    },
+    hash: {
+        type: Sequelize.STRING(46)
+    },
+    status: {
+        type: Sequelize.STRING(1), defaultValue: 'Y'
+    },
+    created_at: {
+        type: Sequelize.DATE, defaultValue: Sequelize.NOW, field: 'created_at'
+    },
+    updated_at: {
+        type: Sequelize.DATE, defaultValue: Sequelize.NOW, field: 'updated_at'
+    },
+    lastdl_at: {
+        type: Sequelize.DATE, defaultValue: Sequelize.NOW, field: 'lastdl_at'
+    }
+}, {
+    freezeTableName: true,
 })
+
 
 const getAllFiles = async () => {
-    const query = 'SELECT * FROM file'
-    let result = await pool.query(query)
-    console.info(result.rows)
-    return result.rows
+    const items = await File.findAll()
+    console.info('items:', items)
+    return items
 }
 
 const saveFile = async (params) => {
-    const now = new Date()
-    const query = "insert into file(id, slug, filename, size, path, source, dl_num, hash, status, created_at, updated_at, lastdl_at) values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)"
-    const values = [params.id, params.slug, params.filename, params.size, params.path, params.source, 0, params.hash, 'Y', now, now, now]
-    let result = await pool.query(query, values)
+    const result = await File.create(params)
     console.info(result)
 }
 

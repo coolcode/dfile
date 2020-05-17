@@ -15,7 +15,7 @@
     "next-transpile-modules": "^2.2.0",
     "nprogress": "^0.2.0",
     "pg": "^8.2.1",
-    "pg-native": "^3.0.0",
+    "pg-hstore": "^2.3.3",
     "prop-types": "^15.7.2",
     "qs": "^6.8.0",
     "react": "^16.8.6",
@@ -26,7 +26,8 @@
     "react-helmet": "^5.2.0",
     "react-no-ssr": "^1.1.0",
     "react-toastify": "^5.0.0",
-    "semantic-ui-react": "^0.86.0"
+    "semantic-ui-react": "^0.86.0",
+    "sequelize": "^5.21.9"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
@@ -59,8 +60,8 @@
     "publish": "npm run export && surge out dfile.app",
     "publish2": "npm run export && surge out dfile.surge.sh",
     "sitmap": "node tools/sitemap.js",
-    "start:server": "netlify-lambda serve ./lambda",
-    "build:server": "NODE_ENV=production netlify-lambda build ./lambda",
+    "start:server": "netlify-lambda serve ./lambda --config webpack.config.js",
+    "build:server": "NODE_ENV=production netlify-lambda build ./lambda --config webpack.config.js",
     "build": "npm run export && npm run build:server"
   },
   "repository": {
