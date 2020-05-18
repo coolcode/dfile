@@ -4,10 +4,6 @@ import React from "react";
 
 export default ({t}) => (
     <Segment inverted centered="true" vertical>
-        {/* <Divider horizontal inverted>
-             {t('host')}&nbsp;@&nbsp;
-            <a href="https://m.do.co/c/0f9c9b9aace1" target="_blank"><img className="digitalocean" src="/static/img/digitalocean.svg"/></a>
-        </Divider> */}
         <Grid columns={3} divided centered>
             <Grid.Row centered className="center">
                 <Grid.Column textAlign="left">

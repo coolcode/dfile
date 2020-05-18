@@ -9,23 +9,11 @@ export default class Layout extends React.Component {
 		let {t} = this.props;
 
 		const leftItems = [
-			// { as: "a", content: "Home", key: "home", href: "/" },
-			//{ as: "a", content: t("menu-home"), key: "home", href: "/" },
-            // <Label color="blue" size="large" circular>
-            // 	Promo
-            // </Label>
 		];
 
         const rightItems = [
             { as: "a", content: t("features"), key: "features", href: "/#features" },
             { as: "a", content: t("docs"), key: "docs", href: "/#docs" },
-            // {
-            // 	as: "a",
-            // 	content: "",
-            // 	key: "",
-            // 	href: `${config.codeUrl()}`,
-            // 	target: "_blank"
-            // }
         ];
 
 		return (

@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Segment, Grid, Button, Card, Image, Form, Label, Icon, Statistic} from 'semantic-ui-react';
+import {Segment, Grid, Button, Card, Image, Form, Statistic} from 'semantic-ui-react';
 import {i18n, Link, withNamespaces} from '../i18n'
 import Layout from "./layout"
 import axios from 'axios';
@@ -197,7 +197,7 @@ class _index extends Component {
                                     <Statistic.Value>
                                         <span>
                                             <span className="pink">
-                                                <i className=" file icon" />
+                                                <i className="file icon" />
                                             </span>
                                             &nbsp;
                                             <CountUp start={0} end={this.state.file_count} duration={3} />

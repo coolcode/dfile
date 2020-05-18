@@ -23,7 +23,7 @@ const i58encode = (n) => {
 
 const i58decode = (s) => {
     console.info(`decode: ${s}`)
-    const buf = new Buffer(Base58.decode(s))
+    const buf = Buffer.from(Base58.decode(s))
     // console.info(`buf: ${buf}`)
     const u64 = buf.readUIntBE(0, buf.byteLength)
     console.info(`u64: `, u64)

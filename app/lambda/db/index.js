@@ -56,26 +56,19 @@ const File = sequelize.define('file', {
 
 
 const getAllFiles = async () => {
-    const items = await File.findAll()
-    console.info('items:', items)
-    return items
+    return await File.findAll()
 }
 
 const saveFile = async (item) => {
-    const result = await File.create(item)
-    console.info(result)
+    return await File.create(item)
 }
 
 const updateFile = async (id, item) => {
-    const file = await File.update(item, {where: {id}})
-    console.info('file:', file)
-    return file
+    return await File.update(item, {where: {id}})
 }
 
 const getFile = async (id) => {
-    const file = await File.findByPk(id)
-    console.info('file:', file)
-    return file
+    return await File.findByPk(id)
 }
 
 module.exports = {
