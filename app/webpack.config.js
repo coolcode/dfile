@@ -2,7 +2,7 @@ const webpack = require("webpack")
 const path = require('path');
 
 module.exports = {
-    plugins: [new webpack.IgnorePlugin(/pg-native/, /\/pg\//, /sequelize/, /mariadb/, /mysql2/, /sqlite3/)],
+    plugins: [new webpack.IgnorePlugin(/pg-native/, /\/pg\//)],
     module: {
         rules: [
             {
