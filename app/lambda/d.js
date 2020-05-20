@@ -21,15 +21,15 @@ exports.handler = async (event, context, callback) => {
             body: `file does not exist: ${path}`
         }
     }
-    console.info(`** [time] [db read] ${util.deltaTime(start)}s`);
+    console.info(`** [time] [db read] ${util.deltaTime(start)}s`)
     start = Date.now()
 
     const url = `${process.env.S3_ENDPOINT}/dfile/${f.path}`
     console.info(`res ${path}, ${fid}, download url: ${url}`)
 
     await db.updateFile(fid, {dl_num: f.dl_num + 1, lastdl_at: new Date()})
-    console.info(`** [time] [db update] ${util.deltaTime(start)}s`);
-    console.info(`** [time] [total] ${util.deltaTime(t0)}s`);
+    console.info(`** [time] [db update] ${util.deltaTime(start)}s`)
+    console.info(`** [time] [total] ${util.deltaTime(t0)}s`)
 
     //redirect
     return {
@@ -38,4 +38,4 @@ exports.handler = async (event, context, callback) => {
             Location: url,
         }
     }
-};
+}

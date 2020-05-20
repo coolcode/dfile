@@ -70,7 +70,7 @@ exports.handler = async (event, context, callback) => {
         }
     }
 
-    console.info(`** [time] [ready] ${util.deltaTime(start)}s`);
+    console.info(`** [time] [ready] ${util.deltaTime(start)}s`)
     start = Date.now()
 
     // s3 upload
@@ -87,11 +87,11 @@ exports.handler = async (event, context, callback) => {
     console.info('s3 params: ', params)
 
     const data = await s3.upload(params).promise()
-    console.log(`File uploaded successfully. ${data.Location}`);
-    console.info(`** [time] [s3 upload] ${util.deltaTime(start)}s`);
+    console.log(`File uploaded successfully. ${data.Location}`)
+    console.info(`** [time] [s3 upload] ${util.deltaTime(start)}s`)
     start = Date.now()
 
-    const agent = util.getBrowserInfo(event.headers['user-agent']);
+    const agent = util.getBrowserInfo(event.headers['user-agent'])
     let source = agent || 'shell'
     if (source && source.length > 64) {
         source = source.substr(0, 64)
@@ -100,8 +100,8 @@ exports.handler = async (event, context, callback) => {
     const fileItem = {id: fid, slug, filename, size: contentLength, path: oname, source, hash}
     await db.saveFile(fileItem)
 
-    console.info(`** [time] [db save] ${util.deltaTime(start)}s`);
-    console.info(`** [time] [total] ${util.deltaTime(t0)}s`);
+    console.info(`** [time] [db save] ${util.deltaTime(start)}s`)
+    console.info(`** [time] [total] ${util.deltaTime(t0)}s`)
 
     const url = `https://dfile.app/d/${oname}`
 
@@ -109,4 +109,4 @@ exports.handler = async (event, context, callback) => {
         statusCode: 200,
         body: url
     }
-};
+}
