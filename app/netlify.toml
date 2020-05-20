@@ -27,3 +27,11 @@
   force = true
   [redirects.headers]
     X-From = "Netlify"
+
+[[redirects]]
+  from = "/stat"
+  to = "/.netlify/functions/stat"
+  status = 200
+  force = true
+  [redirects.headers]
+    X-From = "Netlify"

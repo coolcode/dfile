@@ -1,10 +1,11 @@
-const Sequelize = require('sequelize')
-const pg = require('pg');
+const Sequelize = require('sequelize').Sequelize
+// const pg = require('pg');
+// import {Sequelize} from 'sequelize'
 
 require('dotenv').config()
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
-    dialectModule: pg,
+    // dialectModule: pg,
     define: {
         createdAt: false,
         updatedAt: false,
@@ -12,6 +13,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
         timestamps: false
     }
 });
+
 
 const File = sequelize.define('file', {
     id: {
@@ -30,7 +32,7 @@ const File = sequelize.define('file', {
         type: Sequelize.STRING(256)
     },
     source: {
-        type: Sequelize.STRING(32), defaultValue: 'web'
+        type: Sequelize.STRING(64), defaultValue: 'web'
     },
     dl_num: {
         type: Sequelize.INTEGER, defaultValue: 0, field: 'dl_num'
@@ -56,7 +58,7 @@ const File = sequelize.define('file', {
 
 
 const getAllFiles = async () => {
-    return await File.findAll()
+    return await File.findAll({limit: 10, order: [['id', 'desc']]})
 }
 
 const saveFile = async (item) => {
@@ -71,9 +73,19 @@ const getFile = async (id) => {
     return await File.findByPk(id)
 }
 
+const getFileByHash = async (hash) => {
+    return await File.findOne({where: {hash}, attributes: ['filename', 'path']})
+}
+
+const countFile = async () => {
+    return await File.count()
+}
+
 module.exports = {
     getAllFiles,
     saveFile,
     updateFile,
     getFile,
+    getFileByHash,
+    countFile
 }

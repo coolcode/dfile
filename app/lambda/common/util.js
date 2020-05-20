@@ -1,5 +1,7 @@
 const Base58 = require('base-58')
-const U64 = require("int64-buffer").Uint64BE;
+const U64 = require("int64-buffer").Uint64BE
+const Hash = require('ipfs-only-hash')
+const uaparser = require('ua-parser-js')
 
 const i58encode = (n) => {
     console.info(`n: `, n)
@@ -33,7 +35,27 @@ const i58decode = (s) => {
     return u64//.toString(10)
 }
 
+const hashFile = async (buffer) => {
+    const hash = await Hash.of(buffer)
+    console.info('file hash: ', hash)
+    return hash
+}
+
+const getBrowserInfo = (useragent) => {
+    const ua = uaparser(useragent)
+    console.info('ua: ', ua)
+    return ua.browser.name || 'shell'
+}
+
+const deltaTime = (start)=>{
+    return ((Date.now() - start) / 1000.0).toFixed(2)
+}
+
+
 module.exports = {
     i58encode,
     i58decode,
+    hashFile,
+    getBrowserInfo,
+    deltaTime
 }

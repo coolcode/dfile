@@ -5,8 +5,8 @@ import Layout from "./layout"
 import axios from 'axios';
 import CountUp from "react-countup";
 
-const API_ENDPOINT = (process.env.NODE_ENV == 'production' ? "https://dfile.herokuapp.com" : "http://localhost:5000");
-const DOWN_ENDPOINT = (process.env.NODE_ENV == 'production' ? "https://dfile.app/d" : "http://localhost:5000");
+const API_ENDPOINT = (process.env.NODE_ENV == 'production' ? "https://dfile.app" : "http://localhost:9000");
+const DOWN_ENDPOINT = (process.env.NODE_ENV == 'production' ? "https://dfile.app/d" : "http://localhost:9000/d");
 
 class _index extends Component {   
 
@@ -71,7 +71,7 @@ class _index extends Component {
     }
 
     upload_file(file) {
-        const upload_file_url = API_ENDPOINT;
+        const upload_file_url = `${API_ENDPOINT}/up`;
         const data = new FormData();
         data.append('file', file);
         data.append('t', new Date().getTime());
