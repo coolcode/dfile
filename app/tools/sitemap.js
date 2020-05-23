@@ -1,4 +1,5 @@
 const fs = require('fs');
+require('dotenv').config()
 const getPages = () => {
     const fileObj = {};
 
@@ -47,9 +48,8 @@ const formatDate = (date) => {
 };
 
 
-const config = require("../config/config.json");
 
-const domain = config["domain"];
+const domain = process.env.DOMAIN || 'https://dfile.app';
 console.log("domain:", domain);
 const pages = getPages();
 

@@ -86,3 +86,14 @@ def generator(
             ((timestamp-fitepoch) << timestamp_left_shift) |
             (worker_id << worker_id_shift) |
             sequence)
+
+
+
+if __name__ == "__main__":
+    import datetime
+    print(int(datetime.datetime.utcnow().timestamp()))
+    print(int(datetime.datetime.now().timestamp() ))
+    print(int(time.time() ))
+    sf = generator(now=lambda: int(datetime.datetime.utcnow().timestamp() * 1000))
+    sfid = next(sf)
+    print(f'id {sfid}')

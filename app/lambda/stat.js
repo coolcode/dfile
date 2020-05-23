@@ -8,8 +8,5 @@ exports.handler = async (event, context, callback) => {
 
     const res = JSON.stringify({'file_count': count})
     console.info(res)
-    return {
-        statusCode: 200,
-        body: res
-    }
+    return util.response(res)
 }

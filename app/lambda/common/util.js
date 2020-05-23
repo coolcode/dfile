@@ -47,15 +47,35 @@ const getBrowserInfo = (useragent) => {
     return ua.browser.name || 'shell'
 }
 
-const deltaTime = (start)=>{
+const deltaTime = (start) => {
     return ((Date.now() - start) / 1000.0).toFixed(2)
 }
 
+const response = (body, statusCode = 200, crossDomain = true) => {
+    if (typeof body !== 'string') {
+        body = JSON.stringify(body)
+    }
+
+    const res = {
+        statusCode,
+        body
+    }
+
+    if (crossDomain) {
+        res.headers = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': true,
+        }
+    }
+
+    return res
+}
 
 module.exports = {
     i58encode,
     i58decode,
     hashFile,
     getBrowserInfo,
-    deltaTime
+    deltaTime,
+    response
 }

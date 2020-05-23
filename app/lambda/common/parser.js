@@ -33,7 +33,7 @@ const parse = (event) => new Promise((resolve, reject) => {
     });
 
     busboy.on('field', (fieldname, value) => {
-        console.log('Field [' + fieldname + ']: value: ' + (val));
+        console.log('Field [' + fieldname + ']: value: ' + (value));
         result[fieldname] = value;
     });
 

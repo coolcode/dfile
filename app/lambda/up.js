@@ -26,10 +26,7 @@ exports.handler = async (event, context, callback) => {
     const contentLength = fileContent.byteLength
     let reqSize = ''
     if (!contentLength) {
-        return {
-            statusCode: 400,
-            body: 'empty file'
-        }
+        return util.response('empty file', 400)
     }
 
     if (contentLength >= 1024 * 1024) {
@@ -45,10 +42,7 @@ exports.handler = async (event, context, callback) => {
     console.info(`file name: ${filename}, req size: ${reqSize}`)
     if (contentLength > MAXIMUM_REQUEST_SIZE) {
         console.warn(`file name: ${filename}, excel maximum request size`)
-        return {
-            statusCode: 400,
-            body: 'request length limited'
-        }
+        return util.response('request length limited', 400)
     }
 
     const fid = snowflake.generate() + ''
@@ -63,10 +57,7 @@ exports.handler = async (event, context, callback) => {
         const fileItem = await db.getFileByHash(hash)
         if (fileItem) {
             console.info(`file name: ${fileItem.filename}, exists"`)
-            return {
-                statusCode: 200,
-                body: `https://dfile.app/d/${fileItem.path}`
-            }
+            return util.response(`https://dfile.app/d/${fileItem.path}`)
         }
     }
 
@@ -78,7 +69,7 @@ exports.handler = async (event, context, callback) => {
     const params = {
         Bucket: 'dfile',
         Key: `dfile/${oname}`,
-        Body: fileContent,
+        Body: Buffer.from(f.file),
         ACL: 'public-read',
         ContentType: contentType || 'text/plain',
         Metadata: {filename: encodeURIComponent(filename)}
@@ -104,9 +95,5 @@ exports.handler = async (event, context, callback) => {
     console.info(`** [time] [total] ${util.deltaTime(t0)}s`)
 
     const url = `https://dfile.app/d/${oname}`
-
-    return {
-        statusCode: 200,
-        body: url
-    }
+    return util.response(url)
 }
