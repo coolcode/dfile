@@ -9,19 +9,22 @@ import {
     Container,
     Row,
     Col,
-    Badge, DropdownToggle, Media, DropdownMenu, DropdownItem, UncontrolledDropdown
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    UncontrolledDropdown
 } from "reactstrap"
 
 import {i18n} from '../i18n'
 import util from "../common/util"
-//
+
 const renderLang = ({t}) => {
 
-    let currentLang = (i18n.language || "en")
+    const currentLang = (i18n.language || "en")
 
     const changeLang = (e, value) => {
-        let lang = value || 'en'
-        console.log("change lang: ", lang)
+        const lang = value || 'en'
+        console.info("change lang: ", lang)
         i18n.changeLanguage(lang)
         util.setItem("lang", lang)
     }
@@ -31,7 +34,7 @@ const renderLang = ({t}) => {
         {/*Computer Screen*/}
         <UncontrolledDropdown nav>
             <DropdownToggle className="pr-0 d-none d-md-block" nav>
-                <img src={`/static/img/lang-${i18n.language || "en"}.svg`} style={{width: "16px"}}/>
+                <img src={`/static/img/lang-${currentLang}.svg`} style={{width: "16px"}}/>
                 <span className="pl-1">{t("lang")}</span>
             </DropdownToggle>
             <DropdownMenu className="dropdown-menu-arrow" right>
