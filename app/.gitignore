@@ -77,3 +77,4 @@ build
 out
 yarn.lock
 .idea
+package-lock.json
