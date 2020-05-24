@@ -45,6 +45,7 @@
     "gh-pages": "^2.0.0",
     "husky": "^1.0.1",
     "lint-staged": "^7.3.0",
+    "netlify-lambda": "^1.6.3",
     "node-sass": "^4.13.1",
     "prettier": "^1.14.3",
     "pretty-quick": "^1.7.0",

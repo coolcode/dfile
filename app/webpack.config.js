@@ -18,6 +18,7 @@ module.exports = {
     node: {
         __dirname: false,
     },
+    mode: process.env.NODE_ENV || 'production',
     resolve: {
         alias: {
             mysql: path.resolve(__dirname, "empty_module"),
