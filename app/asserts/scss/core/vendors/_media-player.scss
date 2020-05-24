@@ -1,0 +1,254 @@
+@import 'range-mixins';
+
+.media-controls {
+  display: flex;
+  align-items: center;
+  border-radius: 2.375rem;
+  padding: 0px;
+  background-color: #282f31;
+  color: #1da1f2;
+
+  svg,
+  path,
+  polygon {
+    transform-origin: 50% 50%;
+  }
+
+  .media-player--fullscreen & {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    z-index: 2147483647;
+  }
+}
+
+.media-controls--full {
+  flex-direction: column;
+
+  .media-control-group--seek {
+    width: 100%;
+    margin: 12px 0;
+  }
+}
+
+.media-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.media-control-group {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.media-control-group--seek {
+  flex: 1;
+  background-size:100%;
+}
+
+.media-control {
+  margin: 0 12px;
+}
+
+.media-control--progress {
+  -webkit-appearance: none;
+  width: calc(100% - 24px);
+  height: 3px;
+  margin: 0 12px;
+  border: 0;
+  position: absolute;
+  top: 5px;
+  left: 0px;
+
+  // bar
+  background-color: #fff;
+  &::-webkit-progress-bar {
+    background-color: #fff;
+  }
+
+  // progress
+  color: lighten(#fff, 5%); // IE
+  &::-moz-progress-bar {
+    background-color: lighten(#fff, 5%);
+  }
+  &::-webkit-progress-value {
+    background-color: lighten(#fff, 5%);
+  }
+}
+
+.media-control--seekbar {
+  position: relative;
+  z-index: 5;
+
+  @include -range-track(webkit, moz, ms) {
+    background-color: transparent !important;
+  }
+}
+
+.media-control--play-pause{
+  padding: 2px 0 2px 0;
+  margin: 0 0px;
+}
+
+.media-control--volume {
+  max-width: 120px;
+}
+
+.media-control--prev-track {
+  margin-right: 6px;
+}
+
+.media-control--next-track {
+  margin-left: 6px;
+}
+
+input[type='range'] {
+  @include -range__reset(webkit, moz, ms);
+
+  $track-height: 3px;
+  $track-lower-color: #1da1f2;
+  $track-upper-color: #cdd7db;
+
+  $thumb-height: 8px;
+  $thumb-width: 8px;
+  $thumb-color: #11cdef;
+
+  width: 100%;
+  height: 12px;
+  padding: 0 12px;
+  margin: 0;
+  background-color: transparent;
+
+  &:hover,
+  &:active {
+    @include -range-thumb(webkit, moz, ms) {
+      transform: scale(1.25);
+    }
+  }
+
+  @include -range-track(webkit, moz, ms) {
+    width: 100%;
+    height: $track-height;
+    border: 0;
+    cursor: pointer;
+    background-color: $track-upper-color;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  &::-webkit-slider-container {
+    background-size: inherit;
+  }
+
+  @include -range-track(webkit) {
+    background: {
+      image: linear-gradient($track-lower-color, $track-lower-color);
+      size: inherit;
+      repeat: no-repeat;
+    }
+  }
+
+  @include -range-fill-lower(webkit, moz, ms) {
+    background-color: $track-lower-color;
+  }
+
+  @include -range-thumb(webkit, moz, ms) {
+    width: $thumb-width;
+    height: $thumb-height;
+    border: 0;
+    border-radius: 50%;
+    background-color: $thumb-color;
+    cursor: grab;
+    transform: scale(1);
+    transform-origin: 50% 50%;
+    transition: transform 150ms ease-out;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  @include -range-thumb(webkit) {
+    position: relative;
+    top: -2.5px;
+  }
+}
+
+//.media-playlist-header {
+//  padding: 2px;
+//  background-color: #373d3f;
+//}
+//
+//.media-playlist-title {
+//  font-size: 14px;
+//  text-align: center;
+//}
+//
+//.media-playlist {
+//  background-color: #282f31;
+//  color: #fff;
+//}
+//
+//.media-playlist-tracks {
+//  padding: 0;
+//  margin: 0;
+//  list-style: none;
+//  border: 1px solid #373d3f;
+//}
+//
+//.media-playlist-track {
+//  padding: 12px;
+//  cursor: pointer;
+//
+//  & + & {
+//    border-top: 1px solid #373d3f;
+//  }
+//
+//  &.is-active {
+//    color: #1da1f2;
+//  }
+//}
+
+
+.circle-media-player {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  line-height: 0;
+  background-color: transparent;
+
+  fill: none;
+  stroke: #d7dbdc;
+  stroke-width: 3;
+
+  cursor: pointer;
+  outline: 0;
+}
+
+.circle-media-player__foreground {
+  stroke: #1da1f2;
+  transition: 350ms stroke-dashoffset;
+
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.circle-media-player__background {
+}
+
+.circle-media-player__play,
+.circle-media-player__pause {
+  fill: #1da1f2;
+  stroke-width: 0;
+}
+
+.circle-media-player__pause__text{
+  font-size:8px;
+}

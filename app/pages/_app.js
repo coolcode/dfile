@@ -1,17 +1,14 @@
 import React from 'react'
-import App, { Container } from 'next/app'
-import { appWithTranslation, withNamespaces  } from '../i18n'
+import {appWithTranslation} from '../i18n'
 
-class MyApp extends App {
-  render() {
-    const { Component, pageProps  } = this.props
+import '../asserts/scss/yopo.scss'
+
+const App = ({Component, ...pageProps}) => {
     return (
-      <Container>
-          {/*<div>inject content here</div>*/}
-          <Component {...pageProps} />
-      </Container>
+        <Component {...pageProps} />
     )
-  }
 }
 
-export default appWithTranslation(withNamespaces('common')(MyApp));
+export default appWithTranslation(App)
+
+// export default appWithTranslation(withNamespaces('common')(App))

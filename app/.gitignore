@@ -56,7 +56,6 @@ typings/
 
 # gatsby files
 .cache/
-public
 
 # Mac files
 .DS_Store
@@ -78,3 +77,4 @@ build
 out
 yarn.lock
 .idea
+package-lock.json

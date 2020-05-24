@@ -1,45 +1,24 @@
 import React from "react"
-import BaseLayout from "../common/baseLayout"
-import NavBar from "../common/navbar"
-import Footer from "../common/footer"
+import BaseLayout from "./base-layout"
+import NavBar from "./navbar"
+import Footer from "./footer"
+import {withTranslation} from "../i18n"
+import {Container} from "reactstrap"
 
 
-export default class Layout extends React.Component {
-	render() {
-		let {t} = this.props;
-
-		const leftItems = [
-			// { as: "a", content: "Home", key: "home", href: "/" },
-			//{ as: "a", content: t("menu-home"), key: "home", href: "/" },
-            // <Label color="blue" size="large" circular>
-            // 	Promo
-            // </Label>
-		];
-
-        const rightItems = [
-            { as: "a", content: t("features"), key: "features", href: "/#features" },
-            { as: "a", content: t("docs"), key: "docs", href: "/#docs" },
-            // {
-            // 	as: "a",
-            // 	content: "",
-            // 	key: "",
-            // 	href: `${config.codeUrl()}`,
-            // 	target: "_blank"
-            // }
-        ];
-
-		return (
-			<BaseLayout>
-				<NavBar
-					leftItems={leftItems}
-					rightItems={rightItems}
-					banner={this.props.banner}
-					t={t}
-				>
-					{this.props.children}
-				</NavBar>
-				<Footer t={t}/>
-			</BaseLayout>
-		);
-	}
+const Layout = ({t, children}) => {
+    return (
+        <BaseLayout>
+            <div className="bg-default" style={{minHeight: "calc(100vh - 6rem)"}}>
+                <NavBar t={t}/>
+                <Container className="mt-4">
+                    {children}
+                </Container>
+            </div>
+            {<Footer t={t}/>}
+        </BaseLayout>
+    )
 }
+
+
+export default withTranslation('common')(Layout)
