@@ -51,7 +51,8 @@
     "pretty-quick": "^1.7.0",
     "sass-loader": "^8.0.2",
     "url-loader": "^3.0.0",
-    "webpack": "^4.42.0"
+    "webpack": "^4.42.0",
+    "webpack-merge": "^4.2.2"
   },
   "keywords": [
     "dfile",
@@ -71,8 +72,8 @@
     "publish": "npm run export && surge out dfile.app",
     "publish2": "npm run export && surge out dfile.surge.sh",
     "sitmap": "node tools/sitemap.js",
-    "start:server": "netlify-lambda serve ./lambda --config webpack.config.js",
-    "build:server": "NODE_ENV=production netlify-lambda build ./lambda --config webpack.config.js",
+    "start:server": "netlify-lambda serve ./lambda --config webpack.dev.js",
+    "build:server": "NODE_ENV=production netlify-lambda build ./lambda --config webpack.prod.js",
     "build": "npm run export && npm run build:server"
   },
   "repository": {
