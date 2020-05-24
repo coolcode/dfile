@@ -7,7 +7,7 @@ import {Star, Follow} from '../components/github-buttons'
 import {Row, Col, Form, FormGroup, Input, Button, Container} from "reactstrap"
 
 const isProd = (process.env.NODE_ENV == 'production') // || true
-const UP_ENDPOINT = (isProd ? "https://dfile.app/up" : "http://localhost:9000/up")
+const UP_ENDPOINT = (isProd ? "https://dfile.herokuapp.com" : "http://localhost:9000/up")
 const DOWN_ENDPOINT = (isProd ? "https://dfile.app/d" : "http://localhost:9000/d")
 const STAT_ENDPOINT = (isProd ? "https://dfile.app/stat" : "http://localhost:9000/stat")
 

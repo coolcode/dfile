@@ -30,8 +30,6 @@ const i58decode = (s) => {
     const u64 = buf.readUIntBE(0, buf.byteLength)
     console.info(`u64: `, u64)
     console.info(`u64 type: `, typeof u64)
-    // const u64 = new U64(buf)
-    // console.info(`u64: ${u64}`)
     return u64//.toString(10)
 }
 
@@ -61,7 +59,7 @@ const response = (body, statusCode = 200, crossDomain = true) => {
         body
     }
 
-    if (crossDomain) {
+    if (crossDomain && process.env.NODE_ENV == 'development') {
         res.headers = {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Credentials': true,
