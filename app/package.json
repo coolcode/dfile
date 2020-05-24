@@ -72,7 +72,7 @@
     "sitmap": "node tools/sitemap.js",
     "start:server": "netlify-lambda serve ./lambda --config webpack.config.js",
     "build:server": "NODE_ENV=production netlify-lambda build ./lambda --config webpack.config.js",
-    "build": "npm run export && npm run build:server"
+    "build": "npm i --only=dev && npm run export && npm run build:server"
   },
   "repository": {
     "type": "git",
