@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {ButtonGroup, Button, Row, Col} from "reactstrap"
+import imgGithub from '../asserts/img/github.svg'
+import imgStar from '../asserts/img/star.svg'
 
 const Star = ({owner, repo, ...otherProps}) => {
     const [count, setCount] = useState(0)
@@ -14,7 +16,7 @@ const Star = ({owner, repo, ...otherProps}) => {
     return (
         <ButtonGroup size="sm" {...otherProps}>
             <Button tag="a" href={`https://github.com/${owner}/${repo}`} target="_blank">
-                <img src="/static/img/star.svg" className="img-xs"/>
+                <img src={imgStar} className="img-xs"/>
                 <span>Star</span>
             </Button>
             <Button tag="a" href={`https://github.com/${owner}/${repo}/stargazers`} target="_blank">{count}</Button>
@@ -35,7 +37,7 @@ const Follow = ({owner, ...otherProps}) => {
     return (
         <ButtonGroup size="sm" {...otherProps}>
             <Button tag="a" href={`https://github.com/${owner}`} target="_blank">
-                <img src="/static/img/github.svg" className="img-xs"/>
+                <img src={imgGithub} className="img-xs"/>
                 <span>Follow @{owner}</span>
             </Button>
             <Button tag="a" href={`https://github.com/${owner}/followers`} target="_blank">{count}</Button>

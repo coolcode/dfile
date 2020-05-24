@@ -2,6 +2,8 @@ import React, {useEffect} from "react";
 import Head from "next/head";
 import {initGA} from "./analytics";
 
+import imgIcon from '../asserts/img/icon.svg'
+
 export default ({children}) => {
 
     useEffect(() => {
@@ -20,7 +22,7 @@ export default ({children}) => {
                 <meta property="og:title" content="DFile"/>
                 <meta property="og:type" content="website"/>
                 <meta property="og:url" content="https://dfile.app"/>
-                <meta property="og:image" content="/static/img/icon.svg"/>
+                <meta property="og:image" content={imgIcon}/>
                 <meta property="og:site_name" content="dfile.app"/>
                 <meta
                     property="og:description"
@@ -31,8 +33,8 @@ export default ({children}) => {
                 <meta name="description"
                       content="DFile is a free and anonymous file-sharing platform. You can store and share data of all types (files, images, music, videos etc...). There is no limit, you download at the maximum speed of your connection and everything is free."/>
 
-                <link rel="icon" sizes="32x32" href="/static/img/favicon.ico"/>
-                <link rel="apple-touch-icon" href="/static/img/icon.svg"/>
+                <link rel="icon" sizes="32x32" href="/favicon.ico"/>
+                <link rel="apple-touch-icon" href={imgIcon}/>
             </Head>
             {children}
         </>

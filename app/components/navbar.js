@@ -18,9 +18,19 @@ import {
 import {i18n} from '../i18n'
 import util from "../common/util"
 
-const renderLang = ({t}) => {
+import imgIcon from '../asserts/img/icon.svg'
+import langEN from '../asserts/img/lang-en.svg'
+import langCN from '../asserts/img/lang-cn.svg'
 
+const langImages = {
+    en: langEN,
+    cn: langCN
+}
+
+
+const renderLang = ({t}) => {
     const currentLang = (i18n.language || "en")
+    const langImageUrl = langImages[currentLang]
 
     const changeLang = (e, value) => {
         const lang = value || 'en'
@@ -34,17 +44,17 @@ const renderLang = ({t}) => {
         {/*Computer Screen*/}
         <UncontrolledDropdown nav>
             <DropdownToggle className="pr-0 d-none d-md-block" nav>
-                <img src={`/static/img/lang-${currentLang}.svg`} style={{width: "16px"}}/>
-                <span className="pl-1">{t("lang")}</span>
+                <img src={langImageUrl} className="img-xs"/>
+                <span>{t("lang")}</span>
             </DropdownToggle>
             <DropdownMenu className="dropdown-menu-arrow" right>
                 <DropdownItem onClick={e => changeLang(e, 'en')}>
-                    <img src={`/static/img/lang-en.svg`} style={{width: "16px"}}/>
-                    <span className="pl-1">English</span>
+                    <img src={langEN} className="img-xs"/>
+                    <span>English</span>
                 </DropdownItem>
                 <DropdownItem onClick={e => changeLang(e, 'cn')}>
-                    <img src={`/static/img/lang-cn.svg`} style={{width: "16px"}}/>
-                    <span className="pl-1">中文</span>
+                    <img src={langCN} className="img-xs"/>
+                    <span>中文</span>
                 </DropdownItem>
             </DropdownMenu>
         </UncontrolledDropdown>
@@ -54,16 +64,14 @@ const renderLang = ({t}) => {
         <NavItem className="d-md-none">
             <hr className="my-1"/>
         </NavItem>
-        {/*<NavItem className="d-md-none">*/}
-        {/*    <img src={`/static/img/lang-${i18n.language || "en"}.svg`} style={{width: "16px"}}/><span className="pl-1">{t("lang")}</span>*/}
-        {/*</NavItem>*/}
+
         <NavItem className="d-md-none">
             <NavLink className="nav-link-icon" tag="a" onClick={e => changeLang(e, 'en')}>
-                <img src={`/static/img/lang-en.svg`} style={{width: "16px"}}/>
+                <img src={langEN} className="img-xs"/>
                 <span className="nav-link-inner--text">English</span>
             </NavLink>
             <NavLink className="nav-link-icon" tag="a" onClick={e => changeLang(e, 'cn')}>
-                <img src={`/static/img/lang-cn.svg`} style={{width: "16px"}}/>
+                <img src={langCN} className="img-xs"/>
                 <span className="nav-link-inner--text">中文</span>
             </NavLink>
         </NavItem>
@@ -81,7 +89,7 @@ export default ({t}) => {
             >
                 <Container className="px-3">
                     <NavbarBrand href="/" tag="a">
-                        <img alt="dfile.app" src={("/static/img/icon.svg")}/>
+                        <img alt="dfile.app" src={imgIcon}/>
                         <span className="banner-title">{t("title")}</span>
                     </NavbarBrand>
                     <button className="navbar-toggler" id="navbar-collapse-main">
@@ -92,7 +100,7 @@ export default ({t}) => {
                             <Row>
                                 <Col className="collapse-brand" xs="6">
                                     <a href="/">
-                                        <img alt="dfile.app" src={("/static/img/icon.svg")}/>
+                                        <img alt="dfile.app" src={imgIcon}/>
                                     </a>
                                 </Col>
                                 <Col className="collapse-close" xs="6">

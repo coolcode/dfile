@@ -1,6 +1,9 @@
 import React from "react"
 import {Container, Row, Col} from "reactstrap"
 
+import imgNeehow from '../asserts/img/banner-neehow.svg'
+import imgGithub from '../asserts/img/github.svg'
+
 export default ({t, ...otherProps}) => {
 
     const scrollToTop = (e) => {
@@ -15,13 +18,13 @@ export default ({t, ...otherProps}) => {
                 <Row className="mb-3 align-items-center justify-content-xl-between">
                     <Col xs="6" md="3" xl="3">
                         <a href="https://nee.how" target="_blank">
-                            <img src="/static/img/banner-neehow.svg" alt="nee.how" width="128px"/><span className="ml-1 d-none d-xl-inline">{t("neehow")}</span>
+                            <img src={imgNeehow} alt="nee.how" width="128px"/><span className="ml-1 d-none d-xl-inline">{t("neehow")}</span>
                         </a>
                     </Col>
                     <Col xs="6" md="3" xl="3" align="right" className="order-md-3  order-xl-3">
                         <a href="#" onClick={scrollToTop}>↑{t("go-to-top")}</a>
                         <a className="ml-2" href="https://github.com/coolcode/dfile" target="_blank">
-                            <img src="/static/img/github.svg" alt="nee.how" className="avatar avatar-sm" title="GitHub"/>
+                            <img src={imgGithub} alt="nee.how" className="avatar avatar-sm" title="GitHub"/>
                         </a>
                     </Col>
                     <Col xs="12" md="6" xl="6" className="order-md-2 order-xl-2 align-items-center">

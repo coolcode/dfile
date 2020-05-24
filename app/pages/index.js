@@ -6,6 +6,15 @@ import CountUp from "react-countup"
 import {Star, Follow} from '../components/github-buttons'
 import {Row, Col, Form, FormGroup, Input, Button, Container} from "reactstrap"
 
+import imgPaypal from '../asserts/img/paypal.png'
+import imgPatreon from '../asserts/img/patreon.png'
+import imgFree from '../asserts/img/free.svg'
+import imgCloud from '../asserts/img/cloud.svg'
+import imgDatabase from '../asserts/img/database.svg'
+import imgTerminal from '../asserts/img/terminal.svg'
+import imgLink from '../asserts/img/link.svg'
+import imgClose from '../asserts/img/close.svg'
+
 const isProd = (process.env.NODE_ENV == 'production') // || true
 const UP_ENDPOINT = (isProd ? "https://dfile.herokuapp.com" : "http://localhost:9000/up")
 const DOWN_ENDPOINT = (isProd ? "https://dfile.app/d" : "http://localhost:9000/d")
@@ -162,11 +171,11 @@ const Index = ({t}) => {
 
     const renderFeatures = () => {
         const features = [
-            {img: '/static/img/free.svg', text: t('feature-free')},
-            {img: '/static/img/cloud.svg', text: t('feature-cloud')},
-            {img: '/static/img/database.svg', text: t('feature-storage')},
-            {img: '/static/img/terminal.svg', text: t('feature-terminal')},
-            {img: '/static/img/link.svg', text: t('feature-link')},
+            {img: imgFree, text: t('feature-free')},
+            {img: imgCloud, text: t('feature-cloud')},
+            {img: imgDatabase, text: t('feature-storage')},
+            {img: imgTerminal, text: t('feature-terminal')},
+            {img: imgLink, text: t('feature-link')},
         ]
 
         return features.map((item, i) => (
@@ -218,7 +227,7 @@ const Index = ({t}) => {
                             <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                             <p className="term-content-ouput">{t('comment-drag')}<a href='' className="browse" onClick={onUpload}>{t('comment-browse')}</a>
                                 {(state.files && state.files.length > 0) && (
-                                    <a className="clear" href='' onClick={onClear}>&nbsp;{t('clear-file')} <img src='/static/img/close.svg' className="clear"/></a>)}
+                                    <a className="clear" href='' onClick={onClear}>&nbsp;{t('clear-file')} <img src={imgClose} className="clear"/></a>)}
                             </p>
                             <input ref={fileInput} type="file" name="file" multiple style={{display: "none"}} onChange={onChange}/>
                             <div className="term-content-output">
@@ -340,12 +349,12 @@ const Index = ({t}) => {
                     <Col md="6">
                         <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=4CL7P88WYLH5J&item_name=To+make+the+service+and+the+world+better%21&currency_code=AUD&source=url"
                            target="_blank">
-                            <img src="/static/img/paypal.png" className="img-sm"/><span>{t("buy-me-a-coffee")}</span>
+                            <img src={imgPaypal} className="img-sm"/><span>{t("buy-me-a-coffee")}</span>
                         </a>
                     </Col>
                     <Col md="6">
                         <a href="https://www.patreon.com/xbruce" target="_blank">
-                            <img src="/static/img/patreon.png" className="img-sm"/><span>{t("become-a-patron")}</span>
+                            <img src={imgPatreon} className="img-sm"/><span>{t("become-a-patron")}</span>
                         </a>
                     </Col>
                 </Row>
