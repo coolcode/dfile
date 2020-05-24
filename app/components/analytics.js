@@ -1,9 +1,9 @@
 // Implementing using tutorial from https://malloc.fi/using-google-analytics-with-next-js
 import ReactGA from "react-ga"
 
-export const initGA = () => {
+export const initGA = (gacode) => {
     //console.log("GA init")
-    ReactGA.initialize(process.env.GACODE)
+    ReactGA.initialize(gacode)
     logPageView()
 }
 

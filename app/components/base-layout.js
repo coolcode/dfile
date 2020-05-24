@@ -9,7 +9,7 @@ export default ({children}) => {
     useEffect(() => {
         document.body.classList.add("bg-default")
         if (!window.GA_INITIALIZED) {
-            initGA()
+            initGA(process.env.GACODE)
             window.GA_INITIALIZED = true
         }
     }, [])
