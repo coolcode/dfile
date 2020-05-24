@@ -9,6 +9,10 @@ const MAXIMUM_REQUEST_SIZE = 100 * 1024 * 1024  // 100M
 
 /*  curl -# -F file=@test.txt http://localhost:9000/up */
 exports.handler = async (event, context, callback) => {
+    if(event.httpMethod!= 'POST'){
+        return util.response('Method Not Allowed', 405)
+    }
+
     let t0 = Date.now(), start = Date.now()
     const s3 = new AWS.S3({
         accessKeyId: process.env.S3_KEY,

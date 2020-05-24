@@ -6,7 +6,7 @@ const MAXIMUM_REQUEST_SIZE = 100 * 1024 * 1024  // 100M
 
 /*  curl -# -F file=@test.txt http://localhost:9000/hash */
 exports.handler = async (event, context, callback) => {
-    let start = Date.now()
+    const start = Date.now()
 
     console.info('event: ', event)
     const f = await parser.parse(event)
