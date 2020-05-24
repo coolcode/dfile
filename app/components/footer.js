@@ -24,7 +24,7 @@ export default ({t, ...otherProps}) => {
                     <Col xs="6" md="3" xl="3" align="right" className="order-md-3  order-xl-3">
                         <a href="#" onClick={scrollToTop}>↑{t("go-to-top")}</a>
                         <a className="ml-2" href="https://github.com/coolcode/dfile" target="_blank">
-                            <img src={imgGithub} alt="nee.how" className="avatar avatar-sm" title="GitHub"/>
+                            <img src={imgGithub} alt="github.com/coolcode" className="avatar avatar-sm" title="GitHub"/>
                         </a>
                     </Col>
                     <Col xs="12" md="6" xl="6" className="order-md-2 order-xl-2 align-items-center">

@@ -16,7 +16,7 @@ const Star = ({owner, repo, ...otherProps}) => {
     return (
         <ButtonGroup size="sm" {...otherProps}>
             <Button tag="a" href={`https://github.com/${owner}/${repo}`} target="_blank">
-                <img src={imgStar} className="img-xs"/>
+                <img src={imgStar} className="img-xs" alt="github star"/>
                 <span>Star</span>
             </Button>
             <Button tag="a" href={`https://github.com/${owner}/${repo}/stargazers`} target="_blank">{count}</Button>
@@ -37,7 +37,7 @@ const Follow = ({owner, ...otherProps}) => {
     return (
         <ButtonGroup size="sm" {...otherProps}>
             <Button tag="a" href={`https://github.com/${owner}`} target="_blank">
-                <img src={imgGithub} className="img-xs"/>
+                <img src={imgGithub} className="img-xs" alt="github followers"/>
                 <span>Follow @{owner}</span>
             </Button>
             <Button tag="a" href={`https://github.com/${owner}/followers`} target="_blank">{count}</Button>

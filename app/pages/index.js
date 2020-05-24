@@ -180,7 +180,7 @@ const Index = ({t}) => {
 
         return features.map((item, i) => (
             <div className="feature" key={i}>
-                <img src={item.img}/>
+                <img src={item.img} alt={item.text}/>
                 <h3>{item.text}</h3>
             </div>
         ))
@@ -215,8 +215,8 @@ const Index = ({t}) => {
                         </div>
                         <div className="term-content-row">
                         <span className="term-content-comment"># {t('comment-using')} <a href='https://github.com/coolcode/dfile/issues/1'
-                                                                                         target="_blank">'dfile'</a> {t('comment-alias')},&nbsp;
-                            <a href='https://github.com/coolcode/dfile/issues/1' target="_blank">{t("learn-more")}</a>
+                                                                                          title="DFile shell script" target="_blank">'dfile'</a> {t('comment-alias')},&nbsp;
+                            <a href='https://github.com/coolcode/dfile/issues/1' target="_blank" title="learn more">{t("learn-more")}</a>
                         </span><br/>
                             <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                             <span className="term-content-caret">dfile yourfile.txt</span>
@@ -227,7 +227,7 @@ const Index = ({t}) => {
                             <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
                             <p className="term-content-ouput">{t('comment-drag')}<a href='' className="browse" onClick={onUpload}>{t('comment-browse')}</a>
                                 {(state.files && state.files.length > 0) && (
-                                    <a className="clear" href='' onClick={onClear}>&nbsp;{t('clear-file')} <img src={imgClose} className="clear"/></a>)}
+                                    <a className="clear" href='' onClick={onClear}>&nbsp;{t('clear-file')} <img src={imgClose} className="clear" alt="Clear"/></a>)}
                             </p>
                             <input ref={fileInput} type="file" name="file" multiple style={{display: "none"}} onChange={onChange}/>
                             <div className="term-content-output">
@@ -293,8 +293,8 @@ const Index = ({t}) => {
                             <div className="term-content">
                                 <div className="term-content-row">
                                     <span className="term-content-comment"># {t('comment-using')}
-                                        <a href='https://github.com/coolcode/dfile/issues/1' target="_blank">'dfile'</a> {t('comment-alias')},&nbsp;
-                                        <a href='https://github.com/coolcode/dfile/issues/1' target="_blank">{t("learn-more")}</a>
+                                        <a href='https://github.com/coolcode/dfile/issues/1' target="_blank" title="DFile shell script">'dfile'</a> {t('comment-alias')},&nbsp;
+                                        <a href='https://github.com/coolcode/dfile/issues/1' target="_blank" title="learn more">{t("learn-more")}</a>
                                         </span><br/>
                                     <span className="term-content-comment"># {t('comment-use-alias')}</span><br/>
                                     <span className="term-content-arrow">➜</span> <span className="term-content-tilde">~</span>
@@ -349,12 +349,12 @@ const Index = ({t}) => {
                     <Col md="6">
                         <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=4CL7P88WYLH5J&item_name=To+make+the+service+and+the+world+better%21&currency_code=AUD&source=url"
                            target="_blank">
-                            <img src={imgPaypal} className="img-sm"/><span>{t("buy-me-a-coffee")}</span>
+                            <img src={imgPaypal} className="img-sm" alt="paypal"/><span>{t("buy-me-a-coffee")}</span>
                         </a>
                     </Col>
                     <Col md="6">
                         <a href="https://www.patreon.com/xbruce" target="_blank">
-                            <img src={imgPatreon} className="img-sm"/><span>{t("become-a-patron")}</span>
+                            <img src={imgPatreon} className="img-sm" alt="patreon"/><span>{t("become-a-patron")}</span>
                         </a>
                     </Col>
                 </Row>

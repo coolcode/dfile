@@ -44,16 +44,16 @@ const renderLang = ({t}) => {
         {/*Computer Screen*/}
         <UncontrolledDropdown nav>
             <DropdownToggle className="pr-0 d-none d-md-block" nav>
-                <img src={langImageUrl} className="img-xs"/>
+                <img src={langImageUrl} className="img-xs" alt="language"/>
                 <span>{t("lang")}</span>
             </DropdownToggle>
             <DropdownMenu className="dropdown-menu-arrow" right>
                 <DropdownItem onClick={e => changeLang(e, 'en')}>
-                    <img src={langEN} className="img-xs"/>
+                    <img src={langEN} className="img-xs" alt="English"/>
                     <span>English</span>
                 </DropdownItem>
                 <DropdownItem onClick={e => changeLang(e, 'cn')}>
-                    <img src={langCN} className="img-xs"/>
+                    <img src={langCN} className="img-xs" alt="Chinese"/>
                     <span>中文</span>
                 </DropdownItem>
             </DropdownMenu>
@@ -67,11 +67,11 @@ const renderLang = ({t}) => {
 
         <NavItem className="d-md-none">
             <NavLink className="nav-link-icon" tag="a" onClick={e => changeLang(e, 'en')}>
-                <img src={langEN} className="img-xs"/>
+                <img src={langEN} className="img-xs" alt="English"/>
                 <span className="nav-link-inner--text">English</span>
             </NavLink>
             <NavLink className="nav-link-icon" tag="a" onClick={e => changeLang(e, 'cn')}>
-                <img src={langCN} className="img-xs"/>
+                <img src={langCN} className="img-xs" alt="Chinese"/>
                 <span className="nav-link-inner--text">中文</span>
             </NavLink>
         </NavItem>
