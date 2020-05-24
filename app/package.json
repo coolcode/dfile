@@ -73,7 +73,7 @@
     "publish2": "npm run export && surge out dfile.surge.sh",
     "sitmap": "node tools/sitemap.js",
     "start:server": "netlify-lambda serve ./lambda --config webpack.dev.js",
-    "build:server": "NODE_ENV=production netlify-lambda build ./lambda --config webpack.prod.js",
+    "build:server": "NODE_ENV=production netlify-lambda build ./lambda --config webpack.common.js",
     "build": "npm run export && npm run build:server"
   },
   "repository": {

@@ -8,5 +8,5 @@ exports.handler = async (event, context, callback) => {
 
     const res = {'file_count': count}
     console.info(res)
-    return util.response(res)
+    return util.response(res, 200, false)
 }
