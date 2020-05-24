@@ -7,7 +7,9 @@ const ospath = require('path')
 
 const MAXIMUM_REQUEST_SIZE = 100 * 1024 * 1024  // 100M
 
-/*  curl -# -F file=@test.txt http://localhost:9000/up */
+/* Due to the limitation of Netlify lambda function, (up to 10s execute time, could not upload large files)
+API changed to https://dfile.herokuapp.com */
+/* curl -# -F file=@test.txt http://localhost:9000/up */
 exports.handler = async (event, context, callback) => {
     if(event.httpMethod!= 'POST'){
         return util.response('Method Not Allowed', 405)

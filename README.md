@@ -58,10 +58,15 @@ yarn export
 https://dfile.app/d/F5r3yiDM.png
 
 # Download the file
-➜ curl -# -L https://dfile.app/d/F5r3yiDM.png -o xxx.png
+➜ curl -L https://dfile.app/d/F5r3yiDM.png -o xxx.png
 ```
 
 ## Release History
+
+- 2020/05/20: https://github.com/coolcode/dfile/tree/v0.20.0520
+    - UI theme changed from Semantic React to Reactstrap (aka. React Bootstrap)
+    - nextjs upgraded to 9.4.2
+    - reactjs upgraded to 16.13.1
 
 - 2020/05/16: https://github.com/coolcode/dfile/tree/v0.20.0516
     - File server changed from DigitalOcean to AWS S3
