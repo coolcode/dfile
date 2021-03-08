@@ -5,10 +5,9 @@ const snowflake = require("./common/snowflake")
 const db = require('./db')
 const ospath = require('path')
 
-const MAXIMUM_REQUEST_SIZE = 100 * 1024 * 1024  // 100M
+const MAXIMUM_REQUEST_SIZE = 6 * 1024 * 1024  // 6M
 
 /* Due to the limitation of Netlify lambda function, (up to 10s execute time, could not upload large files)
-API changed to https://dfile.herokuapp.com */
 /* curl -# -F file=@test.txt http://localhost:9000/up */
 exports.handler = async (event, context, callback) => {
     if(event.httpMethod!= 'POST'){
@@ -70,21 +69,6 @@ exports.handler = async (event, context, callback) => {
     console.info(`** [time] [ready] ${util.deltaTime(start)}s`)
     start = Date.now()
 
-    // s3 upload
-
-    const params = {
-        Bucket: 'dfile',
-        Key: `dfile/${oname}`,
-        Body: Buffer.from(f.file),
-        ACL: 'public-read',
-        ContentType: contentType || 'text/plain',
-        Metadata: {filename: encodeURIComponent(filename)}
-    }
-
-    // console.info('s3 params: ', params)
-
-    // const data = await s3.upload(params).promise()
-    // console.log(`File uploaded successfully. ${data.Location}`)
     console.info(`** [time] [s3 upload] ${util.deltaTime(start)}s`)
     start = Date.now()
 
@@ -94,7 +78,7 @@ exports.handler = async (event, context, callback) => {
         source = source.substr(0, 64)
     }
 
-    const fileItem = {id: fid, slug, filename, size: contentLength, path: oname, source, hash, bytes: params.Body}
+    const fileItem = {id: fid, slug, filename, size: contentLength, path: oname, source, hash, bytes: fileContent}
     await db.saveFile(fileItem)
 
     console.info(`** [time] [db save] ${util.deltaTime(start)}s`)
