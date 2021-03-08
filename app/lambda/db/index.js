@@ -43,6 +43,9 @@ const File = sequelize.define('file', {
     status: {
         type: Sequelize.STRING(1), defaultValue: 'Y'
     },
+    bytes: {
+        type: Sequelize.BLOB('long')
+    },
     created_at: {
         type: Sequelize.DATE, defaultValue: Sequelize.NOW, field: 'created_at'
     },

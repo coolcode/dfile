@@ -81,10 +81,10 @@ exports.handler = async (event, context, callback) => {
         Metadata: {filename: encodeURIComponent(filename)}
     }
 
-    console.info('s3 params: ', params)
+    // console.info('s3 params: ', params)
 
-    const data = await s3.upload(params).promise()
-    console.log(`File uploaded successfully. ${data.Location}`)
+    // const data = await s3.upload(params).promise()
+    // console.log(`File uploaded successfully. ${data.Location}`)
     console.info(`** [time] [s3 upload] ${util.deltaTime(start)}s`)
     start = Date.now()
 
@@ -94,7 +94,7 @@ exports.handler = async (event, context, callback) => {
         source = source.substr(0, 64)
     }
 
-    const fileItem = {id: fid, slug, filename, size: contentLength, path: oname, source, hash}
+    const fileItem = {id: fid, slug, filename, size: contentLength, path: oname, source, hash, bytes: params.Body}
     await db.saveFile(fileItem)
 
     console.info(`** [time] [db save] ${util.deltaTime(start)}s`)
