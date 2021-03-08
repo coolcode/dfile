@@ -15,7 +15,7 @@ BUCKET_NAME = 'dfile'
 # @app.route("/up", methods=["POST"])
 def up():
     if "file" not in request.files:
-        return 'file not foud.', 400
+        return 'file not found.', 400
 
     file = request.files["file"]
     if request.content_length:
