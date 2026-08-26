@@ -12,12 +12,15 @@ BUCKET_NAME = 'dfile'
 
 
 @app.route("/", methods=["POST"])
+@app.route("/<path:filename>", methods=["POST"])
 # @app.route("/up", methods=["POST"])
-def up():
+def up(filename=None):
     if "file" not in request.files:
         return 'file not foud.', 400
 
     file = request.files["file"]
+    if filename and (not file.filename or file.filename == '-'):
+        file.filename = filename
     if request.content_length:
         if request.content_length >= 1024 * 1024:
             r = round(request.content_length / (1024 * 1024), 1)
